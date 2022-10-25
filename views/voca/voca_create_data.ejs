@@ -1,0 +1,121 @@
+<div class="voca_main">
+  <div
+    class="alert alert-warning alert-dismissible fade show dnone"
+    id="alertid"
+    role="alert"
+  >
+    <%= errmsg %>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  <form
+    method="post"
+    action="/voca/create_data"
+    nama="createData"
+    id="createDataid"
+  >
+    <div class="create_data_area">
+      <div class="create_data_box">
+        <div class="data_type data_underline">단어or표현</div>
+        <div class="data data_underline">
+          <textarea
+            class="form-control data_input is-val"
+            name="voca"
+            id="createvocaid"
+            minlength="1"
+            maxlength="101"
+            placeholder="100자 이내로 입력해주세요"
+          ></textarea>
+        </div>
+      </div>
+      <div class="create_data_box">
+        <div class="data_type data_underline">단어 뜻</div>
+        <div class="data data_underline">
+          <textarea
+            class="form-control data_input"
+            name="voca_mean"
+            maxlength="100"
+            placeholder="100자 이내로 입력해주세요"
+          ></textarea>
+        </div>
+      </div>
+      <div class="create_data_box">
+        <div class="data_type data_underline">예문</div>
+        <div class="data data_underline">
+          <textarea
+            class="form-control data_input"
+            name="exam"
+            maxlength="1000"
+            placeholder="1000자 이내로 입력해주세요"
+          ></textarea>
+        </div>
+      </div>
+      <div class="create_data_box">
+        <div class="data_type">예문 뜻</div>
+        <div class="data">
+          <textarea
+            class="form-control data_input"
+            name="exam_mean"
+            maxlength="1000"
+            placeholder="1000자 이내로 입력해주세요"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+    <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+  </form>
+  <form
+    method="post"
+    action="/voca/voca_main"
+    nama="finishCreate"
+    id="finishCreateid"
+  >
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+  </form>
+  <form
+    method="post"
+    action="/voca/voca_load"
+    nama="finishandLoad"
+    id="finishandLoadid"
+  >
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+    <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+  </form>
+  <div class="create_page_btn_area">
+    <button
+      class="btn btn-outline-dark"
+      type="submit"
+      onclick="document.getElementById('createDataid').submit()"
+      id="createvocabtn"
+      disabled
+    >
+      추가
+    </button>
+    <button
+      class="btn btn-outline-dark"
+      type="submit"
+      onclick="document.getElementById('finishandLoadid').submit()"
+    >
+      완료
+    </button>
+  </div>
+</div>
+<script>
+  if ("<%= errmsg %>") {
+    document.getElementById("alertid").style = "display:block";
+  }
+  document.getElementById("createvocaid").addEventListener("keyup", () => {
+    isValid("text", "createvoca", 100);
+  });
+</script>

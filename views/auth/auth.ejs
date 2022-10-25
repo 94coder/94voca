@@ -1,0 +1,264 @@
+<div class="authpage">
+  <div class="authwrap">
+    <div
+      class="alert alert-warning alert-dismissible fade show dnone"
+      id="alertid"
+      role="alert"
+    >
+      <%= errmsg %>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <ul class="nav nav-tabs nav-fill">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          id="login_tab_link"
+          aria-current="page"
+          href="#"
+          >로그인</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="signup_tab_link" aria-current="page" href="#"
+          >회원가입</a
+        >
+      </li>
+    </ul>
+    <div id="login_tab_id">
+      <form action="/auth/login_process" method="post" name="login">
+        <img src="/icons/94voca.png" alt="" width="144" height="114" />
+        <h1 class="h4 mb-3 fw-normal authnotice">로그인이 필요합니다</h1>
+
+        <div class="form-floating authinput">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+            name="email"
+          />
+          <label for="floatingInput">이메일</label>
+        </div>
+        <div class="form-floating authinput">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+            name="password"
+          />
+          <label for="floatingPassword">비밀번호</label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
+          로그인
+        </button>
+        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
+          비밀번호 찾기
+        </button>
+        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
+          소셜 로그인
+        </button>
+        <p class="mt-5 mb-3 text-muted">by 94coder</p>
+      </form>
+    </div>
+    <div class="dnone" id="signup_tab_id">
+      <form
+        action="/auth/signup_process"
+        method="post"
+        name="signup"
+        id="signtabid"
+      >
+        <img src="/icons/94voca.png" alt="" width="144" height="114" />
+        <h1 class="h4 mb-3 fw-normal authnotice">정보를 입력하세요</h1>
+        <div class="form-floating authinput">
+          <input
+            type="email"
+            class="form-control is-val"
+            id="email_area"
+            placeholder="name@example.com"
+            name="email"
+          />
+          <label for="floatingInput">이메일</label>
+          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            이메일 형식을 확인하세요
+          </div>
+        </div>
+        <div class="form-floating authinput">
+          <input
+            type="password"
+            class="form-control is-val"
+            id="pwd_area"
+            placeholder="Password"
+            name="password"
+          />
+          <label for="floatingPassword">비밀번호</label>
+          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            비밀번호 형식을 확인하세요
+          </div>
+        </div>
+        <div class="form-floating authinput">
+          <input
+            type="password"
+            class="form-control is-val"
+            id="pwd_area2"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">비밀번호 재확인</label>
+          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            비밀번호가 일치하지 않습니다
+          </div>
+        </div>
+        <div class="form-floating authinput">
+          <input
+            type="text"
+            class="form-control is-val"
+            id="nick_area"
+            placeholder="Nickname"
+            name="nickname"
+          />
+          <label for="floatingInput">닉네임</label>
+          <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            닉네임 형식을 확인하세요
+          </div>
+        </div>
+        <input
+          type="button"
+          class="w-100 btn btn-lg btn-primary"
+          id="sbm_Btn"
+          disabled
+          value="가입하기"
+        />
+        <p class="mt-5 mb-3 text-muted">by 94coder</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const email_list = JSON.parse(`<%- JSON.stringify(email_list) %>`);
+  const nick_list = JSON.parse(`<%- JSON.stringify(nick_list) %>`);
+  const login_tab_link = document.getElementById("login_tab_link");
+  const signup_tab_link = document.getElementById("signup_tab_link");
+  let emailArea = document.getElementById("email_area");
+  let pwdArea = document.getElementById("pwd_area");
+  let pwdArea2 = document.getElementById("pwd_area2");
+  let nickArea = document.getElementById("nick_area");
+  const sbmBtn = document.getElementById("sbm_Btn");
+  const alertid = document.getElementById("alertid");
+  const signtabid = document.getElementById("signtabid");
+
+  const formEmail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+  const formPwd = RegExp(/^[a-zA-Z0-9]{6,18}$/);
+  const formNick = RegExp(/^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,10}$/);
+
+  const tabClick = (target1, target2) => {
+    document.getElementById(target1 + "_tab_id").style = "display:block";
+    document.getElementById(target2 + "_tab_id").style = "display:none";
+    document.getElementById(target1 + "_tab_link").classList.add("active");
+    document.getElementById(target2 + "_tab_link").classList.remove("active");
+  };
+
+  const checkAbled = (status) => {
+    switch (status) {
+      case "e":
+        if (!formEmail.test(emailArea.value)) {
+          emailArea.classList.replace("is-val", "is-invalid");
+          emailArea.classList.replace("is-valid", "is-invalid");
+        } else {
+          emailArea.classList.replace("is-val", "is-valid");
+          emailArea.classList.replace("is-invalid", "is-valid");
+        }
+        break;
+      case "p":
+        if (!formPwd.test(pwdArea.value)) {
+          pwdArea.classList.replace("is-val", "is-invalid");
+          pwdArea.classList.replace("is-valid", "is-invalid");
+        } else {
+          pwdArea.classList.replace("is-val", "is-valid");
+          pwdArea.classList.replace("is-invalid", "is-valid");
+        }
+        break;
+
+      case "n":
+        if (!formNick.test(nickArea.value)) {
+          nickArea.classList.replace("is-val", "is-invalid");
+          nickArea.classList.replace("is-valid", "is-invalid");
+        } else {
+          nickArea.classList.replace("is-val", "is-valid");
+          nickArea.classList.replace("is-invalid", "is-valid");
+        }
+        break;
+
+      case "eq":
+        if (pwdArea.value !== pwdArea2.value) {
+          pwdArea2.classList.replace("is-val", "is-invalid");
+          pwdArea2.classList.replace("is-valid", "is-invalid");
+        } else {
+          pwdArea2.classList.replace("is-val", "is-valid");
+          pwdArea2.classList.replace("is-invalid", "is-valid");
+        }
+        break;
+    }
+    if (
+      emailArea.value &&
+      pwdArea.value &&
+      pwdArea2.value &&
+      nickArea.value &&
+      formEmail.test(emailArea.value) &&
+      formPwd.test(pwdArea.value) &&
+      formNick.test(nickArea.value) &&
+      pwdArea.value === pwdArea2.value
+    ) {
+      sbmBtn.disabled = false;
+    } else {
+      sbmBtn.disabled = true;
+    }
+  };
+
+  const goSubmit = () => {
+    if (email_list.includes(emailArea.value)) {
+      alertid.style = "display:block";
+      alertid.innerText = "이미 존재하는 이메일 입니다";
+    } else if (nick_list.includes(nickArea.value)) {
+      alertid.style = "display:block";
+      alertid.innerText = "이미 존재하는 닉네임 입니다";
+    } else {
+      signtabid.submit();
+    }
+  };
+
+  sbmBtn.addEventListener("click", goSubmit);
+
+  login_tab_link.addEventListener("click", () => {
+    tabClick("login", "signup");
+  });
+
+  signup_tab_link.addEventListener("click", () => {
+    tabClick("signup", "login");
+  });
+
+  emailArea.addEventListener("keyup", () => {
+    checkAbled("e");
+  });
+
+  pwdArea.addEventListener("keyup", () => {
+    checkAbled("p");
+  });
+
+  pwdArea2.addEventListener("keyup", () => {
+    checkAbled("eq");
+  });
+
+  nickArea.addEventListener("keyup", () => {
+    checkAbled("n");
+  });
+
+  if ("<%= errmsg %>") {
+    document.getElementById("alertid").style = "display:block";
+  }
+</script>

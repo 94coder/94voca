@@ -1,0 +1,36 @@
+@import url("logonstyle.css");
+@import url("logoffstyle.css");
+@import url("toggle_switch.css");
+@import url("voca.css");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background-color: #f6f6f6;
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+}
+
+main {
+  position: relative;
+  height: 100%;
+  overflow: scroll;
+  min-height: 600px;
+}
+
+.dnone {
+  display: none;
+}
+
+.din {
+  display: inline;
+}
+
+.w100 {
+  width: 100%;
+}

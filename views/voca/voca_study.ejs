@@ -1,0 +1,119 @@
+<div class="voca_main">
+  <div class="load_page_btn_area ">
+    <form action="/voca/voca_main" method="post" class="din">
+      <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+      <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+      <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+      <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+      <input type="submit" value="뒤로" class="btn btn-outline-dark">
+    </form>
+      <label class="switch" id="all-switch">
+        <input type="checkbox" class="switch-input" id="all_checkbox_id">
+        <span class="switch-label" data-on="전체숨기기" data-off="전체보이기"></span>
+        <span class="switch-handle"></span>
+      </label>
+  </div>
+  <% for(i=0; i<loadlist.length; i++){ %>
+    <div class="loaded_data">
+      <div class="data_box">
+        <div class="data_type data_underline">단어or표현  
+          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill" viewBox="0 0 16 16">
+          <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+          </svg></span>  
+        </div>
+        <div class="data data_underline">
+          <label class="switch">
+            <input type="checkbox" class="switch-input" id="vocaid<%- i %>">
+            <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
+            <span class="switch-handle"></span>
+          </label>
+          <b><span class="study_data dnone" id="voca_id<%- i %>"><%= loadlist[i].voca %></span></b>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type data_underline">단어 뜻  
+        </div>
+        <div class="data data_underline">
+          <label class="switch">
+            <input type="checkbox" class="switch-input" id="voca_meanid<%- i %>">
+            <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
+            <span class="switch-handle"></span>
+          </label>
+          <span class="study_data dnone" id="voca_mean_id<%- i %>"><%= loadlist[i].voca_mean %>
+          </span>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type data_underline">예문  
+          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill" viewBox="0 0 16 16">
+          <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+          </svg></span>  
+        </div>
+        <div class="data data_underline">
+          <label class="switch">
+            <input type="checkbox" class="switch-input" id="examid<%- i %>">
+            <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
+            <span class="switch-handle"></span>
+          </label>
+          <span class="study_data dnone" id="exam_id<%- i %>"><%= loadlist[i].exam %>
+          </span>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type">예문 뜻  
+        </div>
+        <div class="data">
+          <label class="switch">
+            <input type="checkbox" class="switch-input" id="exam_meanid<%- i %>">
+            <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
+            <span class="switch-handle"></span>
+          </label>
+          <span class="study_data dnone" id="exam_mean_id<%- i %>"><%= loadlist[i].exam_mean %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.getElementById('vocaid<%- i %>').addEventListener('click', () =>{
+        isChecked('<%- i %>','voca')
+      })
+      document.getElementById('voca_meanid<%- i %>').addEventListener('click', () =>{
+        isChecked('<%- i %>','voca_mean')
+      })
+      document.getElementById('examid<%- i %>').addEventListener('click', () =>{
+        isChecked('<%- i %>','exam')
+      })
+      document.getElementById('exam_meanid<%- i %>').addEventListener('click', () =>{
+        isChecked('<%- i %>','exam_mean')
+      })
+    </script>
+  <% } %>
+</div>
+<script>
+  const isChecked = (i,what) => {
+    const checkbox = document.getElementById(what+"id"+i);
+    const is_checked = checkbox.checked;
+    if(is_checked){
+    document.getElementById(what+'_id'+i).style = "display:inline"
+    }else{
+      document.getElementById(what+'_id'+i).style = "display:none"
+    }
+  }
+  
+  const showAll = () =>{
+    const is_allchecked = document.getElementById('all_checkbox_id').checked;
+    const classlist = document.getElementsByClassName('study_data');
+    if(is_allchecked){
+      for(i=0; i<classlist.length; i++){
+        classlist[i].style = "display:inline"
+      }      
+    }else{
+      for(i=0; i<classlist.length; i++){
+        classlist[i].style = "display:none"
+      }
+    }
+  }
+
+  document.getElementById('all_checkbox_id').addEventListener('click', showAll)
+  
+</script>

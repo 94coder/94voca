@@ -1,0 +1,31 @@
+.authpage {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+}
+
+.authwrap {
+  text-align: center;
+  border-radius: 5px;
+  padding: 20px;
+  border: 1px solid lightgray;
+  width: 460px;
+  background-color: white;
+}
+
+.authinput,
+.authbtn {
+  margin: 5px;
+}
+
+@media only screen and (max-width: 480px) {
+  .authwrap {
+    width: 250px;
+    margin: 0;
+    border: 0px;
+  }
+
+  .authnotice {
+    font-size: 20px;
+  }
+}

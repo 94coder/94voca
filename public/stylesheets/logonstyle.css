@@ -1,0 +1,53 @@
+.logonpage {
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar {
+  padding: 0 30px;
+  z-index: 1;
+  background-color: #363636;
+  color: white;
+}
+
+.navbar > .nav-tabs > .nav-item {
+  min-height: 80px;
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar > .nav-tabs > .nav-item:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
+  .navbar > .nav-tabs {
+    width: 100%;
+  }
+}

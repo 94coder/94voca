@@ -1,0 +1,106 @@
+<div class="voca_main">
+  <div class="alert alert-warning alert-dismissible fade show dnone" id="alertid" role="alert">
+    <%= errmsg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="load_page_btn_area">
+    <form action="/voca/voca_main" method="post" class="din">
+      <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+      <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+      <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+      <input type="submit" value="뒤로" class="btn btn-outline-dark">
+    </form>
+    <form action="/voca/voca_study" method="post" class="din">
+      <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+      <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+      <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+      <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+      <input type="submit" value="공부하기" class="btn btn-outline-dark">
+    </form>
+    <form action="/voca/create_data_page" method="post" class="din">
+      <input class="btn btn-outline-dark" type="submit" value="단어or표현 추가" />
+      <input type='hidden' name='fd_id' value='<%= fd_id %>' />
+      <input type='hidden' name='fd_name' value='<%= fd_name %>' />
+      <input type='hidden' name='pr_id' value='<%= pr_id %>' />
+      <input type='hidden' name='fl_id' value='<%= fl_id %>' />
+      <input type='hidden' name='errmsg' value='' />
+    </form>
+  </div>
+  <% for(i=0; i<loadlist.length; i++){ %>
+    <div class="loaded_data">
+      <div class="data_box"><div class="data_type data_underline">단어or표현  <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill" viewBox="0 0 16 16">
+        <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+      </svg></span>  </div><div class="data data_underline"><b><%= loadlist[i].voca %></b></div></div>
+      <div class="data_box"><div class="data_type data_underline">단어 뜻  </div><div class="data data_underline"><%= loadlist[i].voca_mean %></div></div>
+      <div class="data_box"><div class="data_type data_underline">예문  <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill" viewBox="0 0 16 16">
+        <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+      </svg></span>  </div><div class="data data_underline"><%= loadlist[i].exam %></div></div>
+      <div class="data_box"><div class="data_type">예문 뜻  </div><div class="data"><%= loadlist[i].exam_mean %></div></div>
+      <form action="/voca/modify_data" method="post" class="din" name="modifydataform">
+        <input type="button" value="수정" class="btn btn-outline-secondary" id="voca_load_md_btn" data-bs-toggle="modal" data-bs-target="#ModifyDataModal<%- i %>">
+        <div class="modal fade" id="ModifyDataModal<%- i %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <form action="/voca/modify_data" method="post">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">데이터 변경</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="mod_data_grid"><b>단어or표현</b><textarea class="form-control data_input is-val" name="voca"  id="modvoca<%- i %>id" minlength="1"  maxlength="101" ><%= loadlist[i].voca %></textarea></div>
+                  <div class="mod_data_grid"><b>단어 뜻</b><textarea class="form-control data_input" name="voca_mean" maxlength="100"><%= loadlist[i].voca_mean %></textarea></div>
+                  <div class="mod_data_grid"><b>예문</b><textarea class="form-control data_input" name="exam" maxlength="1000"><%= loadlist[i].exam %></textarea></div>
+                  <div class="mod_data_grid"><b>예문 뜻</b><textarea class="form-control data_input" name="exam_mean" maxlength="1000"><%= loadlist[i].exam_mean %></textarea></div>
+                  <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+                  <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+                  <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+                  <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+                  <input type="hidden" name="p_voca" value="<%= loadlist[i].voca %>" />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                  <button type="submit" class="btn btn-primary" id="modvoca<%- i %>btn">변경하기</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </form>
+      <button class="btn btn-outline-secondary" id="voca_load_del_btn" data-bs-toggle="modal" data-bs-target="#deleteDataModal<%- i %>">삭제</button>
+      <div class="modal fade" id="deleteDataModal<%- i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <form action="/voca/delete_data" method="post" name="deletedataform">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">데이터 삭제</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                정말 삭제하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="삭제" />
+                <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+                <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+                <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+                <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+                <input type="hidden" name="voca" value="<%= loadlist[i].voca %>" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      document.getElementById('modvoca<%- i %>id').addEventListener('keyup', () => {
+        isValid('text','modvoca<%- i %>',100)
+      })
+    </script>
+  <% } %>
+</div>
+<script>
+  if("<%= errmsg %>"){
+    document.getElementById('alertid').style = "display:block"
+  }
+
+</script>

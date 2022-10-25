@@ -1,0 +1,206 @@
+.voca_main {
+  background-color: white;
+  width: 95%;
+  height: 95%;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+.f_wrapper {
+  display: grid;
+  grid-template-columns: 2.5fr 7.5fr;
+  padding: 20px 0;
+  min-height: 85vh;
+}
+
+.btn_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.folder_wrapper {
+  border-right: 1px solid lightgray;
+  padding-right: 10px;
+}
+
+.now_folder {
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+}
+
+.now_folder_location {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.fd_btn {
+  margin: 3px;
+  padding: 5px 0;
+}
+
+.folder_list_wrapper {
+  padding: 10px;
+}
+
+.folder {
+  padding: 10px;
+}
+
+.folder:hover {
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.voca_file {
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  min-width: 200px;
+}
+
+.voca_file_list {
+  margin-left: 20px;
+}
+
+.file_btn {
+  margin: 5px;
+  min-width: 80px;
+}
+
+.fold {
+  display: none;
+  position: relative;
+  margin: 0;
+}
+
+.fold_icon {
+  margin: 10px;
+  position: absolute;
+  right: 0;
+}
+
+.loaded_data,
+.create_data_area {
+  border: 1px solid lightgray;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.data_box,
+.create_data_box {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+}
+
+.create_data_box {
+  height: 15vh;
+}
+
+.data_type {
+  padding: 10px;
+  border-right: 1px solid lightgray;
+}
+
+.data_underline {
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.data {
+  padding: 5px;
+  word-break: break-all;
+}
+
+.load_page_btn_area,
+.create_page_btn_area {
+  margin: 10px;
+  text-align: center;
+}
+
+.create_page_btn_area > button {
+  min-width: 100px;
+  margin: 20px;
+}
+
+.data_input {
+  width: 100%;
+  height: 90%;
+  margin: 0.01px;
+  border: 1px solid #969bab;
+  white-space: pre;
+}
+
+.study_data {
+  margin-left: 10px;
+}
+
+.mod_data_grid {
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+}
+
+#settModal {
+  min-width: 90%;
+}
+
+.sett_card {
+  margin: 10px;
+}
+
+.sett_btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.sett_card_content {
+  margin: 10px;
+  display: block;
+}
+
+#voca_load_md_btn,
+#voca_load_del_btn {
+  margin-top: 5px;
+}
+
+@media only screen and (max-width: 480px) {
+  .voca_main {
+    padding-bottom: 50px;
+  }
+  .f_wrapper {
+    display: block;
+  }
+
+  .fold {
+    display: block;
+  }
+
+  .folder_wrapper {
+    border-right: none;
+    padding: 0;
+  }
+
+  .folder_list_wrapper {
+    padding-top: 50px;
+    display: none;
+  }
+
+  #folder_list_wrapper_id.active {
+    display: block;
+  }
+
+  .file_wrapper {
+    margin-top: 70px;
+  }
+
+  .data_box,
+  .create_data_box {
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+  }
+
+  .mod_data_grid {
+    display: grid;
+    grid-template-columns: 3fr 6fr;
+  }
+}
