@@ -38,8 +38,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 const indexRouter = require("./routes/index");
-const authRouter = require("./routes/auth");
-const authLogicRouter = require("./routes/auth_process");
+const authRouter = require("./routes/signpage");
+const authLogicRouter = require("./routes/sign_process");
 const vocaRouter = require("./routes/voca");
 const vocaCreateRouter = require("./routes/voca_create");
 const vocaLoadRouter = require("./routes/voca_load");
@@ -75,8 +75,8 @@ const compression = require("compression");
 app.use(compression());
 
 app.use("", indexRouter);
-app.use("/auth", authRouter);
-app.use("/auth", authLogicRouter);
+app.use("/signpage", authRouter);
+app.use("/signpage", authLogicRouter);
 app.use("/voca", vocaRouter);
 app.use("/voca", vocaCreateRouter);
 app.use("/voca", vocaLoadRouter);

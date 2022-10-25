@@ -51,7 +51,7 @@ router.post("*", (req, res, next) => {
 
 router.get("/", (req, res) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/auth");
+    res.redirect("/signpage");
   } else {
     res.redirect("/voca");
   }

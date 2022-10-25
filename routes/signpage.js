@@ -35,7 +35,7 @@ router.get("/", function (req, res) {
           feedback = fmsg.error[0];
         }
         res.render("template", {
-          page: "./auth/auth",
+          page: "./signpage/signpage",
           errmsg: feedback,
           email_list: checked_email,
           nick_list: checked_nickname,

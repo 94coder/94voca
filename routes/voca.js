@@ -14,7 +14,7 @@ const auth = require("../lib/logonStatus");
 
 router.get("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/auth");
+    res.redirect("/signpage");
   } else {
     next();
   }
@@ -22,7 +22,7 @@ router.get("*", (req, res, next) => {
 
 router.post("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/auth");
+    res.redirect("/signpage");
   } else {
     next();
   }

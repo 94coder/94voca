@@ -33,7 +33,7 @@ router.post("/signup_process", (req, res) => {
           (err, result) => {
             req.login(post, (err) => {
               body = mymodule.POST(
-                "/auth/login_process",
+                "/signpage/login_process",
                 `
               <input type='hidden' name='email' value='${post.email}' />
               <input type='hidden' name='password' value='${post.password}' />
@@ -52,7 +52,7 @@ router.post(
   "/login_process",
   passport.authenticate("local", {
     successRedirect: "/voca",
-    failureRedirect: "/auth",
+    failureRedirect: "/signpage",
     failureFlash: true,
   })
 );
@@ -62,9 +62,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.send(`
-  <script>window.location.href = '/auth';</script>
-  `);
+    res.redirect("/signpage");
   });
 });
 
@@ -156,7 +154,7 @@ router.post("/modify_password", (req, res) => {
   });
 });
 
-router.post("/delete_auth", (req, res) => {
+router.post("/delete_member", (req, res) => {
   const user = req.user[0];
   req.logout((err) => {
     if (err) {
@@ -171,9 +169,7 @@ router.post("/delete_auth", (req, res) => {
     `,
       [user.user_id, user.user_id, user.user_id, user.user_id],
       (err, result) => {
-        res.send(`
-  <script>window.location.href = '/auth';</script>
-  `);
+        res.redirect("/signpage");
       }
     );
   });
