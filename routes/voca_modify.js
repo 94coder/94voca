@@ -34,7 +34,10 @@ router.post("/modify_folder", (req, res) => {
           (err, result) => {
             body = mymodule.POST(
               "/voca/voca_main",
-              mymodule.HIDDEN(post.fd_id, post.new_fd_name, post.pr_id)
+              mymodule.HIDDEN(post.fd_id, post.new_fd_name, post.pr_id) +
+                `
+            <input type='hidden' name='successmsg' value='폴더명이 변경되었습니다' />
+            `
             );
             res.send(body);
           }
@@ -68,7 +71,10 @@ router.post("/modify_file", (req, res) => {
           (err, result) => {
             body = mymodule.POST(
               "/voca/voca_main",
-              mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id)
+              mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
+                `
+          <input type='hidden' name='successmsg' value='단어장명이 변경되었습니다' />
+          `
             );
             res.send(body);
           }

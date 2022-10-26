@@ -72,6 +72,7 @@ router.post("/voca_main", function (req, res, next) {
           fd_id: post.fd_id,
           fd_name: post.fd_name,
           errmsg: post.errmsg,
+          successmsg: post.successmsg,
           pr_id: post.pr_id,
           gpr_id: gpri,
           gpr_name: gprn,

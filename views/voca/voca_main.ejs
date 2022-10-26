@@ -4,6 +4,10 @@
     <%= errmsg %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
+  <div class="alert alert-success alert-dismissible fade show dnone" id="alertid2" role="alert">
+    <%= successmsg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
   <div class="container-fluid">
     <div class="f_wrapper">
@@ -144,6 +148,9 @@
 
           if("<%= errmsg %>"){
             document.getElementById('alertid').style = "display:block"
+          }
+          if("<%= successmsg %>"){
+            document.getElementById('alertid2').style = "display:block"
           }
           if("<%= pr_id%>" == '0'){
             document.getElementById("btn_group_id").style = "display: none"

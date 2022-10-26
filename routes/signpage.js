@@ -44,4 +44,9 @@ router.get("/", function (req, res) {
     );
   }
 });
+
+router.get("/personal_policy", (req, res) => {
+  res.render("personal_policy");
+});
+
 module.exports = router;

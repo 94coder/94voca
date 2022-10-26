@@ -54,15 +54,12 @@
           />
           <label for="floatingPassword">비밀번호</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
-          로그인
-        </button>
-        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
-          비밀번호 찾기
-        </button>
-        <button class="w-100 btn btn-lg btn-primary authbtn" type="submit">
-          소셜 로그인
-        </button>
+        <input class="w-100 btn btn-lg btn-primary authbtn" type="submit" value="로그인" />
+        <input class="w-100 btn btn-lg btn-primary authbtn" type="button" data-bs-toggle="modal" data-bs-target="#findpwdmodal" value="비밀번호 찾기" />
+        <div>
+          <img src="/images/glbtn.png" class="sauthbtn" id="glbtnid"/>
+          <img src="/images/klbtn.png" class="sauthbtn" id="klbtnid"/>
+        </div>        
         <p class="mt-5 mb-3 text-muted">by 94coder</p>
       </form>
     </div>
@@ -136,6 +133,45 @@
         <p class="mt-5 mb-3 text-muted">by 94coder</p>
       </form>
     </div>
+  </div>
+</div>
+
+<!-- 모달 -->
+<div
+  class="modal fade"
+  id="findpwdmodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form action="/signpage/pwdmail" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            이메일을 입력해주세요
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input type="email" class="w100" name="email" />
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            취소
+          </button>
+          <input type="submit" value="확인" class="btn btn-primary" />
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -256,6 +292,15 @@
 
   nickArea.addEventListener("keyup", () => {
     checkAbled("n");
+  });
+
+  
+  document.getElementById('glbtnid').addEventListener("click", () => {
+    window.location.href = '/signpage/google';
+  });
+
+  document.getElementById('klbtnid').addEventListener("click", () => {
+    window.location.href = '/signpage/kakao';
   });
 
   if ("<%= errmsg %>") {

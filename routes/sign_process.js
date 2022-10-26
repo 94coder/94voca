@@ -8,6 +8,9 @@ db.connect();
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const mymodule = require("../lib/mymodule");
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
+const mailer = require("../lib/config").mailstore;
 
 const passport = require("../lib/passport")();
 
@@ -91,7 +94,10 @@ router.post("/modify_nickname", (req, res) => {
           (err, result) => {
             body = mymodule.POST(
               "/voca/voca_main",
-              mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id)
+              mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
+                `
+              <input type='hidden' name='successmsg' value='닉네임이 변경되었습니다' />
+              `
             );
             res.send(body);
           }
@@ -146,7 +152,10 @@ router.post("/modify_password", (req, res) => {
       (err, result) => {
         body = mymodule.POST(
           "/voca/voca_main",
-          mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id)
+          mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
+            `
+        <input type='hidden' name='successmsg' value='비밀번호가 변경되었습니다' />
+        `
         );
         res.send(body);
       }
@@ -174,5 +183,92 @@ router.post("/delete_member", (req, res) => {
     );
   });
 });
+
+router.post("/pwdmail", (req, res) => {
+  const post = req.body;
+  db.query(
+    `SELECT email FROM localuser WHERE email=?
+  `,
+    [post.email],
+    (err, result) => {
+      if (result[0]) {
+        const newpwd = Math.random().toString(36).slice(2);
+        bcrypt.hash(newpwd, 10, (err, hash) => {
+          db.query(
+            `
+              UPDATE localuser SET password=? WHERE email=?
+              `,
+            [hash, post.email],
+            (err, result) => {
+              var transporter = nodemailer.createTransport(
+                smtpTransport({
+                  service: "gmail",
+                  host: "smtp.gmail.com",
+                  auth: {
+                    user: mailer.mail,
+                    pass: mailer.mailpwd,
+                  },
+                })
+              );
+
+              var mailOptions = {
+                from: mailer.mail,
+                to: post.email,
+                subject: "94voca 에서의 새 비밀번호를 확인해주세요",
+                text: `
+                새로 발급된 임시비밀번호 : ' ${newpwd} '
+                로그인 후 비밀번호를 꼭 변경해주세요.
+                `,
+              };
+
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.send(`
+                  <script>
+                    alert('메일을 확인해주세요');
+                    window.location.href = '/';
+                  </script>
+                  `);
+                }
+              });
+            }
+          );
+        });
+      } else {
+        res.send(`
+        <script>
+          alert('가입되지 않은 이메일입니다');
+          window.location.href = '/';
+        </script>
+        `);
+      }
+    }
+  );
+});
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/voca",
+    failureRedirect: "/signpage",
+  })
+);
+
+router.get("/kakao", passport.authenticate("kakao"));
+
+router.get(
+  "/kakao/callback",
+  passport.authenticate("kakao", {
+    successRedirect: "/voca",
+    failureRedirect: "/signpage",
+  })
+);
 
 module.exports = router;

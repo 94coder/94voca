@@ -15,17 +15,27 @@
 
 .authinput,
 .authbtn {
-  margin: 5px;
+  margin: 5px 5px 5px 0px;
+}
+
+.sauthbtn {
+  margin: 5px 5px 5px 0px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 480px) {
   .authwrap {
-    width: 250px;
+    height: 95%;
+    width: 95%;
     margin: 0;
     border: 0px;
   }
 
   .authnotice {
     font-size: 20px;
+  }
+
+  .sauthbtn {
+    width: 80%;
   }
 }
