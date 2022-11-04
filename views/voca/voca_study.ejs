@@ -13,7 +13,7 @@
         <span class="switch-handle"></span>
       </label>
   </div>
-  <% for(i=0; i<loadlist.length; i++){ %>
+  <% for(let i=0; i<loadlist.length; i++){ %>
     <div class="loaded_data">
       <div class="data_box">
         <div class="data_type data_underline">단어or표현  
@@ -108,11 +108,11 @@
     const is_allchecked = document.getElementById('all_checkbox_id').checked;
     const classlist = document.getElementsByClassName('study_data');
     if(is_allchecked){
-      for(i=0; i<classlist.length; i++){
+      for(let i=0; i<classlist.length; i++){
         classlist[i].style = "display:inline"
       }      
     }else{
-      for(i=0; i<classlist.length; i++){
+      for(let i=0; i<classlist.length; i++){
         classlist[i].style = "display:none"
       }
     }

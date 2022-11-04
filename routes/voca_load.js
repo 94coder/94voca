@@ -4,11 +4,17 @@ const router = express.Router();
 const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
+const pollyObj = require("../lib/config").polly;
 const mymodule = require("../lib/mymodule");
+const AWS = require("aws-sdk");
+const Stream = require("stream");
+const Speaker = require("speaker");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const Polly = new AWS.Polly(pollyObj);
 
 router.post("/voca_load", (req, res) => {
   const post = req.body;
@@ -59,6 +65,34 @@ router.post("/voca_study", (req, res) => {
       });
     }
   );
+});
+
+router.post("/voca_audio", (req, res) => {
+  const post = req.body;
+  const Player = new Speaker({
+    channels: 1,
+    bitDepth: 16,
+    sampleRate: 16000,
+  });
+  const params = {
+    Text: post.body,
+    OutputFormat: "pcm",
+    VoiceId: "Matthew",
+  };
+  Polly.synthesizeSpeech(params, (err, data) => {
+    if (err) {
+      console.log(err.code);
+    } else if (data) {
+      if (data.AudioStream instanceof Buffer) {
+        // Initiate the source
+        let bufferStream = new Stream.PassThrough();
+        // convert AudioStream into a readable stream
+        bufferStream.end(data.AudioStream);
+        // Pipe into Player
+        bufferStream.pipe(Player);
+      }
+    }
+  });
 });
 
 router.post("/search", (req, res) => {

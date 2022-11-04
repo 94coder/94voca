@@ -42,7 +42,7 @@ router.post("*", (req, res, next) => {
   for (filtered of dirtyvalues) {
     values.push(sanitizeHtml(filtered, sanitizeOption));
   }
-  for (i = 0; i < keys.length; i++) {
+  for (let i = 0; i < keys.length; i++) {
     body[keys[i]] = values[i];
   }
   req.body = body;

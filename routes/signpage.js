@@ -25,7 +25,7 @@ router.get("/", function (req, res) {
       (err, checked) => {
         const checked_email = new Array();
         const checked_nickname = new Array();
-        for (var e of checked) {
+        for (let e of checked) {
           checked_email.push(e.email);
           checked_nickname.push(e.nickname);
         }

@@ -103,7 +103,7 @@
         <div class="folder_list_wrapper" id="folder_list_wrapper_id">
           
           
-          <% for(i=0; i<folder.length; i++){ %>
+          <% for(let i=0; i<folder.length; i++){ %>
               <form action="/voca/voca_main" method="post" name="redirect<%= i%>" id="redirect_id<%= i%>">
                 <input type="hidden" name="fd_id" value="<%= folder[i].folder_id %>" />
                 <input type="hidden" name="fd_name" value="<%= folder[i].folder_name %>" />
@@ -164,7 +164,7 @@
       <div class="file_wrapper text-center">
         <div class="container-fluid text-center">
           <div class="voca_file_list row row-cols-auto ">
-            <% for(i=0; i<file.length; i++){ %>
+            <% for(let i=0; i<file.length; i++){ %>
                 <div class="col">
                   <div class="voca_file text-center m-2">
                       <h5><%= file[i].file_name %></h5>

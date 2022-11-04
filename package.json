@@ -7,6 +7,7 @@
     "dev": "nodemon --watch ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.1241.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "compression": "^1.7.4",
@@ -15,11 +16,13 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
-    "ejs": "~2.6.1",
+    "ejs": "^3.1.8",
     "express": "~4.16.1",
     "express-mysql": "^0.0.1",
     "express-mysql-session": "^2.1.8",
     "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^10.1.0",
     "helmet": "^6.0.0",
     "helmet-csp": "^3.4.0",
     "http": "^0.0.1-security",
@@ -27,13 +30,15 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.8.0",
-    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemailer-smtp-transport": "^2.4.2",
     "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "sanitize-html": "^2.7.2",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "speaker": "^0.5.4",
+    "stream": "^0.0.2"
   }
 }

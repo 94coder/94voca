@@ -23,6 +23,11 @@
   cursor: pointer;
 }
 
+.logoimg {
+  width: 50%;
+  height: 50%;
+}
+
 @media only screen and (max-width: 480px) {
   .authwrap {
     height: 95%;

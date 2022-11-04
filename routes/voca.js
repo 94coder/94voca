@@ -5,12 +5,26 @@ const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
 const mymodule = require("../lib/mymodule");
+const fs = require("fs");
+const fsExtra = require("fs-extra");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
+
+// router.all("*", (req, res, next) => {
+//   fs.readdir("./public", (err, filelist) => {
+//     if (filelist.includes("theVoice")) {
+//       fsExtra.emptyDirSync("./public/theVoice");
+//       fs.rmdirSync("./public/theVoice");
+//       next();
+//     } else {
+//       next();
+//     }
+//   });
+// });
 
 router.get("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
