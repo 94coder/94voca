@@ -84,11 +84,15 @@
         isChecked('<%- i %>','exam_mean')
       })
       document.getElementById('voice<%- i %>').addEventListener('click', (e) => {
-        speak('<%= loadlist[i].voca %>', {
-          rate: 1,
-          pitch: 1,
-          lang: "en-US",
-        });
+        fetch("/voca/voca_audio", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            body: '<%= loadlist[i].voca %>',
+          }),
+        })
       })
     </script>
   <% } %>
