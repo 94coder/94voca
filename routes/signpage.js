@@ -15,7 +15,7 @@ const flash = require("connect-flash");
 app.use(flash());
 
 /* GET home page. */
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
   if (auth.IsOwner(req, res)) {
     res.redirect("/voca");
   } else {

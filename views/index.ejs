@@ -369,14 +369,14 @@
 
 <% if(modal == "delete"){ %>
 <script>
-  setTimeout(function () {
+  setTimeout(() => {
     document.getElementById("hiddenmodalbtn2").click();
     
   }, 100);
 </script>
 <% }else if(modal == "change"){ %>
   <script>
-    setTimeout(function () {
+    setTimeout(() => {
       document.getElementById("hiddenmodalbtn").click();
     }, 100);
   </script>
@@ -436,32 +436,4 @@ document.getElementById('pwdinputid').addEventListener('keyup', () => {
 document.getElementById('modpwd_canclebtn').addEventListener('click', cancelModify)
 
 document.getElementById('modpwd_canclebtn2').addEventListener('click', cancelModify)
-
-function speak(text, opt_prop) {
-      if (
-        typeof SpeechSynthesisUtterance === "undefined" ||
-        typeof window.speechSynthesis === "undefined"
-      ) {
-        alert("이 브라우저는 음성 합성을 지원하지 않습니다.");
-        return;
-      }
-
-      window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
-
-      const prop = opt_prop || {};
-
-      const speechMsg = new SpeechSynthesisUtterance();
-      speechMsg.rate = prop.rate;
-      speechMsg.pitch = prop.pitch;
-      speechMsg.lang = prop.lang
-      speechMsg.text = text;
-
-      // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
-      window.speechSynthesis.speak(speechMsg);
-    }
-
-
-
-
-
 </script>

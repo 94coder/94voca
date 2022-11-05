@@ -43,7 +43,7 @@ router.post("*", (req, res, next) => {
 });
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", (req, res, next) => {
   const user = req.user[0];
   db.query(
     `SELECT folder_id, folder_name FROM voca_folder WHERE user_id=? AND parent_id=?
@@ -59,7 +59,7 @@ router.get("/", function (req, res, next) {
   );
 });
 
-router.post("/voca_main", function (req, res, next) {
+router.post("/voca_main", (req, res, next) => {
   const user = req.user[0];
   const post = req.body;
   if (post.modal == "change") {

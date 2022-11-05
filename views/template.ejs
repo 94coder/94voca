@@ -15,10 +15,20 @@
     <link href="/icons/94voca.ico" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body>
+    <div class="d-flex justify-content-center loader">
+      <div class="spinner-border" role="status" id="loading">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div class="wrapper">
       <main><%- include(`${page}`) %></main>
     </div>
-
+    <script>
+      const finishLoad = () => {
+        document.getElementById("loading").style = "display:none";
+      };
+      window.onload = finishLoad;
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

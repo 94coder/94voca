@@ -182,11 +182,11 @@
 
   .folder_list_wrapper {
     padding-top: 50px;
-    display: none;
+    display: block;
   }
 
   #folder_list_wrapper_id.active {
-    display: block;
+    display: none;
   }
 
   .file_wrapper {

@@ -57,9 +57,9 @@
         </div>
       </div>
       <div class="data_box">
-        <div class="data_type">예문 뜻  
+        <div class="data_type data_underline">예문 뜻  
         </div>
-        <div class="data">
+        <div class="data data_underline">
           <label class="switch">
             <input type="checkbox" class="switch-input" id="exam_meanid<%- i %>">
             <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
@@ -67,6 +67,14 @@
           </label>
           <span class="study_data dnone" id="exam_mean_id<%- i %>"><%= loadlist[i].exam_mean %>
           </span>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type">따라읽기</div>
+        <div class="data">
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="shadowingBtn<%- i %>">
+            반복 <span class="badge text-bg-secondary" id="countNum<%- i %>">0</span>
+          </button><button type="button" class="btn btn-outline-secondary btn-sm ms-1" id="refreshCount<%- i %>">초기화</button>
         </div>
       </div>
     </div>
@@ -82,6 +90,14 @@
       })
       document.getElementById('exam_meanid<%- i %>').addEventListener('click', () =>{
         isChecked('<%- i %>','exam_mean')
+      })
+      document.getElementById('shadowingBtn<%- i %>').addEventListener('click', () =>{
+        let count = Number(document.getElementById('countNum<%- i %>').innerHTML)
+        count ++;
+        document.getElementById('countNum<%- i %>').innerText = count;
+      })
+      document.getElementById('refreshCount<%- i %>').addEventListener('click', () =>{
+        document.getElementById('countNum<%- i %>').innerText = 0;
       })
       // document.getElementById('voice<%- i %>').addEventListener('click', (e) => {
       //   fetch("/voca/voca_audio", {
