@@ -37,8 +37,6 @@
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "sanitize-html": "^2.7.2",
-    "shortid": "^2.2.16",
-    "speaker": "^0.5.4",
-    "stream": "^0.0.2"
+    "shortid": "^2.2.16"
   }
 }
