@@ -2,7 +2,7 @@
   <nav
     class="navbar navbar-expand-lg"
   >
-    <a class="navbar-brand brand_tab" href="/">94VOCA</a>
+    <a class="navbar-brand brand_tab" href="/" id="titleid"></a>
     <ul class="nav nav-tabs justify-content-center nav-fill">
       <li class="nav-item" id="voca_tab_click_id">
         <svg
@@ -436,4 +436,13 @@ document.getElementById('pwdinputid').addEventListener('keyup', () => {
 document.getElementById('modpwd_canclebtn').addEventListener('click', cancelModify)
 
 document.getElementById('modpwd_canclebtn2').addEventListener('click', cancelModify)
+
+document.addEventListener('DOMContentLoaded', () => {
+  new TypeIt("#titleid", {
+  strings: "94VOCA",
+  speed: 50,
+  waitUntilVisible: true,
+  cursor: false,
+  }).go();
+})  
 </script>

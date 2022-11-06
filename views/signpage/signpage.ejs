@@ -32,7 +32,8 @@
     <div id="login_tab_id">
       <form action="/signpage/login_process" method="post" name="login">
         <img src="/icons/94voca_nobackground.png" class="logoimg" alt="" />
-        <h1 class="h4 mb-3 fw-normal authnotice">로그인이 필요합니다</h1>
+        <h1 class="h4 mb-3 fw-normal authnotice" id="typeNotice"></h1>
+        
 
         <div class="form-floating authinput">
           <input
@@ -69,7 +70,7 @@
         id="signtabid"
       >
         <img src="/icons/94voca_nobackground.png" alt="" class="logoimg"/>
-        <h1 class="h4 mb-3 fw-normal authnotice">정보를 입력하세요</h1>
+        <h1 class="h4 mb-3 fw-normal authnotice" id="typeNotice2"></h1>
         <div class="form-floating authinput">
           <input
             type="email"
@@ -91,7 +92,7 @@
             placeholder="Password"
             name="password"
           />
-          <label for="floatingPassword">비밀번호</label>
+          <label for="floatingPassword">비밀번호(6~18자)</label>
           <div id="validationServerUsernameFeedback" class="invalid-feedback">
             비밀번호 형식을 확인하세요
           </div>
@@ -116,7 +117,7 @@
             placeholder="Nickname"
             name="nickname"
           />
-          <label for="floatingInput">닉네임</label>
+          <label for="floatingInput">닉네임(2~10자)</label>
           <div id="validationServerUsernameFeedback" class="invalid-feedback">
             닉네임 형식을 확인하세요
           </div>
@@ -133,6 +134,20 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new TypeIt("#typeNotice", {
+    strings: "로그인이 필요합니다",
+    speed: 50,
+    waitUntilVisible: true,
+    }).go();
+    new TypeIt("#typeNotice2", {
+    strings: "정보를 입력하세요",
+    speed: 50,
+    waitUntilVisible: true,
+    }).go();
+  })          
+</script>
 
 <!-- 모달 -->
 <div
