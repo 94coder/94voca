@@ -54,12 +54,10 @@
           />
           <label for="floatingPassword">비밀번호</label>
         </div>
-        <input class="w-100 btn btn-lg btn-primary authbtn" type="submit" value="로그인" />
-        <input class="w-100 btn btn-lg btn-primary authbtn" type="button" data-bs-toggle="modal" data-bs-target="#findpwdmodal" value="비밀번호 찾기" />
-        <div>
-          <img src="/images/glbtn.png" class="sauthbtn" id="glbtnid"/>
-          <img src="/images/klbtn.png" class="sauthbtn" id="klbtnid"/>
-        </div>        
+        <input class="w-100 btn btn-primary authbtn" type="submit" value="로그인" />
+        <input class="w-100 btn btn-primary authbtn" type="button" data-bs-toggle="modal" data-bs-target="#findpwdmodal" value="비밀번호 찾기" />
+        <input class="w-100 btn btn-outline-primary authbtn sauthbtn" id="glbtnid" type="button" value="구글 계정으로 로그인" />
+        <input class="w-100 btn btn-outline-warning authbtn sauthbtn" id="klbtnid" type="button" value="카카오 계정으로 로그인" />     
         <p class="mt-5 mb-3 text-muted">by 94coder</p>
       </form>
     </div>
@@ -125,7 +123,7 @@
         </div>
         <input
           type="button"
-          class="w-100 btn btn-lg btn-primary"
+          class="w-100 btn btn-primary"
           id="sbm_Btn"
           disabled
           value="가입하기"
