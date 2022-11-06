@@ -35,6 +35,10 @@ main {
   width: 100%;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 #loading {
   position: fixed;
   z-index: 1;

@@ -62,9 +62,23 @@
   margin-left: 20px;
 }
 
+.dropbtn:hover {
+  cursor: pointer;
+}
+
 .file_btn {
   margin: 5px;
   min-width: 80px;
+}
+
+.filebtnRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.fileTitle {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
 }
 
 .fold {
@@ -109,6 +123,10 @@
 .data {
   padding: 5px;
   word-break: break-all;
+}
+
+.datanum {
+  font-size: 13px;
 }
 
 .load_page_btn_area,
