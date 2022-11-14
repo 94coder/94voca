@@ -59,6 +59,10 @@ router.get("/", (req, res, next) => {
   );
 });
 
+router.get("/voca_main", (req, res) => {
+  res.redirect("/");
+});
+
 router.post("/voca_main", (req, res, next) => {
   const user = req.user[0];
   const post = req.body;
