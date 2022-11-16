@@ -59,6 +59,17 @@ router.get("/", (req, res, next) => {
   );
 });
 
+router.get("/fetch", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT * FROM localuser WHERE user_id=?`,
+    [user.user_id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+
 router.get("/voca_main", (req, res) => {
   res.redirect("/");
 });
