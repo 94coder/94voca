@@ -112,9 +112,6 @@ router.post("/create_data_page", (req, res) => {
         pr_id: post.pr_id,
         fl_id: post.fl_id,
         errmsg: post.errmsg,
-        email: result[0].email,
-        nickname: result[0].nickname,
-        date: result[0].registered,
       });
     }
   );

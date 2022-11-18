@@ -59,17 +59,6 @@ router.get("/", (req, res, next) => {
   );
 });
 
-router.get("/fetch", (req, res) => {
-  const user = req.user[0];
-  db.query(
-    `SELECT * FROM localuser WHERE user_id=?`,
-    [user.user_id],
-    (err, result) => {
-      res.send(result);
-    }
-  );
-});
-
 router.get("/voca_main", (req, res) => {
   res.redirect("/");
 });
@@ -84,13 +73,25 @@ router.post("/voca_main", (req, res, next) => {
   } else {
     modal = "";
   }
+  if (post.toast == 0) {
+    toast = 0;
+  } else if (post.toast == 1) {
+    toast = 1;
+  } else if (post.toast == 2) {
+    toast = 2;
+  } else if (post.toast == 3) {
+    toast = 3;
+  } else if (post.toast == null) {
+    toast = 4;
+  }
+
   db.query(
     `SELECT * FROM voca_folder WHERE parent_id=?;
     SELECT * FROM voca_file WHERE folder_id=?;
     SELECT * FROM voca_folder WHERE folder_id=?;
-    SELECT * FROM localuser WHERE user_id=?
+    SELECT * FROM voca_folder WHERE folder_id=?
   `,
-    [post.fd_id, post.fd_id, post.pr_id, user.user_id],
+    [post.fd_id, post.fd_id, post.pr_id, post.fd_id],
     (err, result) => {
       const objRender = (result, post, modal, gpri, gprn) => {
         return {
@@ -105,10 +106,10 @@ router.post("/voca_main", (req, res, next) => {
           pr_id: post.pr_id,
           gpr_id: gpri,
           gpr_name: gprn,
-          email: result[3][0].email,
-          nickname: result[3][0].nickname,
-          date: result[3][0].registered,
           modal: modal,
+          toast: toast,
+          fd_fav: result[3][0].favorites,
+          fd_sh: result[3][0].shared,
         };
       };
 
@@ -126,6 +127,31 @@ router.post("/voca_main", (req, res, next) => {
       } else {
         res.render("template", objRender(result, post, modal, "", ""));
       }
+    }
+  );
+});
+
+router.get("/load_fav", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT * FROM voca_file WHERE user_id=? AND favorites=1;
+    SELECT * FROM voca_folder WHERE user_id=? AND favorites=1
+  `,
+    [user.user_id, user.user_id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+
+router.get("/get_user", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT * FROM localuser WHERE user_id=?
+  `,
+    [user.user_id],
+    (err, result) => {
+      res.send(result[0]);
     }
   );
 });

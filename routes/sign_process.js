@@ -69,45 +69,47 @@ router.get("/logout", (req, res) => {
   });
 });
 
-router.post("/modify_nickname", (req, res) => {
+router.post("/modify_nick_check", (req, res) => {
   const post = req.body;
   const user = req.user[0];
   db.query(
-    `SELECT nickname from localuser WHERE user_id=?
+    `SELECT nickname FROM localuser
   `,
-    [user.user_id],
     (err, result) => {
-      if (result.find((x) => x.nickname === post.nickname)) {
-        body = mymodule.POST(
-          "/voca/voca_main",
-          mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-            `
-      <input type='hidden' name='errmsg' value='이미 존재하는 닉네임입니다' />
-      `
-        );
-        res.send(body);
+      const checked = result.find((nickname) => {
+        return nickname.nickname === post.nickname;
+      });
+
+      if (checked) {
+        res.send("1");
       } else {
-        db.query(
-          `UPDATE localuser SET nickname=? WHERE user_id=?
-      `,
-          [post.nickname, user.user_id],
-          (err, result) => {
-            body = mymodule.POST(
-              "/voca/voca_main",
-              mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-                `
-              <input type='hidden' name='successmsg' value='닉네임이 변경되었습니다' />
-              `
-            );
-            res.send(body);
-          }
-        );
+        res.send("0");
       }
     }
   );
 });
 
-router.post("/modify_password_check", (req, res) => {
+router.post("/modify_nickname", (req, res) => {
+  const post = req.body;
+  const user = req.user[0];
+  db.query(
+    `UPDATE localuser SET nickname=? WHERE user_id=?
+  `,
+    [post.nickname, user.user_id],
+    (err, result) => {
+      body = mymodule.POST(
+        "/voca/voca_main",
+        mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
+          `
+        <input type='hidden' name='successmsg' value='닉네임이 변경되었습니다' />
+        `
+      );
+      res.send(body);
+    }
+  );
+});
+
+router.post("/password_check", (req, res) => {
   const post = req.body;
   const user = req.user[0];
   db.query(
@@ -117,23 +119,9 @@ router.post("/modify_password_check", (req, res) => {
     (err, result) => {
       bcrypt.compare(post.password, result[0].password, (err, results) => {
         if (results) {
-          body = mymodule.POST(
-            "/voca/voca_main",
-            mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-              `
-        <input type='hidden' name='modal' value='${post.modal}' />
-        `
-          );
-          res.send(body);
+          res.send("1");
         } else {
-          body = mymodule.POST(
-            "/voca/voca_main",
-            mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-              `
-        <input type='hidden' name='errmsg' value='비밀번호를 확인하세요' />
-        `
-          );
-          res.send(body);
+          res.send("0");
         }
       });
     }

@@ -35,6 +35,14 @@
   color: white;
 }
 
+.nav_star {
+  width: 20px;
+}
+
+.more_drop {
+  padding: 10px;
+}
+
 @media only screen and (max-width: 480px) {
   .navbar {
     position: fixed;

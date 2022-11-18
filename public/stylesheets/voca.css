@@ -13,6 +13,16 @@
   min-height: 85vh;
 }
 
+.f_wrapper2 {
+  display: grid;
+  grid-template-columns: 2.5fr 7.5fr;
+  padding: 20px 0;
+}
+
+.offcanvas_top {
+  min-height: 40vh;
+}
+
 .btn_row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -44,6 +54,10 @@
 
 .folder {
   padding: 10px;
+  border: none;
+  background-color: white;
+  width: 100%;
+  text-align: left;
 }
 
 .folder:hover {
@@ -55,11 +69,32 @@
   padding: 10px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  min-width: 200px;
+  min-width: 250px;
+}
+
+.fav_voca_file {
+  padding: 10px 5px 5px 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 .voca_file_list {
   margin-left: 20px;
+}
+
+.icon_btn {
+  border: none;
+  background-color: white;
+}
+
+.icon {
+  margin-bottom: 10px;
+  width: 20px;
+}
+
+.icon2 {
+  width: 20px;
+  margin-bottom: 5px;
 }
 
 .dropbtn:hover {
@@ -78,7 +113,17 @@
 
 .fileTitle {
   display: grid;
-  grid-template-columns: 9fr 1fr;
+  grid-template-columns: 0.5fr 5fr 0.5fr;
+}
+
+.share_info {
+  color: gray;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.share_info_icon {
+  margin: 0 5px 5px 0;
 }
 
 .fold {
@@ -157,6 +202,10 @@
   grid-template-columns: 2fr 7fr;
 }
 
+.modal-footer {
+  border: none;
+}
+
 #settModal {
   min-width: 90%;
 }
@@ -208,7 +257,11 @@
   }
 
   .file_wrapper {
-    margin-top: 70px;
+    margin-top: 50px;
+  }
+
+  .voca_file_list {
+    margin-left: 5px;
   }
 
   .data_box,

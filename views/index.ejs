@@ -1,8 +1,6 @@
 <div class="logonpage">
-  <nav
-    class="navbar navbar-expand-lg"
-  >
-    <a class="navbar-brand brand_tab" href="/" id="titleid"></a>
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand brand_tab" href="/" id="titleid">94VOCA</a>
     <ul class="nav nav-tabs justify-content-center nav-fill">
       <li class="nav-item" id="voca_tab_click_id">
         <svg
@@ -15,23 +13,6 @@
         >
           <path
             d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"
-          />
-        </svg>
-      </li>
-      <li class="nav-item" data-bs-toggle="modal" data-bs-target="#settModal">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-gear"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
-          />
-          <path
-            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
           />
         </svg>
       </li>
@@ -49,27 +30,110 @@
           />
         </svg>
       </li>
+      <li
+        class="dropdown nav-item"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        id="drop_menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-list"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+          />
+        </svg>
+        <ul class="dropdown-menu dropdown-menu-dark">
+          <li>
+            <a
+              class="dropdown-item more_drop"
+              data-bs-toggle="modal"
+              data-bs-target="#settModal"
+              id="settmodalbtn"
+              >설정</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a
+              class="dropdown-item more_drop"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasTop"
+              aria-controls="offcanvasTop"
+              id="fav_load_btn"
+              >즐겨찾기</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item more_drop" id="goShared">공유마당</a></li>
+        </ul>
+      </li>
+      <script>
+        if (matchMedia("screen and (max-width: 480px)").matches) {
+          document
+            .getElementById("drop_menu")
+            .classList.replace("dropdown", "dropup");
+        }
+        window.onresize = function () {
+          document.location.reload();
+        };
+        document
+          .getElementById("goShared")
+          .addEventListener(
+            "click",
+            () => (location.href = "/voca/shared_page")
+          );
+      </script>
     </ul>
   </nav>
   <div class="main"><%-include(`${content}`) %></div>
 </div>
 
 <!-- 모달 -->
+
+<div
+  class="offcanvas offcanvas-top offcanvas_top"
+  tabindex="-1"
+  id="offcanvasTop"
+  data-bs-scroll="true"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasTopLabel">즐겨찾기</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      id="wowzz"
+    ></button>
+  </div>
+  <div class="offcanvas-body container-fluid">
+    <div class="f_wrapper2">
+      <div class="folder_wrapper">
+        <div id="fav_fd_area"></div>
+      </div>
+      <div class="text-center">
+        <div class="container-fluid text-center">
+          <div class="voca_file_list row row-cols-auto" id="fav_fl_area"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div>
-  <div
-    class="modal fade"
-    id="searchmodal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="searchmodal" tabindex="-1" aria-hidden="true">
     <form action="/voca/search" method="post">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              검색할 단어or표현을 입력해주세요
-            </h1>
+            <h1 class="modal-title fs-5">검색할 단어or표현을 입력해주세요</h1>
             <button
               type="button"
               class="btn-close"
@@ -79,13 +143,15 @@
           </div>
           <div class="modal-body">
             <form>
-              <input type="text" name="voca" id="searchid"  class="form-control is-val w100" minlength="1"  maxlength="101" />
-              <div class="invalid-feedback">
-                1~100자 사이로 입력하세요
-              </div>
-              <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+              <input
+                type="text"
+                name="voca"
+                id="searchid"
+                class="form-control is-val w100"
+                minlength="1"
+                maxlength="101"
+              />
+              <div class="invalid-feedback">1~100자 사이로 입력하세요</div>
             </form>
           </div>
           <div class="modal-footer">
@@ -96,7 +162,14 @@
             >
               Close
             </button>
-            <button type="submit" class="btn btn-primary" id="searchbtn" disabled>검색</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="searchbtn"
+              disabled
+            >
+              검색
+            </button>
           </div>
         </div>
       </div>
@@ -104,17 +177,11 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="settModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="settModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="card border-secondary mb-3 sett_card modal-content">
       <div class="modal-header">
-        <h3 class="modal-title fs-5" id="exampleModalLabel">회원 정보</h3>
+        <h3 class="modal-title fs-5">회원 정보</h3>
         <button
           type="button"
           class="btn-close"
@@ -123,13 +190,13 @@
         ></button>
       </div>
       <div class="card-body text-secondary">
-        <h7 class="card-title sett_card_content">이메일 : <%= email %></h7>
-        <h7 class="card-title sett_card_content"> 닉네임 : <%= nickname %> </h7>
-        <h7 class="card-title sett_card_content">가입날짜 : <%= date %></h7>
+        <h7 class="card-title sett_card_content" id="user_email_area"></h7>
+        <h7 class="card-title sett_card_content" id="user_nick_area"></h7>
+        <h7 class="card-title sett_card_content" id="user_regi_area"></h7>
         <button
           type="button"
           class="btn btn-outline-secondary sett_btn"
-          id = "logout_btn_id"
+          id="logout_btn_id"
         >
           로그아웃
         </button>
@@ -149,8 +216,12 @@
         >
           비밀번호 변경
         </button>
-        <button type="button" class="btn btn-outline-secondary sett_btn" data-bs-toggle="modal"
-        data-bs-target="#deleteauthmodal">
+        <button
+          type="button"
+          class="btn btn-outline-secondary sett_btn"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteauthmodal"
+        >
           회원탈퇴
         </button>
       </div>
@@ -158,20 +229,12 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="settnickmodal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="settnickmodal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/signpage/modify_nickname" method="post">
+    <form action="/signpage/modify_nickname" method="post" id="mod_nick_form">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            변경할 닉네임을 입력하세요
-          </h1>
+          <h1 class="modal-title fs-5">변경할 닉네임을 입력하세요</h1>
           <button
             type="button"
             class="btn-close"
@@ -181,11 +244,13 @@
         </div>
         <div class="modal-body">
           <input
+            id="nickinputid"
             type="text"
-            placeholder="<%= nickname %>"
-            name="nickname" id="nickinputid"  class="form-control is-val w100"  maxlength="11"
+            name="nickname"
+            class="form-control is-val w100"
+            maxlength="11"
           />
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" id="mod_nick_msg">
             닉네임 형식을 확인하세요(2~10글자의 영어,숫자,한글)
           </div>
           <input type="hidden" name="fd_name" value="<%= fd_name %>" />
@@ -200,27 +265,25 @@
           >
             취소
           </button>
-          <input type="submit" value="변경하기" class="btn btn-primary" id="nickinputbtn" disabled />
+          <input
+            type="button"
+            value="변경하기"
+            class="btn btn-primary"
+            id="nickinputbtn"
+            disabled
+          />
         </div>
       </div>
     </form>
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="settpwdmodal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="settpwdmodal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/signpage/modify_password_check" method="post">
+    <form action="/signpage/modify_password" method="post" id="mod_pwd_form">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            현재 비밀번호를 입력하세요
-          </h1>
+          <h1 class="modal-title fs-5">비밀번호 변경</h1>
           <button
             type="button"
             class="btn-close"
@@ -229,11 +292,41 @@
           ></button>
         </div>
         <div class="modal-body">
-          <input type="password" class="w100" name="password" minlength="6" maxlength="19" />
-          <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-          <input type="hidden" name="modal" value="change" />
+          <ul class="p-2">
+            <li class="row mb-3">
+              <div class="col-3 p-0 mt-1">현재 비밀번호</div>
+              <div class="col-9 p-0">
+                <input
+                  type="password"
+                  class="w-100 form-control is-val"
+                  id="now_pwd_id"
+                  minlength="6"
+                  maxlength="19"
+                />
+                <div class="invalid-feedback">비밀번호를 확인하세요</div>
+                <input type="hidden" name="fd_name" value="<%= fd_name %>" />
+                <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+                <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+                <input type="hidden" name="modal" value="change" />
+              </div>
+            </li>
+            <li class="row">
+              <div class="col-3 p-0 mt-1">새 비밀번호</div>
+              <div class="col-9 p-0">
+                <input
+                  type="password"
+                  id="pwdinputid"
+                  class="w-100 form-control is-val"
+                  name="password"
+                  minlength="6"
+                  maxlength="19"
+                />
+                <div class="invalid-feedback">
+                  비밀번호 형식을 확인하세요(6~18자 영문,숫자 조합)
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
         <div class="modal-footer">
           <button
@@ -243,100 +336,45 @@
           >
             취소
           </button>
-          <input type="submit" value="확인" class="btn btn-primary" />
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary"
+            id="mod_pwd_btn"
+          />
         </div>
       </div>
     </form>
   </div>
 </div>
 
-<button
-  type="button"
-  class="btn btn-primary dnone"
-  data-bs-toggle="modal"
-  data-bs-target="#ChangePasswordModal"
-  id="hiddenmodalbtn"
-></button>
-<button
-  type="button"
-  class="btn btn-primary dnone"
-  data-bs-toggle="modal"
-  data-bs-target="#Godelmodal"
-  id="hiddenmodalbtn2"
-></button>
-
-<div
-  class="modal fade"
-  id="ChangePasswordModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="deleteauthmodal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/signpage/modify_password" method="post">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            변경할 비밀번호를 입력하세요
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            aria-label="Close"
-            id="modpwd_canclebtn2"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <input type="password"  name="password" id="pwdinputid" class="form-control is-val w100" minlength="6" maxlength="19" />
-          <div class="invalid-feedback">
-            비밀번호 형식을 확인하세요(6~18자 영문,숫자 조합)
-          </div>
-          <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            id="modpwd_canclebtn"
-          >
-            취소
-          </button>
-          <input type="submit" value="변경하기" class="btn btn-primary" id="pwdinputbtn" disabled />
-        </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="del_modal_title">현재 비밀번호를 입력하세요</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-    </form>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  id="deleteauthmodal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <form action="/signpage/modify_password_check" method="post">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            현재 비밀번호를 입력하세요
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+      <div class="modal-body">
+        <div id="delete_modal_first">
+          <input
+            type="password"
+            class="w100 is-val form-control"
+            name="password"
+            minlength="6"
+            maxlength="19"
+            id="del_pwd_id"
+          />
+          <div class="invalid-feedback">비밀번호를 확인하세요</div>
         </div>
-        <div class="modal-body">
-          <input type="password" class="w100" name="password" minlength="6" maxlength="19" />
-          <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-          <input type="hidden" name="modal" value="delete" />
+        <div id="delete_modal_second" class="dnone">
+          정말 계정을 삭제하시겠습니까?
+        </div>
         <div class="modal-footer">
           <button
             type="button"
@@ -345,104 +383,161 @@
           >
             취소
           </button>
-          <input type="submit" value="확인" class="btn btn-primary" />
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary"
+            id="delete_check_btn"
+          />
+          <form action="/signpage/delete_member" method="post">
+            <input
+              type="submit"
+              value="탈퇴"
+              class="btn btn-primary dnone"
+              id="delete_form_btn"
+            />
+          </form>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
-
-
-
-
-<form id="goHomeid" method="post" action="/voca/voca_main">
-  <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-  <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-  <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-</form>
-<script>
-  const cancelModify = () => {
-    document.getElementById("goHomeid").submit();
-  };
-</script>
-
-<% if(modal == "delete"){ %>
-<script>
-  setTimeout(() => {
-    document.getElementById("hiddenmodalbtn2").click();
-    
-  }, 100);
-</script>
-<% }else if(modal == "change"){ %>
-  <script>
-    setTimeout(() => {
-      document.getElementById("hiddenmodalbtn").click();
-    }, 100);
-  </script>
-<% } %>
-
-<script>
-  const isValid = (what,where,length) =>{
-    switch(what){
-      case 'text' : 
-        if(document.getElementById(where+'id').value.length > length || document.getElementById(where+'id').value.length == 0){
-        document.getElementById(where+'id').classList.replace("is-val", "is-invalid");
-        document.getElementById(where+'btn').disabled = true;
-        }else{
-          document.getElementById(where+'id').classList.replace("is-invalid", "is-val");
-          document.getElementById(where+'btn').disabled = false;
+    <script>
+      const isValid = (what, where, length) => {
+    switch (what) {
+      case "text":
+        if (
+          document.getElementById(where + "id").value.length > length ||
+          document.getElementById(where + "id").value.length == 0
+        ) {
+          document
+            .getElementById(where + "id")
+            .classList.replace("is-val", "is-invalid");
+          document.getElementById(where + "btn").disabled = true;
+        } else {
+          document
+            .getElementById(where + "id")
+            .classList.replace("is-invalid", "is-val");
+          document.getElementById(where + "btn").disabled = false;
         }
-        break
-    
-      case 'nick' : 
-      case 'pwd' :
-        if(what == 'nick'){
-          formtesting = RegExp(/^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,10}$/);
-        }else if(what == 'pwd'){
+        break;
+
+      case "nick":
+      case "pwd":
+        if (what == "nick") {
+          formtesting = RegExp(
+            /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,10}$/
+          );
+        } else if (what == "pwd") {
           formtesting = RegExp(/^[a-zA-Z0-9]{6,18}$/);
         }
-        if(!formtesting.test(document.getElementById(what+'inputid').value)){
-          document.getElementById(what+'inputid').classList.replace("is-val", "is-invalid");
-          document.getElementById(what+'inputbtn').disabled = true;
-        }else{
-          document.getElementById(what+'inputid').classList.replace("is-invalid", "is-val");
-          document.getElementById(what+'inputbtn').disabled = false;
+        if (
+          !formtesting.test(document.getElementById(what + "inputid").value)
+        ) {
+          document
+            .getElementById(what + "inputid")
+            .classList.replace("is-val", "is-invalid");
+          document.getElementById(what + "inputbtn").disabled = true;
+        } else {
+          document
+            .getElementById(what + "inputid")
+            .classList.replace("is-invalid", "is-val");
+          document.getElementById(what + "inputbtn").disabled = false;
         }
-        break
-  }
-}
+        break;
+    }
+  };
+  
+      document.getElementById("logout_btn_id").addEventListener("click", () => {
+        location.href = "/signpage/logout";
+      });
 
-document.getElementById('voca_tab_click_id').addEventListener('click', () => {
-  location.href='/voca'
-})
+      document.getElementById("searchid").addEventListener("keyup", () => {
+        isValid("text", "search", 100);
+      });
 
-document.getElementById('logout_btn_id').addEventListener('click', () => {
-  location.href='/signpage/logout'
-})
+      document.getElementById("nickinputid").addEventListener("keyup", () => {
+        isValid("nick");
+      });
 
-document.getElementById('searchid').addEventListener('keyup', () => {
-  isValid('text','search',100)
-})
+      document.getElementById("pwdinputid").addEventListener("keyup", () => {
+        isValid("pwd");
+      });
 
-document.getElementById('nickinputid').addEventListener('keyup', () => {
-  isValid('nick')
-})
+      document.getElementById("mod_pwd_btn").addEventListener("click", () => {
+        fetch("/signpage/password_check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: document.getElementById("now_pwd_id").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((checked) => {
+            if (checked == 0) {
+              document
+                .getElementById("now_pwd_id")
+                .classList.replace("is-val", "is-invalid");
+            } else {
+              document.getElementById("mod_pwd_form").submit();
+            }
+          });
+      });
 
-document.getElementById('pwdinputid').addEventListener('keyup', () => {
-  isValid('pwd')
-})
+      document.getElementById("nickinputbtn").addEventListener("click", () => {
+        fetch("/signpage/modify_nick_check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nickname: document.getElementById("nickinputid").value,
+          }),
+        })
+          .then((res) => res.json())
+          .then((checked) => {
+            if (checked == 0) {
+              document.getElementById("mod_nick_form").submit();
+            } else {
+              document.getElementById("mod_nick_msg").innerText =
+                "이미 존재하는 닉네임 입니다";
+              document
+                .getElementById("nickinputid")
+                .classList.replace("is-val", "is-invalid");
+            }
+          });
+      });
 
-document.getElementById('modpwd_canclebtn').addEventListener('click', cancelModify)
-
-document.getElementById('modpwd_canclebtn2').addEventListener('click', cancelModify)
-
-document.addEventListener('DOMContentLoaded', () => {
-  new TypeIt("#titleid", {
-  strings: "94VOCA",
-  speed: 50,
-  waitUntilVisible: true,
-  cursor: false,
-  }).go();
-})  
-</script>
+      document
+        .getElementById("delete_check_btn")
+        .addEventListener("click", () => {
+          fetch("/signpage/password_check", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              password: document.getElementById("del_pwd_id").value,
+            }),
+          })
+            .then((res) => res.json())
+            .then((checked) => {
+              if (checked == 0) {
+                document
+                  .getElementById("del_pwd_id")
+                  .classList.replace("is-val", "is-invalid");
+              } else {
+                document.getElementById("delete_modal_first").classList.add("dnone")
+                document.getElementById("delete_modal_second").classList.remove("dnone")
+                document.getElementById("delete_check_btn").classList.add("dnone")
+                document.getElementById("delete_form_btn").classList.remove("dnone")
+                document.getElementById("del_modal_title").innerText = "회원탈퇴"
+              }
+            });
+        });
+    </script>
+  </div>
+</div>

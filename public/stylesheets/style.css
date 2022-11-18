@@ -39,6 +39,10 @@ main {
   cursor: pointer;
 }
 
+li {
+  list-style: none;
+}
+
 #loading {
   position: fixed;
   z-index: 1;

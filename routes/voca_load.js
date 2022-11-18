@@ -33,9 +33,6 @@ router.post("/voca_load", (req, res) => {
         fd_name: post.fd_name,
         pr_id: post.pr_id,
         errmsg: post.errmsg,
-        email: result[1][0].email,
-        nickname: result[1][0].nickname,
-        date: result[1][0].registered,
       });
     }
   );
@@ -58,9 +55,6 @@ router.post("/voca_study", (req, res) => {
         fd_name: post.fd_name,
         pr_id: post.pr_id,
         loadlist: result[0],
-        email: result[1][0].email,
-        nickname: result[1][0].nickname,
-        date: result[1][0].registered,
       });
     }
   );
@@ -122,11 +116,25 @@ router.post("/search", (req, res) => {
           fd_name: post.fd_name,
           pr_id: post.pr_id,
           loadlist: result[0],
-          email: result[1][0].email,
-          nickname: result[1][0].nickname,
-          date: result[1][0].registered,
         });
       }
+    }
+  );
+});
+
+router.get("/shared_page", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT * FROM voca_folder WHERE shared=1;
+  SELECT * FROM voca_file WHERE shared=1;
+  `,
+    (err, result) => {
+      res.render("template", {
+        page: "./index",
+        content: "./voca/voca_shared",
+        folder: result[0],
+        file: result[1],
+      });
     }
   );
 });
