@@ -57,23 +57,12 @@
         </div>
         <input class="w-100 btn btn-primary authbtn" type="submit" value="로그인" />
         <input class="w-100 btn btn-primary authbtn" type="button" data-bs-toggle="modal" data-bs-target="#findpwdmodal" value="비밀번호 찾기" />
-        <div id="g_id_onload"
-          data-client_id="834980431370-vftl2ughcjv09l39ui5a695bm3bprn50.apps.googleusercontent.com"
-          data-login_uri="https://94voca.com/signpage/google/callback"
-          data-auto_prompt="false"
-          class="dnone" disabled>
-        </div>
-        <div class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-shape="rectangular"
-            data-logo_alignment="left"
-            id="glbtnid">
-        </div>
+        <button class="w-100 btn authbtn sauthbtn btn-outline-dark border border-opacity-75" id="glbtnid" type="button">
+          <img src="/icons/google.png" id="google_logo" />
+            Google 계정으로 로그인
+        </button>
         <button class="w-100 btn authbtn sauthbtn" id="klbtnid" type="button">
-          <img src="/icons/kakao.png" class="social_logo float-start mt-1" />
+          <img src="/icons/kakao.png"  id="kakao_logo" />
           카카오로 시작하기
         </button>
         <p class="mt-5 mb-3 text-muted">by 94coder</p>
