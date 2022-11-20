@@ -68,7 +68,8 @@
             data-theme="outline"
             data-text="sign_in_with"
             data-shape="rectangular"
-            data-logo_alignment="left">
+            data-logo_alignment="left"
+            id="glbtnid">
         </div>
         <button class="w-100 btn authbtn sauthbtn" id="klbtnid" type="button">
           <img src="/icons/kakao.png" class="social_logo float-start mt-1" />
@@ -356,9 +357,9 @@
   });
 
   
-  // document.getElementById('glbtnid').addEventListener("click", () => {
-  //   window.location.href = '/signpage/google';
-  // });
+  document.getElementById('glbtnid').addEventListener("click", () => {
+    window.location.href = '/signpage/google';
+  });
 
   document.getElementById('klbtnid').addEventListener("click", () => {
     window.location.href = '/signpage/kakao';
