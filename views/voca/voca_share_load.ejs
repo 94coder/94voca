@@ -1,0 +1,47 @@
+<div class="voca_main">
+  <div class="load_page_btn_area">
+    <input type="button" value="홈으로" class="btn btn-outline-dark" onclick="location.href='/voca'">
+    <form action="/voca/voca_study" method="post" class="din">
+      <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+      <input type="submit" value="공부하기" class="btn btn-outline-dark">
+    </form>
+  </div>
+  <% for(let i=0; i<loadlist.length; i++){ %>
+    <div class="loaded_data">
+      <span class="datanum"><%- i+1 %></span>
+      <input type="hidden" value="<%= loadlist[i].data_id %>" />
+      <div class="data_box">
+        <div class="data_type data_underline">
+          단어or표현
+        </div>
+        <div class="data data_underline">
+          <b><%= loadlist[i].voca %></b>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type data_underline">
+          단어 뜻  
+        </div>
+        <div class="data data_underline">
+          <%= loadlist[i].voca_mean %>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type data_underline">
+          예문   
+        </div>
+        <div class="data data_underline">
+          <%= loadlist[i].exam %>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="data_type">
+          예문 뜻  
+        </div>
+        <div class="data">
+          <%= loadlist[i].exam_mean %>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>

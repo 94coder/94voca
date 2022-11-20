@@ -58,6 +58,9 @@
   background-color: white;
   width: 100%;
   text-align: left;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 5px 0px;
 }
 
 .folder:hover {
@@ -66,10 +69,50 @@
 }
 
 .voca_file {
-  padding: 10px;
+  padding: 10px 3px 0px 3px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  min-width: 250px;
+  width: 260px;
+  height: 120px;
+}
+
+.sha_voca_file {
+  padding: 10px 3px 0px 3px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width: 260px;
+  height: 160px;
+}
+
+.fav_voca_folder {
+  padding: 10px 5px 5px 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.fav_voca_folder:hover {
+  border: 1px solid black;
+}
+
+.sha_voca_folder {
+  padding: 10px 5px 5px 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width: 250px;
+  height: 150px;
+}
+
+.sha_voca_folder:hover {
+  border: 1px solid black;
+}
+
+.sh_fd_user {
+  margin: 20px;
+}
+
+.sh_fl_user {
+  margin: 8px;
 }
 
 .fav_voca_file {
@@ -78,23 +121,28 @@
   border-radius: 5px;
 }
 
-.voca_file_list {
-  margin-left: 20px;
-}
-
 .icon_btn {
   border: none;
   background-color: white;
 }
 
 .icon {
-  margin-bottom: 10px;
   width: 20px;
+  margin-bottom: 8px;
 }
 
 .icon2 {
   width: 20px;
   margin-bottom: 5px;
+}
+
+.icon3 {
+  width: 20px;
+  margin-bottom: 3px;
+}
+
+.dot3 {
+  margin-bottom: 10px;
 }
 
 .dropbtn:hover {
@@ -112,8 +160,16 @@
 }
 
 .fileTitle {
+  height: 50px;
   display: grid;
   grid-template-columns: 0.5fr 5fr 0.5fr;
+  align-items: center;
+}
+
+.sha_fileTitle {
+  height: 50px;
+  display: grid;
+  align-items: center;
 }
 
 .share_info {
@@ -230,6 +286,10 @@
   margin-top: 5px;
 }
 
+.sha_tab {
+  margin-left: 30px;
+}
+
 @media only screen and (max-width: 480px) {
   .voca_main {
     padding-bottom: 50px;
@@ -258,10 +318,6 @@
 
   .file_wrapper {
     margin-top: 50px;
-  }
-
-  .voca_file_list {
-    margin-left: 5px;
   }
 
   .data_box,

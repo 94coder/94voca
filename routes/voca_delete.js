@@ -13,19 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 router.post("/delete_data", (req, res) => {
   const post = req.body;
   db.query(
-    `DELETE FROM voca_data WHERE file_id=? AND voca=?
+    `DELETE FROM voca_data WHERE data_id=?
   `,
-    [post.fl_id, post.voca],
+    [post.dt_id],
     (err, result) => {
-      body = mymodule.POST(
-        "/voca/voca_load",
-        mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-          `
-    <input type='hidden' name='fl_id' value='${post.fl_id}' />
-    <input type='hidden' name='errmsg' value='' />
-    `
-      );
-      res.send(body);
+      res.send("0");
     }
   );
 });
@@ -39,14 +31,7 @@ router.post("/delete_file", (req, res) => {
   `,
     [post.fl_id, post.fl_id],
     (err, result) => {
-      body = mymodule.POST(
-        "/voca/voca_main",
-        mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-          `
-    <input type='hidden' name='errmsg' value='' />
-    `
-      );
-      res.send(body);
+      res.send("0");
     }
   );
 });
@@ -59,16 +44,9 @@ router.post("/delete_folder", (req, res) => {
   DELETE FROM voca_file WHERE folder_id=?;
   DELETE FROM voca_folder WHERE folder_id=?
   `,
-    [post.pfd_id, post.pfd_id, post.pfd_id],
+    [post.fd_id, post.fd_id, post.fd_id],
     (err, result) => {
-      body = mymodule.POST(
-        "/voca/voca_main",
-        mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-          `
-    <input type='hidden' name='errmsg' value='' />
-    `
-      );
-      res.send(body);
+      res.send("0");
     }
   );
 });

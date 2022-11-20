@@ -97,14 +97,7 @@ router.post("/modify_nickname", (req, res) => {
   `,
     [post.nickname, user.user_id],
     (err, result) => {
-      body = mymodule.POST(
-        "/voca/voca_main",
-        mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-          `
-        <input type='hidden' name='successmsg' value='닉네임이 변경되었습니다' />
-        `
-      );
-      res.send(body);
+      res.send("0");
     }
   );
 });
@@ -138,14 +131,7 @@ router.post("/modify_password", (req, res) => {
         `,
       [hash, user.user_id],
       (err, result) => {
-        body = mymodule.POST(
-          "/voca/voca_main",
-          mymodule.HIDDEN(post.fd_id, post.fd_name, post.pr_id) +
-            `
-        <input type='hidden' name='successmsg' value='비밀번호가 변경되었습니다' />
-        `
-        );
-        res.send(body);
+        res.send("0");
       }
     );
   });

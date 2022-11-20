@@ -71,27 +71,39 @@
             >
           </li>
           <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item more_drop" id="goShared">공유마당</a></li>
+          <li>
+            <a
+              class="dropdown-item more_drop"
+              onclick="location.href='/voca/shared_page'"
+              >공유마당</a
+            >
+          </li>
         </ul>
       </li>
-      <script>
-        if (matchMedia("screen and (max-width: 480px)").matches) {
-          document
-            .getElementById("drop_menu")
-            .classList.replace("dropdown", "dropup");
-        }
-        window.onresize = function () {
-          document.location.reload();
-        };
-        document
-          .getElementById("goShared")
-          .addEventListener(
-            "click",
-            () => (location.href = "/voca/shared_page")
-          );
-      </script>
     </ul>
   </nav>
+  <div
+    class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3"
+  >
+    <div
+      id="liveToast"
+      class="toast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="toast-header">
+        <strong class="me-auto" id="toastMsg"></strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+          id="closeToast"
+        ></button>
+      </div>
+    </div>
+  </div>
   <div class="main"><%-include(`${content}`) %></div>
 </div>
 
@@ -110,15 +122,89 @@
       class="btn-close"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
-      id="wowzz"
+      id="fav_mod_cancle"
     ></button>
   </div>
   <div class="offcanvas-body container-fluid">
-    <div class="f_wrapper2">
-      <div class="folder_wrapper">
-        <div id="fav_fd_area"></div>
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#fd-tab-pane"
+          type="button"
+          role="tab"
+          aria-controls="home-tab-pane"
+          aria-selected="true"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-folder2-open"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"
+            />
+          </svg>
+          폴더
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#fl-tab-pane"
+          type="button"
+          role="tab"
+          aria-controls="profile-tab-pane"
+          aria-selected="false"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-journal-text"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"
+            />
+            <path
+              d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"
+            />
+            <path
+              d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"
+            />
+          </svg>
+          단어장
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div
+        class="text-center tab-pane fade show active"
+        id="fd-tab-pane"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+        tabindex="0"
+      >
+        <div class="container-fluid text-center">
+          <div class="voca_file_list row row-cols-auto" id="fav_fd_area"></div>
+        </div>
       </div>
-      <div class="text-center">
+      <div
+        class="text-center tab-pane fade"
+        id="fl-tab-pane"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+        tabindex="0"
+      >
         <div class="container-fluid text-center">
           <div class="voca_file_list row row-cols-auto" id="fav_fl_area"></div>
         </div>
@@ -129,51 +215,169 @@
 
 <div>
   <div class="modal fade" id="searchmodal" tabindex="-1" aria-hidden="true">
-    <form action="/voca/search" method="post">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5">검색할 단어or표현을 입력해주세요</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <input
-                type="text"
-                name="voca"
-                id="searchid"
-                class="form-control is-val w100"
-                minlength="1"
-                maxlength="101"
-              />
-              <div class="invalid-feedback">1~100자 사이로 입력하세요</div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">단어or표현 검색</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <ul
+            class="nav nav-tabs nav-fill mb-3"
+            role="tablist"
+            id="mySearchTab"
+          >
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="my-search-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#my-search-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="my-search-tab-pane"
+                aria-selected="true"
+              >
+                계정내 검색
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="sha-search-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#sha-search-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="sha-search-tab-pane"
+                aria-selected="false"
+              >
+                공유마당 검색
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="mySearchTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="my-search-tab-pane"
+              role="tabpanel"
+              aria-labelledby="my-search-tab"
+              tabindex="0"
             >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              id="searchbtn"
-              disabled
+              <form action="/voca/my_search" method="post">
+                <div class="input-group w100">
+                  <span class="input-group-text" id="basic-addon1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control is-val"
+                    placeholder="검색할 단어or표현을 입력하세요"
+                    aria-label="Input group example"
+                    aria-describedby="basic-addon1"
+                    name="voca"
+                    id="searchid"
+                    minlength="1"
+                    maxlength="101"
+                  />
+                  <div class="invalid-feedback">1~100자 사이로 입력하세요</div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="searchbtn"
+                    disabled
+                  >
+                    검색
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="sha-search-tab-pane"
+              role="tabpanel"
+              aria-labelledby="sha-search-tab"
+              tabindex="0"
             >
-              검색
-            </button>
+              <form action="/voca/sha_search" method="post">
+                <div class="input-group w100">
+                  <span class="input-group-text" id="basic-addon1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control is-val"
+                    placeholder="검색할 단어or표현을 입력하세요"
+                    aria-label="Input group example"
+                    aria-describedby="basic-addon1"
+                    name="voca"
+                    id="shasearchid"
+                    minlength="1"
+                    maxlength="101"
+                  />
+                  <div class="invalid-feedback">1~100자 사이로 입력하세요</div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="shasearchbtn"
+                    disabled
+                  >
+                    검색
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
@@ -231,120 +435,111 @@
 
 <div class="modal fade" id="settnickmodal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/signpage/modify_nickname" method="post" id="mod_nick_form">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">변경할 닉네임을 입력하세요</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <input
-            id="nickinputid"
-            type="text"
-            name="nickname"
-            class="form-control is-val w100"
-            maxlength="11"
-          />
-          <div class="invalid-feedback" id="mod_nick_msg">
-            닉네임 형식을 확인하세요(2~10글자의 영어,숫자,한글)
-          </div>
-          <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            취소
-          </button>
-          <input
-            type="button"
-            value="변경하기"
-            class="btn btn-primary"
-            id="nickinputbtn"
-            disabled
-          />
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">변경할 닉네임을 입력하세요</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          id="nickinputid"
+          type="text"
+          name="nickname"
+          class="form-control is-val w100"
+          maxlength="11"
+        />
+        <div class="invalid-feedback" id="mod_nick_msg">
+          닉네임 형식을 확인하세요(2~10글자의 영어,숫자,한글)
         </div>
       </div>
-    </form>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="mod_nick_cancle"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          value="변경하기"
+          class="btn btn-primary"
+          id="nickinputbtn"
+          disabled
+        />
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="modal fade" id="settpwdmodal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/signpage/modify_password" method="post" id="mod_pwd_form">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">비밀번호 변경</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <ul class="p-2">
-            <li class="row mb-3">
-              <div class="col-3 p-0 mt-1">현재 비밀번호</div>
-              <div class="col-9 p-0">
-                <input
-                  type="password"
-                  class="w-100 form-control is-val"
-                  id="now_pwd_id"
-                  minlength="6"
-                  maxlength="19"
-                />
-                <div class="invalid-feedback">비밀번호를 확인하세요</div>
-                <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-                <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-                <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-                <input type="hidden" name="modal" value="change" />
-              </div>
-            </li>
-            <li class="row">
-              <div class="col-3 p-0 mt-1">새 비밀번호</div>
-              <div class="col-9 p-0">
-                <input
-                  type="password"
-                  id="pwdinputid"
-                  class="w-100 form-control is-val"
-                  name="password"
-                  minlength="6"
-                  maxlength="19"
-                />
-                <div class="invalid-feedback">
-                  비밀번호 형식을 확인하세요(6~18자 영문,숫자 조합)
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            취소
-          </button>
-          <input
-            type="button"
-            value="확인"
-            class="btn btn-primary"
-            id="mod_pwd_btn"
-          />
-        </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">비밀번호 변경</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-    </form>
+      <div class="modal-body">
+        <ul class="p-2">
+          <li class="row mb-3">
+            <div class="col-3 p-0 mt-1">현재 비밀번호</div>
+            <div class="col-9 p-0">
+              <input
+                type="password"
+                class="w-100 form-control is-val"
+                id="now_pwd_id"
+                minlength="6"
+                maxlength="19"
+              />
+              <div class="invalid-feedback">비밀번호를 확인하세요</div>
+              <input type="hidden" name="modal" value="change" />
+            </div>
+          </li>
+          <li class="row">
+            <div class="col-3 p-0 mt-1">새 비밀번호</div>
+            <div class="col-9 p-0">
+              <input
+                type="password"
+                id="pwdinputid"
+                class="w-100 form-control is-val"
+                minlength="6"
+                maxlength="19"
+              />
+              <div class="invalid-feedback">
+                비밀번호 형식을 확인하세요(6~18자 영문,숫자 조합)
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="mod_pwd_cancle"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          value="확인"
+          class="btn btn-primary"
+          id="mod_pwd_btn"
+        />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -352,7 +547,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="del_modal_title">현재 비밀번호를 입력하세요</h1>
+        <h1 class="modal-title fs-5" id="del_modal_title">
+          현재 비밀번호를 입력하세요
+        </h1>
         <button
           type="button"
           class="btn-close"
@@ -403,8 +600,28 @@
   </div>
 </div>
 
-    <script>
-      const isValid = (what, where, length) => {
+<script>
+  window.onresize = () => {
+    if (window.innerWidth < 480) {
+      document
+        .getElementById("drop_menu")
+        .classList.replace("dropdown", "dropup");
+
+      document
+        .getElementById("fav_fl_area")
+        .classList.remove("row", "row-cols-auto");
+    } else {
+      document
+        .getElementById("drop_menu")
+        .classList.replace("dropup", "dropdown");
+
+      document
+        .getElementById("fav_fl_area")
+        .classList.add("row", "row-cols-auto");
+    }
+  };
+
+  const isValid = (what, where, length) => {
     switch (what) {
       case "text":
         if (
@@ -448,96 +665,282 @@
         break;
     }
   };
-  
-      document.getElementById("logout_btn_id").addEventListener("click", () => {
-        location.href = "/signpage/logout";
-      });
 
-      document.getElementById("searchid").addEventListener("keyup", () => {
-        isValid("text", "search", 100);
-      });
+  const toastLive = document.getElementById("liveToast");
+  const closeToast = document.getElementById("closeToast");
+  const toastMsg = document.getElementById("toastMsg");
 
-      document.getElementById("nickinputid").addEventListener("keyup", () => {
-        isValid("nick");
-      });
+  closeToast.addEventListener(
+    "click",
+    () => (toastLive.style = "display:none")
+  );
 
-      document.getElementById("pwdinputid").addEventListener("keyup", () => {
-        isValid("pwd");
-      });
+  document.getElementById("voca_tab_click_id").addEventListener("click", () => {
+    location.href = "/voca";
+  });
 
-      document.getElementById("mod_pwd_btn").addEventListener("click", () => {
-        fetch("/signpage/password_check", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            password: document.getElementById("now_pwd_id").value,
-          }),
-        })
-          .then((res) => res.json())
-          .then((checked) => {
-            if (checked == 0) {
-              document
-                .getElementById("now_pwd_id")
-                .classList.replace("is-val", "is-invalid");
-            } else {
-              document.getElementById("mod_pwd_form").submit();
-            }
-          });
-      });
+  document.getElementById("logout_btn_id").addEventListener("click", () => {
+    location.href = "/signpage/logout";
+  });
+  document.getElementById("searchid").addEventListener("keyup", () => {
+    isValid("text", "search", 100);
+  });
+  document.getElementById("shasearchid").addEventListener("keyup", () => {
+    isValid("text", "shasearch", 100);
+  });
+  document.getElementById("nickinputid").addEventListener("keyup", () => {
+    isValid("nick");
+  });
+  document.getElementById("pwdinputid").addEventListener("keyup", () => {
+    isValid("pwd");
+  });
 
-      document.getElementById("nickinputbtn").addEventListener("click", () => {
-        fetch("/signpage/modify_nick_check", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nickname: document.getElementById("nickinputid").value,
-          }),
-        })
-          .then((res) => res.json())
-          .then((checked) => {
-            if (checked == 0) {
-              document.getElementById("mod_nick_form").submit();
-            } else {
-              document.getElementById("mod_nick_msg").innerText =
-                "이미 존재하는 닉네임 입니다";
-              document
-                .getElementById("nickinputid")
-                .classList.replace("is-val", "is-invalid");
-            }
-          });
+  document.getElementById("settmodalbtn").addEventListener("click", () => {
+    fetch("/voca/get_user")
+      .then((res) => res.json())
+      .then((user) => {
+        document.getElementById(
+          "user_email_area"
+        ).innerText = `이메일 : ${user.email}`;
+        document.getElementById(
+          "user_nick_area"
+        ).innerText = `닉네임 : ${user.nickname}`;
+        document.getElementById(
+          "user_regi_area"
+        ).innerText = `가입날짜 : ${user.registered}`;
+        document.getElementById("nickinputid").placeholder = user.nickname;
       });
+  });
 
-      document
-        .getElementById("delete_check_btn")
-        .addEventListener("click", () => {
-          fetch("/signpage/password_check", {
+  document.getElementById("mod_pwd_btn").addEventListener("click", () => {
+    fetch("/signpage/password_check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: document.getElementById("now_pwd_id").value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((checked) => {
+        if (checked == 0) {
+          document
+            .getElementById("now_pwd_id")
+            .classList.replace("is-val", "is-invalid");
+        } else {
+          fetch("/signpage/modify_password", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              password: document.getElementById("del_pwd_id").value,
+              password: document.getElementById("pwdinputid").value,
             }),
-          })
-            .then((res) => res.json())
-            .then((checked) => {
-              if (checked == 0) {
-                document
-                  .getElementById("del_pwd_id")
-                  .classList.replace("is-val", "is-invalid");
-              } else {
-                document.getElementById("delete_modal_first").classList.add("dnone")
-                document.getElementById("delete_modal_second").classList.remove("dnone")
-                document.getElementById("delete_check_btn").classList.add("dnone")
-                document.getElementById("delete_form_btn").classList.remove("dnone")
-                document.getElementById("del_modal_title").innerText = "회원탈퇴"
-              }
-            });
-        });
-    </script>
-  </div>
-</div>
+          }).then((res) => {
+            toastLive.style = "display:block";
+            toastMsg.innerText = "비밀번호가 변경되었습니다";
+            document.getElementById("mod_pwd_cancle").click();
+            document.getElementById("settmodalbtn").click();
+            document.getElementById("drop_menu").click();
+          });
+        }
+      });
+  });
+  document.getElementById("nickinputbtn").addEventListener("click", () => {
+    fetch("/signpage/modify_nick_check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nickname: document.getElementById("nickinputid").value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((checked) => {
+        if (checked == 0) {
+          fetch("/signpage/modify_nickname", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nickname: document.getElementById("nickinputid").value,
+            }),
+          }).then((res) => {
+            toastLive.style = "display:block";
+            toastMsg.innerText = "닉네임이 변경되었습니다";
+            document.getElementById("mod_nick_cancle").click();
+            document.getElementById("settmodalbtn").click();
+            document.getElementById("drop_menu").click();
+          });
+        } else {
+          document.getElementById("mod_nick_msg").innerText =
+            "이미 존재하는 닉네임 입니다";
+          document
+            .getElementById("nickinputid")
+            .classList.replace("is-val", "is-invalid");
+        }
+      });
+  });
+  document.getElementById("delete_check_btn").addEventListener("click", () => {
+    fetch("/signpage/password_check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: document.getElementById("del_pwd_id").value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((checked) => {
+        if (checked == 0) {
+          document
+            .getElementById("del_pwd_id")
+            .classList.replace("is-val", "is-invalid");
+        } else {
+          document.getElementById("delete_modal_first").classList.add("dnone");
+          document
+            .getElementById("delete_modal_second")
+            .classList.remove("dnone");
+          document.getElementById("delete_check_btn").classList.add("dnone");
+          document.getElementById("delete_form_btn").classList.remove("dnone");
+          document.getElementById("del_modal_title").innerText = "회원탈퇴";
+        }
+      });
+  });
+
+  const loadFavorites = () => {
+    fetch("/voca/load_fav")
+      .then((res) => res.json())
+      .then((fav) => {
+        fav_file = fav[0];
+        fav_folder = fav[1];
+        let fav_filelist = "";
+        let fav_folderlist = "";
+        for (let i = 0; i < fav_folder.length; i++) {
+          fav_folderlist += `
+        <div class="dropdown text-center m-2">
+            <button type="button" class="btn dropdown-toggle fav_voca_folder" data-bs-toggle="dropdown" aria-expanded="false" onclick="loadMoreFav('${fav_folder[i].folder_id}','${i}')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
+                <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+              </svg>
+              ${fav_folder[i].folder_name}
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <button class="dropdown-item" onclick="unFavFolder('${fav_folder[i].folder_id}')">
+                  <img src="/icons/star0.png" class="icon3" />
+                  즐겨찾기 해제
+                </button>
+              </li>
+              <div id="drop_fav${i}">
+              </div>
+            </ul>
+        </div>
+    `;
+        }
+        for (let i = 0; i < fav_file.length; i++) {
+          fav_filelist += `
+        <div class="fav_voca_file text-center m-2">                    
+          <div class="fileTitle">
+            <button class="icon_btn cursor" onclick="unFavFile('${fav_file[i].file_id}')">
+              <img src="/icons/star1.png" class="icon" />
+            </button>
+            <h6>${fav_file[i].file_name}</h6>
+          </div>
+        <div class="filebtnRow">
+          <form action="/voca/voca_load" method="post" name="loadingvoca">
+            <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+            <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
+            <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
+          </form>
+          <form action="/voca/voca_study" method="post" name="loadingvoca">
+            <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+            <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
+            <input type="submit" class="btn btn-outline-secondary file_btn" value="공부" />
+          </form>
+        </div>
+      </div>
+      `;
+        }
+        document.getElementById("fav_fl_area").innerHTML = fav_filelist;
+        document.getElementById("fav_fd_area").innerHTML = fav_folderlist;
+      });
+  };
+
+  document
+    .getElementById("fav_load_btn")
+    .addEventListener("click", loadFavorites);
+
+  const loadMoreFav = (fd_id, i) => {
+    fetch("/voca/load_fav_file", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fd_id: fd_id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((list) => {
+        let fav_filelist = "";
+        for (let i = 0; i < list.length; i++) {
+          fav_filelist += `
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <form action="/voca/voca_load" method="post" name="loadingvoca">
+              <input type="hidden" name="fl_id" value="${list[i].file_id}" />
+              <input type="hidden" name="fd_id" value="${list[i].folder_id}" />
+              <button class="dropdown-item" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                  <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                </svg>
+              ${list[i].file_name}
+              </button>
+            </form>
+          </li>
+          
+          `;
+        }
+        document.getElementById("drop_fav" + i).innerHTML = fav_filelist;
+      });
+  };
+
+  const unFavFolder = (fd_id) => {
+    fetch("/voca/favorites_folder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fd_id: fd_id,
+      }),
+    }).then((res) => {
+      toastLive.style = "display:block";
+      toastMsg.innerText = "즐겨찾기가 해제되었습니다";
+      loadFavorites();
+    });
+  };
+
+  const unFavFile = (fl_id) => {
+    fetch("/voca/favorites_file", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fl_id: fl_id,
+      }),
+    }).then((res) => {
+      toastLive.style = "display:block";
+      toastMsg.innerText = "즐겨찾기가 해제되었습니다";
+      loadFavorites();
+    });
+  };
+</script>

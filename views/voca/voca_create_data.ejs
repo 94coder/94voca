@@ -1,121 +1,108 @@
 <div class="voca_main">
-  <div
-    class="alert alert-warning alert-dismissible fade show dnone"
-    id="alertid"
-    role="alert"
-  >
-    <%= errmsg %>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="alert"
-      aria-label="Close"
-    ></button>
-  </div>
-  <form
-    method="post"
-    action="/voca/create_data"
-    nama="createData"
-    id="createDataid"
-  >
-    <div class="create_data_area">
-      <div class="create_data_box">
-        <div class="data_type data_underline">단어or표현</div>
-        <div class="data data_underline">
-          <textarea
-            class="form-control data_input is-val"
-            name="voca"
-            id="createvocaid"
-            minlength="1"
-            maxlength="101"
-            placeholder="100자 이내로 입력해주세요"
-          ></textarea>
-        </div>
-      </div>
-      <div class="create_data_box">
-        <div class="data_type data_underline">단어 뜻</div>
-        <div class="data data_underline">
-          <textarea
-            class="form-control data_input"
-            name="voca_mean"
-            maxlength="100"
-            placeholder="100자 이내로 입력해주세요"
-          ></textarea>
-        </div>
-      </div>
-      <div class="create_data_box">
-        <div class="data_type data_underline">예문</div>
-        <div class="data data_underline">
-          <textarea
-            class="form-control data_input"
-            name="exam"
-            maxlength="1000"
-            placeholder="1000자 이내로 입력해주세요"
-          ></textarea>
-        </div>
-      </div>
-      <div class="create_data_box">
-        <div class="data_type">예문 뜻</div>
-        <div class="data">
-          <textarea
-            class="form-control data_input"
-            name="exam_mean"
-            maxlength="1000"
-            placeholder="1000자 이내로 입력해주세요"
-          ></textarea>
-        </div>
+  <div class="create_data_area">
+    <div class="create_data_box">
+      <div class="data_type data_underline">단어or표현</div>
+      <div class="data data_underline">
+        <textarea
+          class="form-control data_input is-val"
+          name="voca"
+          id="createvocaid"
+          minlength="1"
+          maxlength="101"
+          placeholder="100자 이내로 입력해주세요"
+        ></textarea>
       </div>
     </div>
-    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-    <input type="hidden" name="fl_id" value="<%= fl_id %>" />
-  </form>
-  <form
-    method="post"
-    action="/voca/voca_main"
-    nama="finishCreate"
-    id="finishCreateid"
-  >
-    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
-  </form>
+    <div class="create_data_box">
+      <div class="data_type data_underline">단어 뜻</div>
+      <div class="data data_underline">
+        <textarea
+          class="form-control data_input"
+          name="voca_mean"
+          id="createvmid"
+          maxlength="100"
+          placeholder="100자 이내로 입력해주세요"
+        ></textarea>
+      </div>
+    </div>
+    <div class="create_data_box">
+      <div class="data_type data_underline">예문</div>
+      <div class="data data_underline">
+        <textarea
+          class="form-control data_input"
+          name="exam"
+          id="createexamid"
+          maxlength="1000"
+          placeholder="1000자 이내로 입력해주세요"
+        ></textarea>
+      </div>
+    </div>
+    <div class="create_data_box">
+      <div class="data_type">예문 뜻</div>
+      <div class="data">
+        <textarea
+          class="form-control data_input"
+          name="exam_mean"
+          id="createemid"
+          maxlength="1000"
+          placeholder="1000자 이내로 입력해주세요"
+        ></textarea>
+      </div>
+    </div>
+  </div>
   <form
     method="post"
     action="/voca/voca_load"
     nama="finishandLoad"
     id="finishandLoadid"
   >
-    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
-    <input type="hidden" name="fd_name" value="<%= fd_name %>" />
-    <input type="hidden" name="pr_id" value="<%= pr_id %>" />
     <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
   </form>
   <div class="create_page_btn_area">
     <button
       class="btn btn-outline-dark"
-      type="submit"
-      onclick="document.getElementById('createDataid').submit()"
+      type="button"
       id="createvocabtn"
       disabled
     >
       추가
     </button>
-    <button
-      class="btn btn-outline-dark"
-      type="submit"
-      onclick="document.getElementById('finishandLoadid').submit()"
-    >
+    <button class="btn btn-outline-dark" type="button" id="finishandLoadBtn">
       완료
     </button>
   </div>
 </div>
 <script>
-  if ("<%= errmsg %>") {
-    document.getElementById("alertid").style = "display:block";
-  }
   document.getElementById("createvocaid").addEventListener("keyup", () => {
     isValid("text", "createvoca", 100);
+  });
+  document.getElementById("createvocabtn").addEventListener("click", () => {
+    fetch("/voca/create_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fl_id: "<%= fl_id %>",
+        fd_id: "<%= fd_id %>",
+        voca: document.getElementById("createvocaid").value,
+        voca_mean: document.getElementById("createvmid").value,
+        exam: document.getElementById("createexamid").value,
+        exam_mean: document.getElementById("createemid").value,
+      }),
+    }).then((res) => {
+      toastLive.style = "display:block";
+      toastMsg.innerText = "추가 완료";
+      document.getElementById("createvocabtn").disabled = true;
+      document.getElementById("createvocaid").value = "";
+      document.getElementById("createvmid").value = "";
+      document.getElementById("createexamid").value = "";
+      document.getElementById("createemid").value = "";
+    });
+  });
+
+  document.getElementById("finishandLoadBtn").addEventListener("click", () => {
+    document.getElementById("finishandLoadid").submit();
   });
 </script>

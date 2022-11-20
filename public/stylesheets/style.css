@@ -43,6 +43,10 @@ li {
   list-style: none;
 }
 
+.inline {
+  display: inline;
+}
+
 #loading {
   position: fixed;
   z-index: 1;
