@@ -51,4 +51,17 @@ router.post("/delete_folder", (req, res) => {
   );
 });
 
+router.post("/delete_support", (req, res) => {
+  const post = req.body;
+  db.query(
+    `
+  DELETE FROM support WHERE support_id=?;
+  `,
+    [post.id],
+    (err, result) => {
+      res.send("0");
+    }
+  );
+});
+
 module.exports = router;

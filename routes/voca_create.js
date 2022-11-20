@@ -144,4 +144,18 @@ router.post("/create_data", (req, res) => {
   );
 });
 
+router.post("/create_support", (req, res) => {
+  const post = req.body;
+  const user = req.user[0];
+  db.query(
+    `
+  INSERT INTO support(user_id,title,message) VALUES(?,?,?)
+  `,
+    [user.user_id, post.title, post.message],
+    (err, result) => {
+      res.send("0");
+    }
+  );
+});
+
 module.exports = router;

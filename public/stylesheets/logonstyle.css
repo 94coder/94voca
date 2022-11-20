@@ -43,6 +43,10 @@
   padding: 10px;
 }
 
+#supportinputid {
+  height: 300px;
+}
+
 @media only screen and (max-width: 480px) {
   .navbar {
     position: fixed;

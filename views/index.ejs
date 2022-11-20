@@ -78,6 +78,16 @@
               >공유마당</a
             >
           </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a
+              class="dropdown-item more_drop"
+              data-bs-toggle="modal"
+              data-bs-target="#supportModal"
+              id="suppmodalbtn"
+              >문의하기</a
+            >
+          </li>
         </ul>
       </li>
     </ul>
@@ -600,6 +610,162 @@
   </div>
 </div>
 
+<div class="modal fade" id="supportModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="del_modal_title">문의하기</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs nav-fill mb-3" id="supportTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="support-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#support-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="support-tab-pane"
+              aria-selected="true"
+            >
+              문의하기
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="support-list-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#support-list-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="support-list-tab-pane"
+              aria-selected="false"
+            >
+              문의내역
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content sha_tab me-4">
+          <div
+            class="col-9 p-0 w100 tab-pane fade show active"
+            id="support-tab-pane"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control is-val h-25"
+                placeholder="제목을 입력해주세요"
+                id="supporttitleinputid"
+                minlength="1"
+                maxlength="51"
+              />
+              <label for="supporttitleinputid">제목을 입력해주세요</label>
+              <div class="invalid-feedback">50자 이내로 입력하세요</div>
+            </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control is-val"
+                placeholder="문의하실 내용을 입력해주세요"
+                id="supportinputid"
+                minlength="1"
+                maxlength="1001"
+              ></textarea>
+              <label for="supportinputid">문의하실 내용을 입력해주세요</label>
+              <div class="invalid-feedback">1~1000자 사이로 입력하세요</div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="support-list-tab-pane"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <div class="accordion accordion-flush" id="support_accordion"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="support_cancle"
+          >
+            취소
+          </button>
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary"
+            id="supportinputbtn"
+            disabled
+          />
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary dnone"
+            id="supporttitleinputbtn"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="delSupportModal"
+  tabindex="-1"
+  aria-labelledby="delSupportModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          정말 삭제하시겠습니까?
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="cancle_delete_support"
+          >
+            취소
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            id="delete_support_button"
+          >
+            삭제
+          </button>
+          <input type="hidden" id="selectedsupport" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   window.onresize = () => {
     if (window.innerWidth < 480) {
@@ -694,6 +860,16 @@
   document.getElementById("pwdinputid").addEventListener("keyup", () => {
     isValid("pwd");
   });
+
+  document.getElementById("supportinputid").addEventListener("keyup", () => {
+    isValid("text", "supportinput", 1000);
+  });
+
+  document
+    .getElementById("supporttitleinputid")
+    .addEventListener("keyup", () => {
+      isValid("text", "supporttitleinput", 50);
+    });
 
   document.getElementById("settmodalbtn").addEventListener("click", () => {
     fetch("/voca/get_user")
@@ -942,5 +1118,105 @@
       toastMsg.innerText = "즐겨찾기가 해제되었습니다";
       loadFavorites();
     });
+  };
+
+  document.getElementById("support-list-tab").addEventListener("click", () => {
+    fetch("/voca/load_support")
+      .then((res) => res.json())
+      .then((list) => {
+        document.getElementById("supportinputbtn").style = "display:none";
+        let sup_list = "";
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].checked == 1) {
+            readed = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-check-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+            </svg>`;
+          } else {
+            readed = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-dash" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M5.5 6.5A.5.5 0 0 1 6 6h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+            </svg>
+            `;
+          }
+          sup_list += `
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#support_list_item${i}"
+                  aria-expanded="false"
+                  aria-controls="support_list_item${i}"
+                >
+                  <div class=text-truncate>${readed} 문의 제목 : ${list[i].title}</div>
+                </button>
+              </h2>
+              <div
+                id="support_list_item${i}"
+                class="accordion-collapse collapse"
+                aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <div class="accordion-body">
+                  <div class="position-relative mb-3"><h5>문의 내용</h5>
+                    <button type="button" class="btn btn-danger position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#delSupportModal" onclick="delSupport('${list[i].support_id}')">삭제</button></div>
+                  <div class="mb-5 text-break">${list[i].message}</div>
+                  <div class="mb-5">문의 날짜 : ${list[i].received}</div>
+                  <div>답변 : ${list[i].answer}</div>
+                  
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        document.getElementById("support_accordion").innerHTML = sup_list;
+      });
+  });
+
+  document.getElementById("support-tab").addEventListener("click", () => {
+    document.getElementById("supportinputbtn").style = "display:block";
+  });
+
+  document.getElementById("supportinputbtn").addEventListener("click", () => {
+    fetch("/voca/create_support", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: document.getElementById("supporttitleinputid").value,
+        message: document.getElementById("supportinputid").value,
+      }),
+    }).then((res) => {
+      document.getElementById("supporttitleinputid").value = "";
+      document.getElementById("supportinputid").value = "";
+      toastLive.style = "display:block";
+      toastMsg.innerText = "문의가 접수 되었습니다";
+      document.getElementById("support_cancle").click();
+    });
+  });
+
+  document
+    .getElementById("delete_support_button")
+    .addEventListener("click", () => {
+      fetch("/voca/delete_support", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: document.getElementById("selectedsupport").value,
+        }),
+      }).then((res) => {
+        toastLive.style = "display:block";
+        toastMsg.innerText = "문의가 삭제 되었습니다";
+        document.getElementById("cancle_delete_support").click();
+      });
+    });
+
+  const delSupport = (id) => {
+    document.getElementById("selectedsupport").value = id;
   };
 </script>

@@ -134,7 +134,6 @@ router.post("/my_search", (req, res) => {
 
 router.post("/sha_search", (req, res) => {
   const post = req.body;
-  const user = req.user[0];
   db.query(
     `SELECT * FROM voca_data WHERE voca REGEXP ? OR voca_mean REGEXP ?;
   `,
@@ -147,6 +146,19 @@ router.post("/sha_search", (req, res) => {
         user: 1,
         keyword: post.voca,
       });
+    }
+  );
+});
+
+router.get("/load_support", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `
+  SELECT * FROM support WHERE user_id=?
+  `,
+    [user.user_id],
+    (err, result) => {
+      res.send(result);
     }
   );
 });
