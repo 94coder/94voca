@@ -787,6 +787,16 @@
     }
   };
 
+  if (window.innerWidth > 480) {
+    document
+      .getElementById("drop_menu")
+      .classList.replace("dropdown", "dropup");
+
+    document
+      .getElementById("fav_fl_area")
+      .classList.remove("row", "row-cols-auto");
+  }
+
   const isValid = (what, where, length) => {
     switch (what) {
       case "text":
