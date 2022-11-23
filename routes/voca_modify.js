@@ -4,7 +4,6 @@ const router = express.Router();
 const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
-const mymodule = require("../lib/mymodule");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());

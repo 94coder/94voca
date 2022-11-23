@@ -4,35 +4,12 @@ const router = express.Router();
 const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
-const fs = require("fs");
-const fsExtra = require("fs-extra");
-const AWS = require("aws-sdk");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
-const AWS_USER = require("../lib/config").polly;
-
-const Polly = new AWS.Polly({
-  accessKeyId: AWS_USER.accessKeyId,
-  secretAccessKey: AWS_USER.secretAccessKey,
-  signatureVersion: AWS_USER.signatureVersion,
-  region: AWS_USER.region,
-});
-
-// router.all("*", (req, res, next) => {
-//   fs.readdir("./public", (err, filelist) => {
-//     if (filelist.includes("theVoice")) {
-//       fsExtra.emptyDirSync("./public/theVoice");
-//       fs.rmdirSync("./public/theVoice");
-//       next();
-//     } else {
-//       next();
-//     }
-//   });
-// });
 
 router.get("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
@@ -54,10 +31,6 @@ router.post("*", (req, res, next) => {
 router.get("/", (req, res, next) => {
   res.redirect("/voca/voca_main");
 });
-
-// router.get("/voca_main", (req, res) => {
-//   res.redirect("/");
-// });
 
 router.get("/voca_main", (req, res) => {
   const user = req.user[0];
@@ -165,34 +138,6 @@ router.get("/get_user", (req, res) => {
       res.send(result[0]);
     }
   );
-});
-
-router.post("/audio", (req, res) => {
-  const post = req.body;
-  const params = {
-    Text: post.audio,
-    OutputFormat: "mp3",
-    VoiceId: "Matthew",
-  };
-  Polly.synthesizeSpeech(params, (err, data) => {
-    if (err) {
-      console.log(err.code);
-    } else if (data) {
-      if (data.AudioStream instanceof Buffer) {
-        fs.writeFile(
-          `./public/audio/${post.audio}.mp3`,
-          data.AudioStream,
-          () => {
-            res.send("0");
-          }
-        );
-      }
-    }
-  });
-});
-
-router.post("/audio_delete", (req, res) => {
-  fsExtra.emptyDirSync("./public/audio");
 });
 
 module.exports = router;

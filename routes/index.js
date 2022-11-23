@@ -8,7 +8,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const auth = require("../lib/logonStatus");
 
 const sanitizeHtml = require("sanitize-html");
-const { DataBrew } = require("aws-sdk");
 
 const sanitizeOption = {
   allowedTags: [
