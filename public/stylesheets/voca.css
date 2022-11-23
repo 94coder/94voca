@@ -1,9 +1,7 @@
 .voca_main {
-  background-color: white;
   width: 95%;
-  height: 95%;
   border-radius: 10px;
-  overflow: scroll;
+  height: 95%;
 }
 
 .f_wrapper {

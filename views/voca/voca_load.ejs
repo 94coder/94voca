@@ -14,7 +14,7 @@
   <input type="hidden" id="selected_data" />
   <input type="hidden" id="selected_data_id" />
   <% for(let i=0; i<loadlist.length; i++){ %>
-    <div class="loaded_data" id="shown_id<%- i %>">
+    <div class="loaded_data" id="shown_id<%- i %>" data-scroll>
       <span class="datanum"><%- i+1 %></span>
       <input type="hidden" id="data_id<%- i %>" value="<%= loadlist[i].data_id %>" />
       <div class="data_box">

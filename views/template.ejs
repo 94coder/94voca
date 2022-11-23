@@ -12,6 +12,7 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
+    <script src="https://unpkg.com/scroll-out/dist/scroll-out.min.js"></script>
     <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,7 +26,8 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <div class="wrapper">
+    <div class="wrapper h-100">
+      <button id="saveit">저장</button>
       <main><%- include(`${page}`) %></main>
     </div>
     <footer></footer>
@@ -34,6 +36,10 @@
         document.getElementById("loading").style = "display:none";
       };
       window.onload = finishLoad;
+      ScrollOut({});
+      document.getElementById("saveit").addEventListener("click", () => {
+        fetch("/voca/saveit");
+      });
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

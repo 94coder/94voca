@@ -51,6 +51,12 @@ router.get("/", (req, res, next) => {
 //   res.redirect("/");
 // });
 
+router.get("/saveit", (req, res) => {
+  fs.writeFile("readsomething.txt", "listen me", (err) => {
+    console.log(err);
+  });
+});
+
 router.get("/voca_main", (req, res) => {
   const user = req.user[0];
   db.query(
