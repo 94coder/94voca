@@ -1229,31 +1229,4 @@
   const delSupport = (id) => {
     document.getElementById("selectedsupport").value = id;
   };
-
-  const listen = (text) => {
-    fetch("/voca/audio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        audio: text,
-      }),
-    }).then((res) => {
-      let audio = new Audio(`/public/audio/${text}.mp3`);
-      audio.load();
-      audio.play();
-      setTimeout(() => {
-        fetch("/voca/audio_delete", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            audio: text,
-          }),
-        });
-      }, 100);
-    });
-  };
 </script>
