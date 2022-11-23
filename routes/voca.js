@@ -4,15 +4,23 @@ const router = express.Router();
 const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
-const mymodule = require("../lib/mymodule");
 const fs = require("fs");
 const fsExtra = require("fs-extra");
+const AWS = require("aws-sdk");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
+const AWS_USER = require("../lib/config").polly;
+
+const Polly = new AWS.Polly({
+  accessKeyId: AWS_USER.accessKeyId,
+  secretAccessKey: AWS_USER.secretAccessKey,
+  signatureVersion: AWS_USER.signatureVersion,
+  region: AWS_USER.region,
+});
 
 // router.all("*", (req, res, next) => {
 //   fs.readdir("./public", (err, filelist) => {
@@ -50,12 +58,6 @@ router.get("/", (req, res, next) => {
 // router.get("/voca_main", (req, res) => {
 //   res.redirect("/");
 // });
-
-router.get("/saveit", (req, res) => {
-  fs.writeFile("readsomething.txt", "listen me", (err) => {
-    console.log(err);
-  });
-});
 
 router.get("/voca_main", (req, res) => {
   const user = req.user[0];
@@ -115,73 +117,6 @@ router.post("/load_list", (req, res) => {
     }
   );
 });
-// router.post("/voca_main", (req, res, next) => {
-//   const user = req.user[0];
-//   const post = req.body;
-//   if (post.modal == "change") {
-//     modal = "change";
-//   } else if (post.modal == "delete") {
-//     modal = "delete";
-//   } else {
-//     modal = "";
-//   }
-//   if (post.toast == 0) {
-//     toast = 0;
-//   } else if (post.toast == 1) {
-//     toast = 1;
-//   } else if (post.toast == 2) {
-//     toast = 2;
-//   } else if (post.toast == 3) {
-//     toast = 3;
-//   } else if (post.toast == null) {
-//     toast = 4;
-//   }
-
-//   db.query(
-//     `SELECT * FROM voca_folder WHERE parent_id=?;
-//     SELECT * FROM voca_file WHERE folder_id=?;
-//     SELECT * FROM voca_folder WHERE folder_id=?;
-//     SELECT * FROM voca_folder WHERE folder_id=?
-//   `,
-//     [post.fd_id, post.fd_id, post.pr_id, post.fd_id],
-//     (err, result) => {
-//       const objRender = (result, post, modal, gpri, gprn) => {
-//         return {
-//           page: "./index",
-//           content: "./voca/voca_main",
-//           folder: result[0],
-//           file: result[1],
-//           fd_id: post.fd_id,
-//           fd_name: post.fd_name,
-//           errmsg: post.errmsg,
-//           successmsg: post.successmsg,
-//           pr_id: post.pr_id,
-//           gpr_id: gpri,
-//           gpr_name: gprn,
-//           modal: modal,
-//           toast: toast,
-//           fd_fav: result[3][0].favorites,
-//           fd_sh: result[3][0].shared,
-//         };
-//       };
-
-//       if (result[2][0]) {
-//         res.render(
-//           "template",
-//           objRender(
-//             result,
-//             post,
-//             modal,
-//             result[2][0].parent_id,
-//             result[2][0].folder_name
-//           )
-//         );
-//       } else {
-//         res.render("template", objRender(result, post, modal, "", ""));
-//       }
-//     }
-//   );
-// });
 
 router.get("/load_fav", (req, res) => {
   const user = req.user[0];
@@ -230,6 +165,34 @@ router.get("/get_user", (req, res) => {
       res.send(result[0]);
     }
   );
+});
+
+router.post("/audio", (req, res) => {
+  const post = req.body;
+  const params = {
+    Text: post.audio,
+    OutputFormat: "mp3",
+    VoiceId: "Matthew",
+  };
+  Polly.synthesizeSpeech(params, (err, data) => {
+    if (err) {
+      console.log(err.code);
+    } else if (data) {
+      if (data.AudioStream instanceof Buffer) {
+        fs.writeFile(
+          `./public/audio/${post.audio}.mp3`,
+          data.AudioStream,
+          () => {
+            res.send("0");
+          }
+        );
+      }
+    }
+  });
+});
+
+router.post("/audio_delete", (req, res) => {
+  fsExtra.emptyDirSync("./public/audio");
 });
 
 module.exports = router;

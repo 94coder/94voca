@@ -27,7 +27,6 @@
       </div>
     </div>
     <div class="wrapper h-100">
-      <button id="saveit">저장</button>
       <main><%- include(`${page}`) %></main>
     </div>
     <footer></footer>
@@ -37,9 +36,6 @@
       };
       window.onload = finishLoad;
       ScrollOut({});
-      document.getElementById("saveit").addEventListener("click", () => {
-        fetch("/voca/saveit");
-      });
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
