@@ -1240,7 +1240,7 @@
         audio: text,
       }),
     }).then((res) => {
-      let audio = new Audio(`/audio/${text}.mp3`);
+      let audio = new Audio(`/public/audio/${text}.mp3`);
       audio.load();
       audio.play();
       setTimeout(() => {
