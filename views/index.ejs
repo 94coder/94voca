@@ -1040,11 +1040,13 @@
         <div class="filebtnRow">
           <form action="/voca/voca_load" method="post" name="loadingvoca">
             <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+            <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
             <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
             <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
           </form>
           <form action="/voca/voca_study" method="post" name="loadingvoca">
             <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+            <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
             <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
             <input type="submit" class="btn btn-outline-secondary file_btn" value="공부" />
           </form>
@@ -1080,6 +1082,7 @@
           <li>
             <form action="/voca/voca_load" method="post" name="loadingvoca">
               <input type="hidden" name="fl_id" value="${list[i].file_id}" />
+              <input type="hidden" name="fl_name" value="${list[i].file_name}" />
               <input type="hidden" name="fd_id" value="${list[i].folder_id}" />
               <button class="dropdown-item" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
@@ -1228,5 +1231,28 @@
 
   const delSupport = (id) => {
     document.getElementById("selectedsupport").value = id;
+  };
+
+  const tts = (id, text) => {
+    fetch("/voca/tts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        text: text,
+      }),
+    })
+      .then((res) => res.arrayBuffer())
+      .then((data) => {
+        const context = new AudioContext();
+        context.decodeAudioData(data, (buffer) => {
+          const source = context.createBufferSource();
+          source.buffer = buffer;
+          source.connect(context.destination);
+          source.start(0);
+        });
+      });
   };
 </script>

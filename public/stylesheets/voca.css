@@ -46,6 +46,10 @@
   padding: 5px 0;
 }
 
+.sub_fd_btn :hover {
+  background-color: lightgrey;
+}
+
 .folder_list_wrapper {
   padding: 10px;
 }
@@ -93,6 +97,11 @@
   border: 1px solid black;
 }
 
+#fd_fav_img {
+  width: 18px;
+  height: 18px;
+}
+
 .sha_voca_folder {
   padding: 10px 5px 5px 5px;
   border: 1px solid lightgray;
@@ -132,6 +141,7 @@
 .icon2 {
   width: 20px;
   margin-bottom: 5px;
+  margin-left: -2.5px;
 }
 
 .icon3 {

@@ -157,10 +157,12 @@
               <div class="filebtnRow">
                 <form action="/voca/shared_voca_load" method="post" name="loadingvoca">
                   <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+                  <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
                   <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
                 </form>
                 <form action="/voca/shared_voca_study" method="post" name="loadingvoca">
                   <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+                  <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
                   <input type="submit" class="btn btn-outline-secondary file_btn" value="공부" />
                 </form>
               </div>
@@ -219,6 +221,7 @@
           <li>
             <form action="/voca/shared_voca_load" method="post" name="loadingvoca">
               <input type="hidden" name="fl_id" value="${list[i].file_id}" />
+              <input type="hidden" name="fl_name" value="${list[i].file_name}" />
               <button class="dropdown-item" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
                   <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>

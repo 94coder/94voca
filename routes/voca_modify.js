@@ -156,4 +156,17 @@ router.post("/move_file", (req, res) => {
   );
 });
 
+router.post("/move_folder", (req, res) => {
+  const post = req.body;
+  db.query(
+    `
+  UPDATE voca_folder SET parent_id=? WHERE folder_id=?
+  `,
+    [post.mv_fd_id, post.fd_id],
+    (err, result) => {
+      res.send("0");
+    }
+  );
+});
+
 module.exports = router;

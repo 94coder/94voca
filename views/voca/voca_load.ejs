@@ -1,13 +1,16 @@
 <div class="voca_main">
+  <h4 class="text-center m-3"><%= fl_name %></h4>
   <div class="load_page_btn_area">
-    <input type="button" value="홈으로" class="btn btn-outline-dark" onclick="location.href='/voca'">
+    <input type="button" value="홈으로" class="btn btn-outline-dark" onclick="location.href='/'">
     <form action="/voca/voca_study" method="post" class="din">
       <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+      <input type="hidden" name="fl_name" value="<%= fl_name %>" />
       <input type="submit" value="공부하기" class="btn btn-outline-dark">
     </form>
     <form action="/voca/create_data_page" method="post" class="din">
       <input class="btn btn-outline-dark" type="submit" value="단어or표현추가" />
       <input type='hidden' name='fl_id' value='<%= fl_id %>' />
+      <input type='hidden' name='fl_name' value='<%= fl_name %>' />
       <input type='hidden' name='fd_id' value='<%= fd_id %>' />
     </form>
   </div>
@@ -20,6 +23,9 @@
       <div class="data_box">
         <div class="data_type data_underline">
           단어or표현
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill mb-1 cursor" viewBox="0 0 16 16" onclick="tts('<%= loadlist[i].data_id %>','voca')">
+            <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+          </svg>
         </div>
         <div class="data data_underline">
           <b id="shown_voca<%- i %>"><%= loadlist[i].voca %></b>
@@ -36,6 +42,9 @@
       <div class="data_box">
         <div class="data_type data_underline">
           예문
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-down-fill mb-1 cursor" viewBox="0 0 16 16" onclick="tts('<%= loadlist[i].data_id %>','exam')">
+            <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zm3.025 4a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
+          </svg>
         </div>
         <div class="data data_underline" id="shown_exam<%- i %>">
           <%= loadlist[i].exam %>
@@ -96,6 +105,15 @@
 <script>
   document.getElementById('modvocaid').addEventListener('keyup', () => {
     isValid('text','modvoca',100)
+  })
+  document.getElementById('modvmid').addEventListener('keyup', () => {
+    isValid('text','modvoca',100)
+  })
+  document.getElementById('modexamid').addEventListener('keyup', () => {
+    isValid('text','modvoca',1000)
+  })
+  document.getElementById('modemid').addEventListener('keyup', () => {
+    isValid('text','modvoca',1000)
   })
   function modVoca(voca,voca_mean,exam,exam_mean,data,i){
     document.getElementById("modvocaid").value = voca

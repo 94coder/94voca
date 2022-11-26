@@ -16,12 +16,14 @@ router.post("/voca_load", (req, res) => {
   `,
     [post.fl_id],
     (err, result) => {
+      console.log(result);
       res.render("template", {
         page: "./index",
         content: "./voca/voca_load",
         loadlist: result,
         fd_id: post.fd_id,
         fl_id: post.fl_id,
+        fl_name: post.fl_name,
       });
     }
   );
@@ -39,6 +41,7 @@ router.post("/voca_study", (req, res) => {
         content: "./voca/voca_study",
         fd_id: post.fd_id,
         fl_id: post.fl_id,
+        fl_name: post.fl_name,
         loadlist: result,
       });
     }
@@ -85,6 +88,7 @@ router.post("/shared_voca_load", (req, res) => {
         content: "./voca/voca_share_load",
         loadlist: result,
         fl_id: post.fl_id,
+        fl_name: post.fl_name,
       });
     }
   );
@@ -101,6 +105,7 @@ router.post("/shared_voca_study", (req, res) => {
         page: "./index",
         content: "./voca/voca_share_study",
         fl_id: post.fl_id,
+        fl_name: post.fl_name,
         loadlist: result,
       });
     }

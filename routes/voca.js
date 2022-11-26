@@ -10,6 +10,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
+const AWS = require("aws-sdk");
+const pollystat = require("../lib/config").polly;
+
+const Polly = new AWS.Polly({
+  accessKeyId: pollystat.accessKeyId,
+  secretAccessKey: pollystat.secretAccessKey,
+  signatureVersion: pollystat.signatureVersion,
+  region: pollystat.region,
+});
 
 router.get("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
@@ -136,6 +145,37 @@ router.get("/get_user", (req, res) => {
     [user.user_id],
     (err, result) => {
       res.send(result[0]);
+    }
+  );
+});
+
+router.post("/tts", (req, res) => {
+  const post = req.body;
+  db.query(
+    `SELECT voca,exam FROM voca_data WHERE data_id=?
+  `,
+    [post.id],
+    (err, result) => {
+      let ttstext = "";
+      if (post.text == "voca") {
+        ttstext = result[0].voca;
+      } else if (post.text == "exam") {
+        ttstext = result[0].exam;
+      }
+      const params = {
+        Text: ttstext,
+        OutputFormat: "mp3",
+        VoiceId: "Matthew",
+      };
+      Polly.synthesizeSpeech(params, (err, data) => {
+        if (err) {
+          console.log(err.code);
+        } else if (data) {
+          if (data.AudioStream instanceof Buffer) {
+            res.send(data.AudioStream);
+          }
+        }
+      });
     }
   );
 });

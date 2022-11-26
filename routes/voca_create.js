@@ -88,13 +88,14 @@ router.post("/create_file", (req, res) => {
     [user.user_id, post.fd_id, post.new_fl_name],
     (err, result) => {
       db.query(
-        `SELECT file_id FROM voca_file WHERE folder_id=? AND file_name=?
+        `SELECT * FROM voca_file WHERE folder_id=? AND file_name=?
               `,
         [post.fd_id, post.new_fl_name],
         (err, result) => {
           body = mymodule.POST(
             "/voca/create_data_page",
             `<input type='hidden' name='fl_id' value='${result[0].file_id}' />
+            <input type='hidden' name='fl_name' value='${result[0].file_name}' />
             <input type='hidden' name='fd_id' value='${post.fd_id}' />
             `
           );
@@ -118,6 +119,7 @@ router.post("/create_data_page", (req, res) => {
     content: "./voca/voca_create_data",
     fd_id: post.fd_id,
     fl_id: post.fl_id,
+    fl_name: post.fl_name,
     toast: toast,
   });
 });
