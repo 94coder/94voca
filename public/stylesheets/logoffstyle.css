@@ -5,6 +5,10 @@ h2 {
   font-size: 3rem;
 }
 
+.navbar {
+  height: 80px;
+}
+
 .authpage {
   display: grid;
   place-items: center;
@@ -67,5 +71,8 @@ h2 {
 
   .sauthbtn {
     width: 80%;
+  }
+  .mob_none {
+    display: none;
   }
 }

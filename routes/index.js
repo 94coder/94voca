@@ -74,7 +74,7 @@ router.get("/", (req, res, next) => {
           feedback = fmsg.error[0];
         }
         res.render("template", {
-          page: "./signpage/signpage2",
+          page: "./signpage/signpage",
           errmsg: feedback,
           email_list: checked_email,
           nick_list: checked_nickname,
