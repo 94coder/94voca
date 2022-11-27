@@ -1,7 +1,7 @@
 <div class="voca_main">
   <h4 class="text-center m-3"><%= fl_name %></h4>
   <div class="load_page_btn_area ">
-    <input type="button" value="홈으로" class="btn btn-outline-dark" onclick="location.href='/voca'">
+    <input type="button" value="홈으로" class="btn btn-outline-dark" onclick="location.href='/'">
     <label class="switch" id="all-switch">
       <input type="checkbox" class="switch-input" id="all_checkbox_id">
       <span class="switch-label" data-on="전체숨기기" data-off="전체보이기"></span>
@@ -23,7 +23,7 @@
             <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
             <span class="switch-handle"></span>
           </label>
-          <b><span class="study_data dnone" id="voca_id<%- i %>"><%= loadlist[i].voca %></span></b>
+          <b><span class="dnone" id="voca_id<%- i %>"><%= loadlist[i].voca %></span></b>
         </div>
       </div>
       <div class="data_box">
@@ -35,7 +35,7 @@
             <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
             <span class="switch-handle"></span>
           </label>
-          <span class="study_data dnone" id="voca_mean_id<%- i %>"><%= loadlist[i].voca_mean %>
+          <span class="dnone" id="voca_mean_id<%- i %>"><%= loadlist[i].voca_mean %>
           </span>
         </div>
       </div>
@@ -51,7 +51,7 @@
             <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
             <span class="switch-handle"></span>
           </label>
-          <span class="study_data dnone" id="exam_id<%- i %>"><%= loadlist[i].exam %>
+          <span class="dnone" id="exam_id<%- i %>"><%= loadlist[i].exam %>
           </span>
         </div>
       </div>
@@ -64,7 +64,7 @@
             <span class="switch-label" data-on="숨기기" data-off="보이기"></span>
             <span class="switch-handle"></span>
           </label>
-          <span class="study_data dnone" id="exam_mean_id<%- i %>"><%= loadlist[i].exam_mean %>
+          <span class="dnone" id="exam_mean_id<%- i %>"><%= loadlist[i].exam_mean %>
           </span>
         </div>
       </div>
@@ -95,17 +95,12 @@
   }
   
   const showAll = () =>{
-    const is_allchecked = document.getElementById('all_checkbox_id').checked;
-    const classlist = document.getElementsByClassName('study_data');
-    if(is_allchecked){
-      for(let i=0; i<classlist.length; i++){
-        classlist[i].style = "display:inline"
-      }      
-    }else{
-      for(let i=0; i<classlist.length; i++){
-        classlist[i].style = "display:none"
-      }
-    }
+    for(let i=0; i<"<%= loadlist.length %>"; i++){
+      document.getElementById("vocaid"+i).click()
+      document.getElementById("voca_meanid"+i).click()
+      document.getElementById("examid"+i).click()
+      document.getElementById("exam_meanid"+i).click()
+    }      
   }
 
   const shadowing = (i) => {

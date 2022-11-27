@@ -22,7 +22,7 @@ const Polly = new AWS.Polly({
 
 router.get("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/signpage");
+    res.redirect("/");
   } else {
     next();
   }
@@ -30,42 +30,10 @@ router.get("*", (req, res, next) => {
 
 router.post("*", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/signpage");
+    res.redirect("/");
   } else {
     next();
   }
-});
-
-/* GET home page. */
-router.get("/", (req, res, next) => {
-  res.redirect("/voca/voca_main");
-});
-
-router.get("/voca_main", (req, res) => {
-  const user = req.user[0];
-  db.query(
-    `SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0`,
-    [user.user_id],
-    (err, result) => {
-      let fd_id = result[0].folder_id;
-      db.query(
-        `SELECT * FROM voca_folder WHERE parent_id=?;
-      SELECT * FROM voca_file WHERE folder_id=?
-      `,
-        [fd_id, fd_id],
-        (err, result2) => {
-          res.render("template", {
-            page: "./index",
-            content: "./voca/voca_main",
-            selected_folder: fd_id,
-            pr_id: 0,
-            folder: result2[0],
-            file: result2[1],
-          });
-        }
-      );
-    }
-  );
 });
 
 router.post("/load_list", (req, res) => {

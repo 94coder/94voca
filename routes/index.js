@@ -4,6 +4,13 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+const mysql = require("mysql");
+const db = mysql.createConnection(require("../lib/config").user);
+db.connect();
+
+const flash = require("connect-flash");
+
+app.use(flash());
 
 const auth = require("../lib/logonStatus");
 
@@ -49,12 +56,61 @@ router.post("*", (req, res, next) => {
   next();
 });
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    res.redirect("/signpage");
+    db.query(
+      `SELECT email,nickname FROM localuser
+    `,
+      (err, checked) => {
+        const checked_email = new Array();
+        const checked_nickname = new Array();
+        for (let e of checked) {
+          checked_email.push(e.email);
+          checked_nickname.push(e.nickname);
+        }
+        const fmsg = req.flash();
+        let feedback = "";
+        if (fmsg.error) {
+          feedback = fmsg.error[0];
+        }
+        res.render("template", {
+          page: "./signpage/signpage2",
+          errmsg: feedback,
+          email_list: checked_email,
+          nick_list: checked_nickname,
+        });
+      }
+    );
   } else {
-    res.redirect("/voca");
+    next();
   }
+});
+
+router.get("/", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0`,
+    [user.user_id],
+    (err, result) => {
+      let fd_id = result[0].folder_id;
+      db.query(
+        `SELECT * FROM voca_folder WHERE parent_id=?;
+      SELECT * FROM voca_file WHERE folder_id=?
+      `,
+        [fd_id, fd_id],
+        (err, result2) => {
+          res.render("template", {
+            page: "./index",
+            content: "./voca/voca_main",
+            selected_folder: fd_id,
+            pr_id: 0,
+            folder: result2[0],
+            file: result2[1],
+          });
+        }
+      );
+    }
+  );
 });
 
 module.exports = router;
