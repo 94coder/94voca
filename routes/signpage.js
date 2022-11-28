@@ -196,6 +196,7 @@ router.post("/pwdmail", (req, res) => {
               let transporter = nodemailer.createTransport({
                 service: "gmail",
                 host: "smtp.gmail.com",
+                port: 465,
                 auth: {
                   user: mailer.mail,
                   pass: mailer.mailpwd,
