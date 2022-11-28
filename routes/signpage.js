@@ -197,6 +197,7 @@ router.post("/pwdmail", (req, res) => {
                 service: "gmail",
                 host: "smtp.gmail.com",
                 port: 465,
+                secure: true,
                 auth: {
                   user: mailer.mail,
                   pass: mailer.mailpwd,
