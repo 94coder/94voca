@@ -16,7 +16,6 @@ router.post("/voca_load", (req, res) => {
   `,
     [post.fl_id],
     (err, result) => {
-      console.log(result);
       res.render("template", {
         page: "./index",
         content: "./voca/voca_load",

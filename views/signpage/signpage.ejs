@@ -65,7 +65,7 @@
             <img src="/images/guide1.png" class="d-block w-100 border" alt="..." id="info_img_src1" />
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <div class="border d-inline-block p-2 mb-2 rounded">
+            <div class="border d-inline-block p-2 pt-4 mb-2 rounded">
               <h5>나만의 방식으로 단어장을 구성하세요</h5>
               <p>
                 단어, 표현, 문장 등 원하는 대로 입력하세요.<br/>
@@ -334,37 +334,50 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <form action="/signpage/pwdmail" method="post">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            이메일을 입력해주세요
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <input type="email" class="w100" name="email" />
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            취소
-          </button>
-          <input type="submit" value="확인" class="btn btn-primary" />
-        </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">
+          이메일을 입력해주세요
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-    </form>
+      <div class="modal-body">
+        <div class="alert alert-warning alert-dismissible fade show d-none" role="alert" id="findpwdalert">
+          <span id="findpwdalerttext"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <input type="email" class="w100" id="findpwdemail" />
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="closefindpwd"
+        >
+          취소
+        </button>
+        <input type="button" value="확인" class="btn btn-primary" id="findpwdbtn" />
+        <button class="btn btn-primary d-none" type="button" disabled id="spinnerbtn">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          전송 중...
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
+  if("<%= errmsg %>"){
+    document.getElementById("info_page").classList.add("d-none");
+    document.getElementById("sign_page").classList.remove("d-none");
+    document.getElementById("goInfo").classList.remove("d-none");
+    document.getElementById("goLogin1").classList.add("d-none");
+  }
   window.addEventListener("load", () => {
     if (window.innerWidth < 481) {
       document.getElementById("info_img_src1").src = "/images/m_guide1.jpg";
@@ -387,9 +400,6 @@
       document.getElementById("info_img_src4").src = "/images/guide4.png";
     }
   };
-
-  const email_list = JSON.parse(`<%- JSON.stringify(email_list) %>`);
-  const nick_list = JSON.parse(`<%- JSON.stringify(nick_list) %>`);
   const login_tab_link = document.getElementById("login_tab_link");
   const signup_tab_link = document.getElementById("signup_tab_link");
   let emailArea = document.getElementById("email_area");
@@ -469,16 +479,58 @@
   };
 
   const goSubmit = () => {
-    if (email_list.includes(emailArea.value)) {
-      alertid.style = "display:block";
-      alertid.innerText = "이미 존재하는 이메일 입니다";
-    } else if (nick_list.includes(nickArea.value)) {
-      alertid.style = "display:block";
-      alertid.innerText = "이미 존재하는 닉네임 입니다";
-    } else {
-      signtabid.submit();
-    }
+    fetch("/signpage/check_info",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailArea.value,
+        nickname: nickArea.value,
+      }),
+    })
+    .then((res) => res.json())
+    .then((check) => {
+      if(check == "1"){
+        alertid.innerText = "이미 존재하는 이메일 입니다";
+        alertid.style = "display:block";
+      }else if(check == "2"){
+        alertid.innerText = "이미 존재하는 닉네임 입니다";
+        alertid.style = "display:block";
+      }else if(check == "3"){
+        signtabid.submit();
+      }
+    })
   };
+
+  document.getElementById("findpwdbtn").addEventListener("click",()=>{
+    document.getElementById("spinnerbtn").classList.remove("d-none");
+    document.getElementById("findpwdbtn").classList.add("d-none");
+    fetch("/signpage/pwdmail",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: document.getElementById("findpwdemail").value,
+      }),
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data == 1){
+        document.getElementById("spinnerbtn").classList.add("d-none");
+        document.getElementById("findpwdbtn").classList.remove("d-none");
+        document.getElementById("closefindpwd").click();
+        alertid.innerText = "이메일을 전송하였습니다. 확인해주세요";
+        alertid.style = "display:block";
+      }else if(data == 2){
+        document.getElementById("spinnerbtn").classList.add("d-none");
+        document.getElementById("findpwdbtn").classList.remove("d-none");
+        document.getElementById("findpwdalerttext").innerText = "가입되지 않은 이메일입니다. 다시 확인해 주세요."
+        document.getElementById("findpwdalert").classList.remove("d-none")
+      }
+    })
+  })
 
   sbmBtn.addEventListener("click", goSubmit);
 

@@ -49,7 +49,6 @@ router.post("/load_list", (req, res) => {
         newest = result[1].sort((a, b) => {
           return new Date(b.created) - new Date(a.created);
         });
-        console.log(result[1]);
       } else if (post.order == 2) {
         file_list = result[1].sort((a, b) => {
           let x = a.file_name.toLowerCase();

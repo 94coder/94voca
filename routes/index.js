@@ -58,29 +58,15 @@ router.post("*", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   if (!auth.IsOwner(req, res)) {
-    db.query(
-      `SELECT email,nickname FROM localuser
-    `,
-      (err, checked) => {
-        const checked_email = new Array();
-        const checked_nickname = new Array();
-        for (let e of checked) {
-          checked_email.push(e.email);
-          checked_nickname.push(e.nickname);
-        }
-        const fmsg = req.flash();
-        let feedback = "";
-        if (fmsg.error) {
-          feedback = fmsg.error[0];
-        }
-        res.render("template", {
-          page: "./signpage/signpage",
-          errmsg: feedback,
-          email_list: checked_email,
-          nick_list: checked_nickname,
-        });
-      }
-    );
+    const fmsg = req.flash();
+    let feedback = "";
+    if (fmsg.error) {
+      feedback = fmsg.error[0];
+    }
+    res.render("template", {
+      page: "./signpage/signpage",
+      errmsg: feedback,
+    });
   } else {
     next();
   }

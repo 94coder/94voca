@@ -29,6 +29,7 @@
 .folder_wrapper {
   border-right: 1px solid lightgray;
   padding-right: 10px;
+  min-width: 270px;
 }
 
 .now_folder {

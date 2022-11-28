@@ -10,7 +10,6 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const mymodule = require("../lib/mymodule");
 const nodemailer = require("nodemailer");
-const smtpTransport = require("nodemailer-smtp-transport");
 const mailer = require("../lib/config").mailstore;
 
 const passport = require("../lib/passport")();
@@ -194,16 +193,14 @@ router.post("/pwdmail", (req, res) => {
               `,
             [hash, post.email],
             (err, result) => {
-              var transporter = nodemailer.createTransport(
-                smtpTransport({
-                  service: "gmail",
-                  host: "smtp.gmail.com",
-                  auth: {
-                    user: mailer.mail,
-                    pass: mailer.mailpwd,
-                  },
-                })
-              );
+              let transporter = nodemailer.createTransport({
+                service: "gmail",
+                host: "smtp.gmail.com",
+                auth: {
+                  user: mailer.mail,
+                  pass: mailer.mailpwd,
+                },
+              });
 
               var mailOptions = {
                 from: mailer.mail,
@@ -219,24 +216,14 @@ router.post("/pwdmail", (req, res) => {
                 if (error) {
                   console.log(error);
                 } else {
-                  res.send(`
-                  <script>
-                    alert('메일을 확인해주세요');
-                    window.location.href = '/';
-                  </script>
-                  `);
+                  res.send("1");
                 }
               });
             }
           );
         });
       } else {
-        res.send(`
-        <script>
-          alert('가입되지 않은 이메일입니다');
-          window.location.href = '/';
-        </script>
-        `);
+        res.send("2");
       }
     }
   );
@@ -264,5 +251,24 @@ router.get(
     failureRedirect: "/",
   })
 );
+
+router.post("/check_info", (req, res) => {
+  const post = req.body;
+  db.query(
+    `SELECT email,nickname FROM localuser
+  `,
+    (err, result) => {
+      const mail = result.filter((it) => it.email.includes(post.email));
+      const nick = result.filter((it) => it.nickname.includes(post.nickname));
+      if (mail[0]) {
+        res.send("1");
+      } else if (nick[0]) {
+        res.send("2");
+      } else {
+        res.send("3");
+      }
+    }
+  );
+});
 
 module.exports = router;
