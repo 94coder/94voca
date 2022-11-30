@@ -75,8 +75,8 @@
   padding: 10px 3px 0px 3px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  width: 260px;
-  height: 120px;
+  /* width: 260px;
+  height: 120px; */
 }
 
 .sha_voca_file {
@@ -156,6 +156,13 @@
 
 .dropbtn:hover {
   cursor: pointer;
+}
+
+.file_row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+  row-gap: 10px;
+  column-gap: 20px;
 }
 
 .file_btn {
@@ -297,6 +304,24 @@
 
 .sha_tab {
   margin-left: 30px;
+}
+
+@media only screen and (max-width: 1150px) {
+  .file_row {
+    grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+  }
+}
+
+@media only screen and (max-width: 930px) {
+  .file_row {
+    grid-template-columns: repeat(auto-fill, minmax(40%, auto));
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .file_row {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media only screen and (max-width: 480px) {

@@ -145,48 +145,46 @@
                 )'>이름순</button></li>
             </ul>
           </div>
-          <div class="voca_file_list row row-cols-auto mt-5" id="file_list_wrapper_id">
+          <div class="voca_file_list file_row mt-5" id="file_list_wrapper_id">
             <% for(let i=0; i<file.length; i++){ %>
-                <div class="col">
-                  <div class="voca_file text-center m-2">                    
-                      <div class="fileTitle">
-                        <button class="icon_btn cursor" onclick="goFav('<%= file[i].file_id %>','<%- i %>')"><img src="/icons/star<%= file[i].favorites %>.png" class="icon" id="file_fav_img<%- i %>" /></button>
-                        <h6><%= file[i].file_name %></h6>
-                        <div class="btn-group dropend dropbtn">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-toggle bi bi-three-dots-vertical dot3" viewBox="0 0 16 16"  data-bs-toggle="dropdown" aria-expanded="false">
-                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                          </svg>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModifyFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장명 변경</a></li>
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#DeleteFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장 삭제</a></li>
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#MoveFileModal" onclick="selectFile('<%= file[i].file_id %>'),selectMove(document.getElementById('selected_folder').value,document.getElementById('parent_folder').value,document.getElementById('now_folder_name').value)">단어장 이동</a></li>
-                          <li>
-                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ShareFileModal" onclick="sharingFile('<%= file[i].file_id %>','<%= file[i].shared %>','<%= i %>')" id="share_file_btn_id<%- i %>">
-                              <% if(file[i].shared == 0){ %>
-                              단어장 공유
-                              <% }else{ %>
-                              공유 해제하기
-                              <% } %>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      </div>
-                      <div class="filebtnRow">
-                        <form action="/voca/voca_load" method="post" name="loadingvoca">
-                          <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
-                          <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
-                          <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
-                          <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
-                        </form>
-                        <form action="/voca/voca_study" method="post" name="studyingvoca">
-                          <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
-                          <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
-                          <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
-                          <input type="submit" class="btn btn-outline-secondary file_btn" value="공부">
-                        </form>
-                      </div>
-                  </div>
+                <div class="voca_file text-center">                    
+                    <div class="fileTitle">
+                      <button class="icon_btn cursor" onclick="goFav('<%= file[i].file_id %>','<%- i %>')"><img src="/icons/star<%= file[i].favorites %>.png" class="icon" id="file_fav_img<%- i %>" /></button>
+                      <h6><%= file[i].file_name %></h6>
+                      <div class="btn-group dropend dropbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-toggle bi bi-three-dots-vertical dot3" viewBox="0 0 16 16"  data-bs-toggle="dropdown" aria-expanded="false">
+                          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        </svg>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModifyFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장명 변경</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#DeleteFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장 삭제</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#MoveFileModal" onclick="selectFile('<%= file[i].file_id %>'),selectMove(document.getElementById('selected_folder').value,document.getElementById('parent_folder').value,document.getElementById('now_folder_name').value)">단어장 이동</a></li>
+                        <li>
+                          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ShareFileModal" onclick="sharingFile('<%= file[i].file_id %>','<%= file[i].shared %>','<%= i %>')" id="share_file_btn_id<%- i %>">
+                            <% if(file[i].shared == 0){ %>
+                            단어장 공유
+                            <% }else{ %>
+                            공유 해제하기
+                            <% } %>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                    <div class="filebtnRow">
+                      <form action="/voca/voca_load" method="post" name="loadingvoca">
+                        <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+                        <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
+                        <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
+                        <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
+                      </form>
+                      <form action="/voca/voca_study" method="post" name="studyingvoca">
+                        <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+                        <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
+                        <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
+                        <input type="submit" class="btn btn-outline-secondary file_btn" value="공부">
+                      </form>
+                    </div>
                 </div>
               <% } %>
           </div>
