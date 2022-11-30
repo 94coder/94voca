@@ -221,7 +221,7 @@
 .data_box,
 .create_data_box {
   display: grid;
-  grid-template-columns: 1fr 9fr;
+  grid-template-columns: 2fr 8fr;
 }
 
 .create_data_box {
@@ -321,6 +321,11 @@
 @media only screen and (max-width: 750px) {
   .file_row {
     grid-template-columns: 1fr;
+  }
+  .data_box,
+  .create_data_box {
+    display: grid;
+    grid-template-columns: 3fr 8fr;
   }
 }
 
