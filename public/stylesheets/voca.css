@@ -325,6 +325,10 @@
     display: none;
   }
 
+  #file_list_wrapper_id {
+    margin-bottom: 150px;
+  }
+
   .file_wrapper {
     margin-top: 50px;
   }
@@ -338,5 +342,9 @@
   .mod_data_grid {
     display: grid;
     grid-template-columns: 3fr 6fr;
+  }
+
+  .load_footer {
+    height: 100px;
   }
 }

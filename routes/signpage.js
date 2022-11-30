@@ -14,6 +14,17 @@ const mailer = require("../lib/config").mailstore;
 
 const passport = require("../lib/passport")();
 
+const AWS = require("aws-sdk");
+const aws_info = require("../lib/config").aws;
+
+const SES_CONFIG = {
+  accessKeyId: aws_info.accessKeyId,
+  secretAccessKey: aws_info.secretAccessKey,
+  region: aws_info.k_region,
+};
+
+const AWS_SES = new AWS.SES(SES_CONFIG);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -178,58 +189,82 @@ router.post(
 );
 
 router.post("/pwdmail", (req, res) => {
-  const post = req.body;
-  db.query(
-    `SELECT email FROM localuser WHERE email=?
-  `,
-    [post.email],
-    (err, result) => {
-      if (result[0]) {
-        const newpwd = Math.random().toString(36).slice(2);
-        bcrypt.hash(newpwd, 10, (err, hash) => {
-          db.query(
-            `
-              UPDATE localuser SET password=? WHERE email=?
-              `,
-            [hash, post.email],
-            (err, result) => {
-              let transporter = nodemailer.createTransport({
-                service: "gmail",
-                host: "smtp.gmail.com",
-                port: 465,
-                secure: true,
-                auth: {
-                  user: mailer.mail,
-                  pass: mailer.mailpwd,
-                },
-              });
-
-              var mailOptions = {
-                from: mailer.mail,
-                to: post.email,
-                subject: "94voca 에서의 새 비밀번호를 확인해주세요",
-                text: `
-                새로 발급된 임시비밀번호 : ' ${newpwd} '
-                로그인 후 비밀번호를 꼭 변경해주세요.
-                `,
-              };
-
-              transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                  console.log(error);
-                } else {
-                  res.send("1");
-                }
-              });
-            }
-          );
-        });
-      } else {
-        res.send("2");
-      }
-    }
-  );
+  let params = {
+    Source: "94voca2022@gmail.com",
+    Destination: {
+      ToAddresses: ["94voca2022@gmail.com"],
+    },
+    ReplyToAddresses: [],
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: "This is the body of my email!",
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: `Hello!`,
+      },
+    },
+  };
+  AWS_SES.sendEmail(params).promise();
+  res.send("1");
 });
+
+// router.post("/pwdmail", (req, res) => {
+//   const post = req.body;
+//   db.query(
+//     `SELECT email FROM localuser WHERE email=?
+//   `,
+//     [post.email],
+//     (err, result) => {
+//       if (result[0]) {
+//         const newpwd = Math.random().toString(36).slice(2);
+//         bcrypt.hash(newpwd, 10, (err, hash) => {
+//           db.query(
+//             `
+//               UPDATE localuser SET password=? WHERE email=?
+//               `,
+//             [hash, post.email],
+//             (err, result) => {
+//               let transporter = nodemailer.createTransport({
+//                 service: "gmail",
+//                 host: "smtp.gmail.com",
+//                 port: 465,
+//                 secure: true,
+//                 auth: {
+//                   user: mailer.mail,
+//                   pass: mailer.mailpwd,
+//                 },
+//               });
+
+//               var mailOptions = {
+//                 from: mailer.mail,
+//                 to: post.email,
+//                 subject: "94voca 에서의 새 비밀번호를 확인해주세요",
+//                 text: `
+//                 새로 발급된 임시비밀번호 : ' ${newpwd} '
+//                 로그인 후 비밀번호를 꼭 변경해주세요.
+//                 `,
+//               };
+
+//               transporter.sendMail(mailOptions, (error, info) => {
+//                 if (error) {
+//                   console.log(error);
+//                 } else {
+//                   res.send("1");
+//                 }
+//               });
+//             }
+//           );
+//         });
+//       } else {
+//         res.send("2");
+//       }
+//     }
+//   );
+// });
 
 router.get(
   "/google",

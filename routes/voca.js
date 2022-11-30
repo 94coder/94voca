@@ -11,13 +11,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
 const AWS = require("aws-sdk");
-const pollystat = require("../lib/config").polly;
+
+const aws_info = require("../lib/config").aws;
 
 const Polly = new AWS.Polly({
-  accessKeyId: pollystat.accessKeyId,
-  secretAccessKey: pollystat.secretAccessKey,
-  signatureVersion: pollystat.signatureVersion,
-  region: pollystat.region,
+  accessKeyId: aws_info.accessKeyId,
+  secretAccessKey: aws_info.secretAccessKey,
+  signatureVersion: aws_info.signatureVersion,
+  region: aws_info.region,
 });
 
 router.get("*", (req, res, next) => {
