@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 router.post("/modify_folder", (req, res) => {
   const post = req.body;
   db.query(
-    `UPDATE voca_folder SET folder_name=? WHERE folder_id=?;
+    `UPDATE voca_folder SET folder_name=? WHERE folder_id=?
     `,
     [post.new_fd_name, post.fd_id],
     (err, result) => {

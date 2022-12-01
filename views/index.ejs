@@ -88,10 +88,77 @@
               >문의하기</a
             >
           </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item more_drop" id="dark_mode_btn"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-moon-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"
+                />
+              </svg>
+              다크 모드</a
+            >
+          </li>
         </ul>
       </li>
     </ul>
   </nav>
+  <a href="javascript:history.back()" class="text-dark">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="currentColor"
+      class="bi bi-arrow-left-circle position-fixed opacity-50"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+      />
+    </svg>
+  </a>
+  <div
+    class="btn-group-vertical position-fixed end-0 opacity-50 me-1"
+    role="group"
+    aria-label="Vertical button group"
+  >
+    <button type="button" class="btn btn-outline-dark pt-1 pb-1" id="go_header">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        fill="currentColor"
+        class="bi bi-caret-up-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+        />
+      </svg>
+    </button>
+    <button type="button" class="btn btn-outline-dark pt-1 pb-1" id="go_footer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        fill="currentColor"
+        class="bi bi-caret-down-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+        />
+      </svg>
+    </button>
+  </div>
   <div
     class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3"
   >
@@ -1255,4 +1322,19 @@
         });
       });
   };
+
+  document.getElementById("dark_mode_btn").addEventListener("click", () => {
+    fetch("/voca/dark_mode");
+  });
+  document.getElementById("go_header").addEventListener("click", () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  });
+
+  document.getElementById("go_footer").addEventListener("click", () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  });
 </script>

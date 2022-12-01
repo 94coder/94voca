@@ -148,4 +148,27 @@ router.post("/tts", (req, res) => {
   );
 });
 
+router.get("/dark_mode", (req, res) => {
+  const user = req.user[0];
+  if (user.darkmode == 0) {
+    db.query(
+      `UPDATE localuser SET darkmode=1 WHERE user_id=?
+    `,
+      [user.user_id],
+      (err, result) => {
+        res.send("0");
+      }
+    );
+  } else {
+    db.query(
+      `UPDATE localuser SET darkmode=0 WHERE user_id=?
+    `,
+      [user.user_id],
+      (err, result) => {
+        res.send("0");
+      }
+    );
+  }
+});
+
 module.exports = router;

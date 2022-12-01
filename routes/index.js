@@ -57,6 +57,7 @@ router.post("*", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
+  // res.redirect("/inspecting");
   if (!auth.IsOwner(req, res)) {
     const fmsg = req.flash();
     let feedback = "";
@@ -97,6 +98,12 @@ router.get("/", (req, res) => {
       );
     }
   );
+});
+
+router.get("/inspecting", (req, res) => {
+  res.render("template", {
+    page: "./inspect",
+  });
 });
 
 module.exports = router;
