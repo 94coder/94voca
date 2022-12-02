@@ -89,10 +89,16 @@ router.get("/", (req, res) => {
           res.render("template", {
             page: "./index",
             content: "./voca/voca_main",
-            selected_folder: fd_id,
-            pr_id: 0,
+            fd_id: fd_id,
+            pr_id: "0",
+            gpr_id: "0",
             folder: result2[0],
             file: result2[1],
+            fd_name: "Home",
+            pr_name: "0",
+            fav: "0",
+            sha: "0",
+            toast: "",
           });
         }
       );

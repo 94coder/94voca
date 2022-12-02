@@ -57,7 +57,14 @@ router.post("/create_folder", (req, res) => {
       `,
     [user.user_id, post.fd_id, post.new_fd_name],
     (err, result) => {
-      res.send("0");
+      body = mymodule.POST(
+        "/voca/main",
+        mymodule.HIDDEN(post.fd_id, post.pr_id) +
+          `
+        <input type="hidden" name="toast" value="폴더가 생성되었습니다" />
+        `
+      );
+      res.send(body);
     }
   );
 });

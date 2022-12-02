@@ -1,7 +1,13 @@
-<div class="logonpage">
-  <nav class="navbar navbar-expand-lg">
+<link
+  href="/stylesheets/logonstyle.css"
+  rel="stylesheet"
+  type="text/css"
+  id="logoncss"
+/>
+<div class="logonpage" color-theme="dark">
+  <nav class="navbar navbar-expand-lg border">
     <a class="navbar-brand brand_tab" href="/" id="titleid">94VOCA</a>
-    <ul class="nav nav-tabs justify-content-center nav-fill">
+    <ul class="nav nav-tabs justify-content-center nav-fill border-0">
       <li class="nav-item" id="voca_tab_click_id">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -110,23 +116,8 @@
       </li>
     </ul>
   </nav>
-  <a href="javascript:history.back()" class="text-dark">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
-      fill="currentColor"
-      class="bi bi-arrow-left-circle position-fixed opacity-50"
-      viewBox="0 0 16 16"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
-      />
-    </svg>
-  </a>
   <div
-    class="btn-group-vertical position-fixed end-0 opacity-50 me-1"
+    class="btn-group-vertical position-fixed end-0 opacity-50 me-2 mt-2 upanddown"
     role="group"
     aria-label="Vertical button group"
   >
@@ -909,9 +900,9 @@
     }
   };
 
-  const toastLive = document.getElementById("liveToast");
-  const closeToast = document.getElementById("closeToast");
-  const toastMsg = document.getElementById("toastMsg");
+  let toastLive = document.getElementById("liveToast");
+  let closeToast = document.getElementById("closeToast");
+  let toastMsg = document.getElementById("toastMsg");
 
   closeToast.addEventListener(
     "click",
@@ -1075,51 +1066,43 @@
         let fav_folderlist = "";
         for (let i = 0; i < fav_folder.length; i++) {
           fav_folderlist += `
-        <div class="dropdown text-center m-2">
-            <button type="button" class="btn dropdown-toggle fav_voca_folder" data-bs-toggle="dropdown" aria-expanded="false" onclick="loadMoreFav('${fav_folder[i].folder_id}','${i}')">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
-                <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
-              </svg>
-              ${fav_folder[i].folder_name}
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <button class="dropdown-item" onclick="unFavFolder('${fav_folder[i].folder_id}')">
-                  <img src="/icons/star0.png" class="icon3" />
-                  즐겨찾기 해제
-                </button>
-              </li>
-              <div id="drop_fav${i}">
-              </div>
-            </ul>
-        </div>
-    `;
+            <form action="/voca/main" method="post">
+              <button type="submit" class="btn fav_voca_folder m-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
+                  <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+                </svg>
+                ${fav_folder[i].folder_name}
+              </button>
+              <input type="hidden" name="fd_id" value="${fav_folder[i].folder_id}" />
+              <input type="hidden" name="pr_id" value="${fav_folder[i].parent_id}" />
+            </form>
+          `;
         }
         for (let i = 0; i < fav_file.length; i++) {
           fav_filelist += `
-        <div class="fav_voca_file text-center m-2">                    
-          <div class="fileTitle">
-            <button class="icon_btn cursor" onclick="unFavFile('${fav_file[i].file_id}')">
-              <img src="/icons/star1.png" class="icon" />
-            </button>
-            <h6>${fav_file[i].file_name}</h6>
+            <div class="fav_voca_file text-center m-2">
+              <div class="fileTitle">
+                <button class="icon_btn cursor" onclick="unFavFile('${fav_file[i].file_id}')">
+                  <img src="/icons/star1.png" class="icon" />
+                </button>
+                <h6>${fav_file[i].file_name}</h6>
+              </div>
+            <div class="filebtnRow">
+              <form action="/voca/voca_load" method="post" name="loadingvoca">
+                <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+                <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
+                <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
+                <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
+              </form>
+              <form action="/voca/voca_study" method="post" name="loadingvoca">
+                <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
+                <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
+                <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
+                <input type="submit" class="btn btn-outline-secondary file_btn" value="공부" />
+              </form>
+            </div>
           </div>
-        <div class="filebtnRow">
-          <form action="/voca/voca_load" method="post" name="loadingvoca">
-            <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
-            <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
-            <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
-            <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
-          </form>
-          <form action="/voca/voca_study" method="post" name="loadingvoca">
-            <input type="hidden" name="fl_id" value="${fav_file[i].file_id}" />
-            <input type="hidden" name="fl_name" value="${fav_file[i].file_name}" />
-            <input type="hidden" name="fd_id" value="${fav_file[i].folder_id}" />
-            <input type="submit" class="btn btn-outline-secondary file_btn" value="공부" />
-          </form>
-        </div>
-      </div>
-      `;
+          `;
         }
         document.getElementById("fav_fl_area").innerHTML = fav_filelist;
         document.getElementById("fav_fd_area").innerHTML = fav_folderlist;
@@ -1129,60 +1112,6 @@
   document
     .getElementById("fav_load_btn")
     .addEventListener("click", loadFavorites);
-
-  const loadMoreFav = (fd_id, i) => {
-    fetch("/voca/load_fav_file", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fd_id: fd_id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((list) => {
-        let fav_filelist = "";
-        for (let i = 0; i < list.length; i++) {
-          fav_filelist += `
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <form action="/voca/voca_load" method="post" name="loadingvoca">
-              <input type="hidden" name="fl_id" value="${list[i].file_id}" />
-              <input type="hidden" name="fl_name" value="${list[i].file_name}" />
-              <input type="hidden" name="fd_id" value="${list[i].folder_id}" />
-              <button class="dropdown-item" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
-                  <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                </svg>
-              ${list[i].file_name}
-              </button>
-            </form>
-          </li>
-          
-          `;
-        }
-        document.getElementById("drop_fav" + i).innerHTML = fav_filelist;
-      });
-  };
-
-  const unFavFolder = (fd_id) => {
-    fetch("/voca/favorites_folder", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fd_id: fd_id,
-      }),
-    }).then((res) => {
-      toastLive.style = "display:block";
-      toastMsg.innerText = "즐겨찾기가 해제되었습니다";
-      loadFavorites();
-    });
-  };
 
   const unFavFile = (fl_id) => {
     fetch("/voca/favorites_file", {
@@ -1245,7 +1174,7 @@
                   <div class="mb-5 text-break">${list[i].message}</div>
                   <div class="mb-5">문의 날짜 : ${list[i].received}</div>
                   <div>답변 : ${list[i].answer}</div>
-                  
+
                 </div>
               </div>
             </div>
@@ -1323,8 +1252,34 @@
       });
   };
 
+  if (
+    localStorage.getItem("color-theme") == null ||
+    localStorage.getItem("color-theme") == "bright"
+  ) {
+    document
+      .getElementById("logoncss")
+      .setAttribute("href", "/stylesheets/logonstyle.css");
+  } else {
+    document
+      .getElementById("logoncss")
+      .setAttribute("href", "/stylesheets/darkmode.css");
+  }
+
   document.getElementById("dark_mode_btn").addEventListener("click", () => {
-    fetch("/voca/dark_mode");
+    if (
+      localStorage.getItem("color-theme") == null ||
+      localStorage.getItem("color-theme") == "bright"
+    ) {
+      localStorage.setItem("color-theme", "dark");
+      document
+        .getElementById("logoncss")
+        .setAttribute("href", "/stylesheets/darkmode.css");
+    } else {
+      localStorage.setItem("color-theme", "bright");
+      document
+        .getElementById("logoncss")
+        .setAttribute("href", "/stylesheets/logonstyle.css");
+    }
   });
   document.getElementById("go_header").addEventListener("click", () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

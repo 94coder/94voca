@@ -192,7 +192,7 @@ router.post("/pwdmail", (req, res) => {
   let params = {
     Source: "94voca2022@gmail.com",
     Destination: {
-      ToAddresses: ["94voca2022@gmail.com"],
+      ToAddresses: ["billlee2656@gmail.com"],
     },
     ReplyToAddresses: [],
     Message: {

@@ -1,3 +1,10 @@
+@import url("toggle_switch.css");
+@import url("voca.css");
+
+body {
+  background-color: white;
+}
+
 .logonpage {
   width: 100%;
   height: 100%;
@@ -66,4 +73,19 @@
   .navbar > .nav-tabs {
     width: 100%;
   }
+}
+
+:root[color-theme="light"] {
+  --background: #fff;
+  --boxColor: #000;
+}
+
+:root[color-theme="dark"] {
+  --background: #000;
+  --boxColor: #fff;
+}
+
+.logonpage {
+  background: var(--boxColor);
+  color: var(--background);
 }

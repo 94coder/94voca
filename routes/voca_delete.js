@@ -6,6 +6,7 @@ const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
 
 const bodyParser = require("body-parser");
+const mymodule = require("../lib/mymodule");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -45,7 +46,14 @@ router.post("/delete_folder", (req, res) => {
   `,
     [post.fd_id, post.fd_id, post.fd_id],
     (err, result) => {
-      res.send("0");
+      body = mymodule.POST(
+        "/voca/main",
+        mymodule.HIDDEN(post.pr_id, post.gpr_id) +
+          `
+        <input type="hidden" name="toast" value="폴더가 삭제되었습니다" />
+        `
+      );
+      res.send(body);
     }
   );
 });

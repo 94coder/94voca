@@ -27,13 +27,13 @@
 }
 
 .folder_wrapper {
-  border-right: 1px solid lightgray;
+  border-right: 1px solid gray;
   padding-right: 10px;
   min-width: 270px;
 }
 
 .now_folder {
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid gray;
   padding: 10px;
 }
 
@@ -45,6 +45,9 @@
 .fd_btn {
   margin: 3px;
   padding: 5px 0;
+  background-color: #5a5a5a;
+  border: 1px solid gray;
+  color: #d3d3d3;
 }
 
 .sub_fd_btn :hover {
@@ -58,22 +61,24 @@
 .folder {
   padding: 10px;
   border: none;
-  background-color: white;
+  background-color: #5a5a5a;
   width: 100%;
   text-align: left;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
   margin: 5px 0px;
+  color: #d3d3d3;
 }
 
 .folder:hover {
   background-color: lightgray;
+  color: black;
   border-radius: 5px;
 }
 
 .voca_file {
   padding: 10px 3px 0px 3px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
   /* width: 260px;
   height: 120px; */
@@ -81,7 +86,7 @@
 
 .sha_voca_file {
   padding: 10px 3px 0px 3px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
   width: 260px;
   height: 160px;
@@ -89,13 +94,15 @@
 
 .fav_voca_folder {
   padding: 10px 5px 5px 5px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
   width: 250px;
+  color: #d3d3d3;
 }
 
 .fav_voca_folder:hover {
   border: 1px solid black;
+  background-color: gray;
 }
 
 #fd_fav_img {
@@ -105,14 +112,16 @@
 
 .sha_voca_folder {
   padding: 10px 5px 5px 5px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
   width: 250px;
   height: 150px;
+  color: #d3d3d3;
 }
 
 .sha_voca_folder:hover {
   border: 1px solid black;
+  background-color: gray;
 }
 
 .sh_fd_user {
@@ -125,13 +134,13 @@
 
 .fav_voca_file {
   padding: 10px 5px 5px 5px;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   border-radius: 5px;
 }
 
 .icon_btn {
   border: none;
-  background-color: white;
+  background: none;
 }
 
 .icon {
@@ -158,6 +167,14 @@
   cursor: pointer;
 }
 
+.text-secondary {
+  color: #d3d3d3 !important;
+}
+
+.border {
+  border: 1px solid gray !important;
+}
+
 .file_row {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(20%, auto));
@@ -168,6 +185,7 @@
 .file_btn {
   margin: 5px;
   min-width: 80px;
+  color: #d3d3d3;
 }
 
 .filebtnRow {
@@ -212,7 +230,7 @@
 
 .loaded_data,
 .create_data_area {
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   margin: 10px;
   border-radius: 5px;
   padding: 10px;
@@ -230,16 +248,20 @@
 
 .data_type {
   padding: 10px;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid gray;
 }
 
 .data_underline {
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid gray;
 }
 
 .data {
   padding: 5px;
   word-break: break-all;
+}
+
+.data > .form-control {
+  background-color: lightgray;
 }
 
 .datanum {
@@ -255,6 +277,8 @@
 .create_page_btn_area > button {
   min-width: 100px;
   margin: 20px;
+  border: 1px solid gray;
+  color: #d3d3d3;
 }
 
 .data_input {
@@ -307,7 +331,9 @@
 }
 
 .switch {
+  padding: 0;
   margin-top: 5px;
+  height: 25px;
 }
 
 @media only screen and (max-width: 1150px) {

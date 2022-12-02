@@ -9,8 +9,9 @@
                 <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
                 </svg>
               </span>
-              <span id="not_root">
-                <span id="parent_name">
+              <span id="not_root" class="d-none">
+                <span>
+                  <%= pr_name %>
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +28,7 @@
                 </svg>
               </span>
               <span id="selected_folder_name">
-                Home
+                <%= fd_name %>
               </span>
           </div>
 
@@ -62,7 +63,7 @@
                   </li>
                   <li><hr class="dropdown-divider"></li>
                   <li class="dropdown-item cursor" id="fd_fav_btn">
-                    <img class="icon2" id="fd_fav_img" />
+                    <img class="icon2" src="/icons/star<%= fav %>.png" id="fd_fav_img" />
                     <span id="fd_fav_words"></span>
                   </li>
                   <li><hr class="dropdown-divider"></li>
@@ -73,7 +74,7 @@
                     <span id="fd_sh_words"></span>
                   </li>
                   <li><hr class="dropdown-divider"></li>
-                  <li class="dropdown-item cursor" data-bs-toggle="modal" data-bs-target="#MoveFolderModal" onclick="selectMove2('<%= selected_folder %>','0','Home')">
+                  <li class="dropdown-item cursor" data-bs-toggle="modal" data-bs-target="#MoveFolderModal" onclick="selectMove2('<%= fd_id %>','<%= pr_id %>','<%= fd_name %>')">
                     <i class="fa-solid fa-folder-tree"></i>
                     폴더 이동
                   </li>
@@ -102,21 +103,34 @@
           <span class="fold_icon"></span>
         </div>
         <div class="folder_list_wrapper" id="folder_list_wrapper_id">
-          <% for(let i=0; i<folder.length; i++){ %>
-            <button class="folder cursor" type="button" onclick="selectFolder('<%= folder[i].folder_id %>','<%= folder[i].parent_id %>','<%= folder[i].folder_name %>','<%= folder[i].favorites%>','<%= folder[i].shared %>',document.getElementById('selected_order').value)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
-                <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
-              </svg>
-              <%= folder[i].folder_name %>
+          <form action="/voca/main" method="post">
+            <button class="btn folder cursor d-none" id="redirect_back" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"/>
+              </svg> 상위 폴더로
             </button>
+            <input type="hidden" name="fd_id" value="<%= pr_id %>" />
+            <input type="hidden" name="pr_id" value="<%= gpr_id %>" />
+          </form>
+          <% for(let i=0; i<folder.length; i++){ %>
+            <form action="/voca/main" method="post">
+              <button class="folder cursor" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
+                  <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+                </svg>
+                <%= folder[i].folder_name %>
+              </button>
+              <input type="hidden" name="fd_id" value="<%= folder[i].folder_id %>" />
+              <input type="hidden" name="pr_id" value="<%= folder[i].parent_id %>" />
+            </form>
           <% } %>
         </div>
       </div>
       
       <div class="file_wrapper text-center">
         <div class="container-fluid text-center d-flex flex-column position-relative">
-          <div class="dropdown position-absolute top-0 end-0">
-            <button class="btn btn-outline-light border text-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="dropdown position-absolute top-0 end-0 me-2">
+            <button class="btn btn-outline-light border text-secondary dropdown-toggle" id="order_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list mb-1" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
               </svg>
@@ -145,10 +159,10 @@
           </div>
           <div class="voca_file_list file_row mt-5" id="file_list_wrapper_id">
             <% for(let i=0; i<file.length; i++){ %>
-                <div class="voca_file text-center">                    
+                <div class="voca_file text-center" id="file_id<%- file[i].file_id %>">                    
                     <div class="fileTitle">
                       <button class="icon_btn cursor" onclick="goFav('<%= file[i].file_id %>','<%- i %>')"><img src="/icons/star<%= file[i].favorites %>.png" class="icon" id="file_fav_img<%- i %>" /></button>
-                      <h6><%= file[i].file_name %></h6>
+                      <h6 id="file_name<%- file[i].file_id %>"><%= file[i].file_name %></h6>
                       <div class="btn-group dropend dropbtn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-toggle bi bi-three-dots-vertical dot3" viewBox="0 0 16 16"  data-bs-toggle="dropdown" aria-expanded="false">
                           <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -156,7 +170,7 @@
                       <ul class="dropdown-menu">
                         <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModifyFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장명 변경</a></li>
                         <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#DeleteFileModal" onclick="selectFile('<%= file[i].file_id %>')">단어장 삭제</a></li>
-                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#MoveFileModal" onclick="selectFile('<%= file[i].file_id %>'),selectMove(document.getElementById('selected_folder').value,document.getElementById('parent_folder').value,document.getElementById('now_folder_name').value)">단어장 이동</a></li>
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#MoveFileModal" onclick="selectFile('<%= file[i].file_id %>'),selectMove('<%= fd_id %>','<%= pr_id %>','<%= fd_name %>')">단어장 이동</a></li>
                         <li>
                           <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ShareFileModal" onclick="sharingFile('<%= file[i].file_id %>','<%= file[i].shared %>','<%= i %>')" id="share_file_btn_id<%- i %>">
                             <% if(file[i].shared == 0){ %>
@@ -174,12 +188,14 @@
                         <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
                         <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
                         <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
+                        <input type="hidden" name="pr_id" value="<%= pr_id %>" />
                         <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
                       </form>
                       <form action="/voca/voca_study" method="post" name="studyingvoca">
                         <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
                         <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
                         <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
+                        <input type="hidden" name="pr_id" value="<%= pr_id %>" />
                         <input type="submit" class="btn btn-outline-secondary file_btn" value="공부">
                       </form>
                     </div>
@@ -201,7 +217,11 @@
         <h5 class="modal-title">폴더 생성</h5>
       </div>
       <div class="modal-body">
-        <input type="text" placeholder="추가하실 폴더이름을 입력해주세요"  id="newfolderid" class="form-control is-val w100"  minlength="1" maxlength="21"  />
+        <form action="/voca/create_folder" method="post" id="create_folder_form">
+          <input type="text" placeholder="추가하실 폴더이름을 입력해주세요" name="new_fd_name" id="newfolderid" class="form-control is-val w100"  minlength="1" maxlength="21"  />
+          <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+          <input type="hidden" name="pr_id" value="<%= pr_id %>" />
+        </form>
         <div class="invalid-feedback">
           폴더명은 1~20자로 해주세요
         </div>
@@ -366,7 +386,7 @@
       </div>
       <div class="modal-body">
         <span id="sharing_file_Msg"></span>
-        <br>
+        <br />
         <div class="share_info" id="sharing_file_info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle share_info_icon" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
           <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
@@ -475,12 +495,6 @@
     </div>
   </div>
 </div>
-
-<input type="hidden" id="selected_folder" value="<%= selected_folder %>" />
-<input type="hidden" id="parent_folder" value="0" />
-<input type="hidden" id="now_folder_name" value="Home" />
-<input type="hidden" id="folder_favorites" value="" />
-<input type="hidden" id="folder_shared" value="" />
 <input type="hidden" id="selected_file" />
 <input type="hidden" id="selected_file_num" />
 <input type="hidden" id="move_selected_folder" />
@@ -488,174 +502,53 @@
 <input type="hidden" id="move_now_folder_name" />
 <input type="hidden" id="selected_order" value="0" />
 
+<form id="posting_form" method="post">
+  <input type="hidden" name="fd_id" value="<%= fd_id %>" id="post_fd_id" />
+  <input type="hidden" name="pr_id" value="<%= pr_id %>" id="post_pr_id" />
+  <input type="hidden" name="gpr_id" value="<%= gpr_id %>" />
+  <input type="hidden" name="fl_id" id="post_fl_id" />
+  <input type="hidden" name="toast" id="post_toast" />
+</form>
+
 <script>
-  window.onresize = () => {
-    if (window.innerWidth < 480) {
-      document
-        .getElementById("file_list_wrapper_id")
-        .classList.remove("row", "row-cols-auto");
-    }else{
-      document
-        .getElementById("file_list_wrapper_id")
-        .classList.add("row", "row-cols-auto");
-    }
+  toastLive = document.getElementById("liveToast");
+  closeToast = document.getElementById("closeToast");
+  toastMsg = document.getElementById("toastMsg");
+  if("<%= pr_id %>" == 0){
+    document.getElementById("not_root").classList.add("d-none")
+    document.getElementById("redirect_back").classList.add("d-none")
+    document.getElementById("folder_btn_group").classList.add("d-none")
+  }else{
+    document.getElementById("not_root").classList.remove("d-none")
+    document.getElementById("redirect_back").classList.remove("d-none")
+    document.getElementById("folder_btn_group").classList.remove("d-none")
   }
 
-  const selectFolder = (fd_id, pr_id, fd_name, fav, sha, order) => {
-    document.getElementById("fav_mod_cancle").click();
-    document.getElementById("selected_folder").value = fd_id;
-    document.getElementById("parent_folder").value = pr_id;
-    document.getElementById("now_folder_name").value = fd_name;
-    document.getElementById("folder_favorites").value = fav;
-    document.getElementById("folder_shared").value = sha;
-    document.getElementById("selected_order").value = order;
+  if("<%= fav %>" == 0){
+    document.getElementById("fd_fav_words").innerText = "즐겨찾기 등록"
+  }else{
+    document.getElementById("fd_fav_words").innerText = "즐겨찾기 해제"
+  }
 
-    if (fav == 0) {
-      document.getElementById("fd_fav_img").src = "/icons/star0.png";
-      document.getElementById("fd_fav_words").innerText = "즐겨찾기 등록";
-    } else {
-      document.getElementById("fd_fav_img").src = "/icons/star1.png";
-      document.getElementById("fd_fav_words").innerText = "즐겨찾기 해제";
-    }
+  if("<%= sha %>" == 0){
+    document.getElementById("fd_sh_words").innerText = "폴더 공유하기"
+    document.getElementById("sharing_fd_info").style = "display : block"
+    document.getElementById("fd_sh_words").innerText = "폴더 공유하기"
+    document.getElementById("sharing_fd_Msg").innerText = "폴더를 회원들과 공유하시겠습니까?"
+    document.getElementById("sharing_fd_Msg2").innerText = '회원들이 알아보기 쉬운 폴더명으로 설정해주세요';
+    document.getElementById("sharing_fd_Btn").value = "공유"
+  }else{
+    document.getElementById("fd_sh_words").innerText = "폴더 공유해제"
+    document.getElementById("sharing_fd_info").style = "display : none"
+    document.getElementById("fd_sh_words").innerText = "폴더 공유해제"
+    document.getElementById("sharing_fd_Msg").innerText = "폴더를 공유 해제 하시겠습니까?"
+    document.getElementById("sharing_fd_Btn").value = "공유해제"
+  }
 
-    if (sha == 0) {
-      document.getElementById("sharing_fd_info").style = "display : block";
-      document.getElementById("fd_sh_words").innerText = "폴더 공유하기";
-      document.getElementById("sharing_fd_Msg").innerText =
-        "폴더를 회원들과 공유하시겠습니까?";
-      document.getElementById("sharing_fd_Msg2").innerText =
-        "회원들이 알아보기 쉬운 폴더명으로 설정해주세요";
-      document.getElementById("sharing_fd_Btn").value = "공유";
-    } else {
-      document.getElementById("sharing_fd_info").style = "display : none";
-      document.getElementById("fd_sh_words").innerText = "폴더 공유해제";
-      document.getElementById("sharing_fd_Msg").innerText =
-        "폴더를 공유 해제 하시겠습니까?";
-      document.getElementById("sharing_fd_Btn").value = "공유해제";
-    }
-
-    if(order == 0){
-      document.getElementById("select_order_id1").classList.add("active")
-      document.getElementById("select_order_id2").classList.remove("active")
-      document.getElementById("select_order_id3").classList.remove("active")
-    }else if(order ==1){
-      document.getElementById("select_order_id1").classList.remove("active")
-      document.getElementById("select_order_id2").classList.add("active")
-      document.getElementById("select_order_id3").classList.remove("active")
-    }else if(order ==2){
-      document.getElementById("select_order_id1").classList.remove("active")
-      document.getElementById("select_order_id2").classList.remove("active")
-      document.getElementById("select_order_id3").classList.add("active")
-    }
-
-    fetch("/voca/load_list", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fd_id: fd_id,
-        pr_id: pr_id,
-        order : order
-      }),
-    })
-      .then((res) => res.json())
-      .then((list) => {
-        document.getElementById("not_root").style = "display:inline";
-        document.getElementById("selected_folder_name").innerText = fd_name;
-
-        if (list[2][0]) {
-          fd_id2 = list[2][0].folder_id;
-          pr_id2 = list[2][0].parent_id;
-          fd_name2 = list[2][0].folder_name;
-          fav2 = list[2][0].favorites;
-          sha2 = list[2][0].shared;
-          document.getElementById("parent_name").innerText =
-            list[2][0].folder_name;
-            document.getElementById("folder_btn_group").classList.remove("d-none")
-        } else {
-          fd_id2 = '';
-          pr_id2 = '';
-          fd_name2 = '';
-          fav2 = '';
-          sha2 = '';
-          document.getElementById("not_root").style = "display:none";
-          document.getElementById("parent_name").innerText = "Home";
-          document.getElementById("folder_btn_group").classList.add("d-none")
-        }
-
-        let folder_list = list[0];
-        let file_list = list[1];
-
-        let show_folder = `
-          <div class="folder cursor" id="redirect_back" onclick="selectFolder('${fd_id2}','${pr_id2}','${fd_name2}','${fav2}','${sha2}', document.getElementById('selected_order').value)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"/>
-            </svg> 상위 폴더로
-          </div>
-          `;
-        let show_file = "";
-
-        for (let i = 0; i < folder_list.length; i++) {
-          show_folder += `
-                <button class="folder cursor" type="button" onclick="selectFolder('${folder_list[i].folder_id}','${folder_list[i].parent_id}','${folder_list[i].folder_name}','${folder_list[i].favorites}','${folder_list[i].shared}',document.getElementById('selected_order').value)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
-                    <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4H2.19zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
-                  </svg>
-                  ${folder_list[i].folder_name}
-                </button>
-                `;
-        }
-        for (let i = 0; i < file_list.length; i++) {
-          if (file_list[i].shared == 0) {
-            sharebtn = "단어장 공유";
-          } else {
-            sharebtn = "공유 해제하기";
-          }
-          show_file += `
-                <div class="col">
-                  <div class="voca_file text-center m-2">                    
-                      <div class="fileTitle">
-                        <button class="icon_btn cursor" onclick="goFav('${file_list[i].file_id}','${i}')"><img src="/icons/star${file_list[i].favorites}.png" class="icon" id="file_fav_img${i}" /></button>
-                        <h6>${file_list[i].file_name}</h6>
-                        <div class="btn-group dropend dropbtn">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="dropdown-toggle bi bi-three-dots-vertical dot3" viewBox="0 0 16 16"  data-bs-toggle="dropdown" aria-expanded="false">
-                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                          </svg>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModifyFileModal" onclick="selectFile(${file_list[i].file_id})">단어장명 변경</a></li>
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#DeleteFileModal" onclick="selectFile(${file_list[i].file_id})">단어장 삭제</a></li>
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#MoveFileModal" onclick="selectFile(${file_list[i].file_id}),selectMove(document.getElementById('selected_folder').value,document.getElementById('parent_folder').value,document.getElementById('now_folder_name').value)">단어장 이동</a></li>
-                          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ShareFileModal" onclick="sharingFile(${file_list[i].file_id},${file_list[i].shared},${i})" id="share_file_btn_id${i}">${sharebtn}</a></li>
-                        </ul>
-                      </div>
-                      </div>
-                      <div class="filebtnRow">
-                        <form action="/voca/voca_load" method="post" name="loadingvoca">
-                          <input type="hidden" name="fl_id" value="${file_list[i].file_id}" />
-                          <input type="hidden" name="fl_name" value="${file_list[i].file_name}" />
-                          <input type="hidden" name="fd_id" value="${file_list[i].folder_id}" />
-                          <input type="submit" class="btn btn-outline-secondary file_btn" value="열기" />
-                        </form>
-                        <form action="/voca/voca_study" method="post" name="studyingvoca">
-                          <input type="hidden" name="fl_id" value="${file_list[i].file_id}" />
-                          <input type="hidden" name="fl_name" value="${file_list[i].file_name}" />
-                          <input type="hidden" name="fd_id" value="${file_list[i].folder_id}" />
-                          <input type="submit" class="btn btn-outline-secondary file_btn" value="공부">
-                        </form>
-                      </div>
-                  </div>
-                </div>
-                `;
-        }
-        document.getElementById("folder_list_wrapper_id").innerHTML =
-          show_folder;
-        document.getElementById("file_list_wrapper_id").innerHTML = show_file;
-        if (pr_id == 0) {
-          document.getElementById("redirect_back").classList.add("dnone");
-        }
-      });
-  };
+  if("<%= toast %>"){
+    toastLive.style = "display:block"
+    toastMsg.innerText = "<%= toast %>"
+  }
 
   const upbtn = document.getElementById('upbtn');
   const downbtn = document.getElementById('downbtn');
@@ -675,12 +568,8 @@
   });
 
   document.getElementById("del_check_btn").addEventListener("click",()=>{
-    document.getElementById("del_folder_msg").innerText = `정말 ${document.getElementById('now_folder_name').value} 폴더를 삭제하시겠습니까?`
+    document.getElementById("del_folder_msg").innerText = "정말 <%= fd_name %> 폴더를 삭제하시겠습니까?"
   })
-
-  if("<% pr_id %>" == 0){
-    document.getElementById("not_root").style = "display:none"
-  }
 
   document.getElementById('newfolderid').addEventListener('keyup', () =>{
     isValid('text','newfolder',20)
@@ -694,7 +583,6 @@
     isValid('text','modfolder',20)
   })
 
-
   document.getElementById("newfolderbtn").addEventListener("click", () => {
     fetch("/voca/folder_check",{
       method: "POST",
@@ -702,36 +590,14 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
+        fd_id: "<%= fd_id %>",
         new_fd_name : document.getElementById("newfolderid").value
       }),
     })
     .then((res)=>res.json())
     .then((checked) => {
       if(checked == "0"){
-        fetch("/voca/create_folder",{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fd_id: document.getElementById("selected_folder").value,
-            new_fd_name : document.getElementById("newfolderid").value
-          }),
-        })
-        .then((res)=>res.json())
-        .then((changed) => {
-          toastLive.style = "display:block"
-          toastMsg.innerText = "폴더가 추가되었습니다"
-          document.getElementById("add_folder_cancle").click()
-          selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
-        })
+        document.getElementById("create_folder_form").submit();
       }else{
         toastLive.style = "display:block"
         toastMsg.innerText = "해당 폴더내에 같은 폴더명이 존재합니다"
@@ -746,23 +612,16 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
+        fd_id: "<%= fd_id %>",
         new_fl_name: document.getElementById("newfileid").value,
       }),
     })
     .then((res)=>res.json())
     .then((checked) => {
       if(checked == "0"){
-        document.getElementById("new_fl_fd_id").value = document.getElementById("selected_folder").value;
+        document.getElementById("new_fl_fd_id").value = "<%= fd_id %>";
         document.getElementById("new_file_form").submit();
       }else{
-        selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
         toastLive.style = "display:block"
         toastMsg.innerText = "해당 폴더내에 같은 단어장명이 존재합니다"
       }
@@ -771,14 +630,15 @@
   })
 
   document.getElementById("modfolderbtn").addEventListener("click", () => {
+    const modfoldername = document.getElementById("modfolderid").value
     fetch("/voca/parent_check",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
-        new_fd_name : document.getElementById("modfolderid").value
+        fd_id: "<%= fd_id %>",
+        new_fd_name : modfoldername
       }),
     })
     .then((res)=>res.json())
@@ -790,8 +650,8 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fd_id: document.getElementById("selected_folder").value,
-            new_fd_name : document.getElementById("modfolderid").value
+            fd_id: "<%= fd_id %>",
+            new_fd_name : modfoldername
           }),
         })
         .then((res)=>res.json())
@@ -799,37 +659,26 @@
           toastLive.style = "display:block"
           toastMsg.innerText = "폴더명이 변경되었습니다"
           document.getElementById("mod_folder_cancle").click()
-          selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("modfolderid").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
+          document.getElementById("selected_folder_name").innerText = modfoldername
         })
       }else{
         toastLive.style = "display:block"
         toastMsg.innerText = "해당 폴더내에 같은 폴더명이 존재합니다"
       }
-      selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
     })
   })
 
   document.getElementById("modfilebtn").addEventListener("click", () => {
+    const fl_id = document.getElementById("selected_file").value;
+    const modfilename = document.getElementById("modfileid").value;
     fetch("/voca/file_check",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
-        new_fl_name: document.getElementById("modfileid").value,
+        fd_id: "<%= fd_id %>",
+        new_fl_name: modfilename
       }),
     })
     .then((res)=>res.json())
@@ -841,8 +690,8 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fl_id: document.getElementById("selected_file").value,
-            new_fl_name: document.getElementById("modfileid").value
+            fl_id: fl_id,
+            new_fl_name: modfilename
           }),
         })
         .then((res)=>res.json())
@@ -850,13 +699,7 @@
           toastLive.style = "display:block"
           toastMsg.innerText = "단어장명이 변경되었습니다"
           document.getElementById("mod_file_cancle").click()
-          selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
+          document.getElementById("file_name"+fl_id).innerText = modfilename
         })
       }else{
         toastLive.style = "display:block"
@@ -866,78 +709,33 @@
   })
 
   document.getElementById("del_folder_btn").addEventListener("click", () => {
-    fetch("/voca/delete_folder",{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
-      }),
-    })
-    .then((res)=>{
-      toastLive.style = "display:block"
-      toastMsg.innerText = "폴더가 삭제되었습니다"
-      document.getElementById("del_folder_cancle").click()
-      document.getElementById("redirect_back").click()
-    })
+    document.getElementById("posting_form").action = "/voca/delete_folder"
+    document.getElementById("posting_form").submit();
   })
 
   document.getElementById("del_file_btn").addEventListener("click", () => {
+    const selected_file = document.getElementById("selected_file").value
     fetch("/voca/delete_file",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fl_id: document.getElementById("selected_file").value,
+        fl_id: selected_file,
       }),
     })
     .then((res)=>{
       toastLive.style = "display:block"
       toastMsg.innerText = "단어장이 삭제되었습니다"
       document.getElementById("del_file_cancle").click()
-      selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
+      document.getElementById("file_id" + selected_file).style.display = "none"
     })
   })
 
   document.getElementById("sharing_file_Btn").addEventListener("click",() => {
-    fetch("/voca/share_file",{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fl_id: document.getElementById("selected_file").value,
-      }),
-    })
-    .then((res) => res.json())
-    .then((sha) => {
-      if(sha == 0){
-        toastLive.style = "display:block"
-        toastMsg.innerText = "공유가 해제되었습니다"
-        document.getElementById("share_file_btn_id"+document.getElementById("selected_file_num").value).innerText = "단어장 공유"
-        document.getElementById("sha_file_cancle").click()
-      }else{
-        toastLive.style = "display:block"
-        toastMsg.innerText = "단어장이 공유되었습니다"
-        document.getElementById("share_file_btn_id"+document.getElementById("selected_file_num").value).innerText = "공유 해제하기"
-        document.getElementById("sha_file_cancle").click()
-      }
-      selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
-    })
+    document.getElementById("post_fl_id").value = document.getElementById("selected_file").value
+    document.getElementById("posting_form").action = "/voca/share_file"
+    document.getElementById("posting_form").submit();
   })
 
   document.getElementById("sharing_fd_Btn").addEventListener("click",() => {
@@ -947,7 +745,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
+        fd_id: "<%= fd_id %>"
       }),
     })
     .then((res) => res.json())
@@ -982,7 +780,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
+        fd_id: "<%= fd_id %>"
       }),
     })
       .then((res) => res.json())
@@ -1015,7 +813,6 @@
       document.getElementById("move_now_folder_name").value = 'Home';
     }
     
-
     fetch("/voca/load_list", {
       method: "POST",
       headers: {
@@ -1068,17 +865,10 @@
         if (pr_id == 0) {
           document.getElementById("move_redirect_back").classList.add("dnone");
         }
-
       })
   };
 
   const selectMove2 = (fd_id, pr_id, fd_name) => {
-    if(fd_id == document.getElementById("selected_folder").value){
-      toastLive.style = "display:block";
-      toastMsg.innerText = "여기는 안돼요!";
-      return selectMove2("<%= selected_folder %>","0","Home");
-    }
-
     document.getElementById("move_selected_folder").value = fd_id;
     if(pr_id){
       document.getElementById("move_parent_folder").value = pr_id;
@@ -1157,41 +947,34 @@
       }),
     })
     .then((res)=>{
-      toastLive.style = "display:block";
-      toastMsg.innerText = "단어장이 이동되었습니다";
-      selectFolder(document.getElementById("selected_folder").value,
-          document.getElementById("parent_folder").value,
-          document.getElementById("now_folder_name").value,
-          document.getElementById("folder_favorites").value,
-          document.getElementById("folder_shared").value,
-          document.getElementById('selected_order').value
-          )
-          document.getElementById("move_file_cancle").click();
+      document.getElementById("post_toast").value = "단어장이 이동되었습니다"
+      document.getElementById("posting_form").action = "/voca/main"
+      document.getElementById("posting_form").submit();
     })
   })
 
   document.getElementById("move_folder_btn").addEventListener("click", () => {
+    if("<%= fd_id %>" == document.getElementById("move_selected_folder").value){
+      toastLive.style = "display:block";
+      toastMsg.innerText = "여기는 안돼요!";
+      return selectMove2("<%= fd_id %>","<%= pr_id %>","<%= fd_name %>");
+    }
     fetch("/voca/move_folder",{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        fd_id: document.getElementById("selected_folder").value,
+        fd_id: "<%= fd_id %>",
         mv_fd_id: document.getElementById("move_selected_folder").value,
       }),
     })
     .then((res)=>{
-      toastLive.style = "display:block";
-      toastMsg.innerText = "폴더가 이동되었습니다";
-      selectFolder("<%= selected_folder %>",
-          "0",
-          "Home",
-          "0",
-          "0",
-          "0"
-      )
-      document.getElementById("move_folder_cancle").click();
+      document.getElementById("post_fd_id").value = "<%= pr_id %>"
+      document.getElementById("post_pr_id").value = "<%= gpr_id %>"
+      document.getElementById("post_toast").value = "폴더가 이동되었습니다"
+      document.getElementById("posting_form").action = "/voca/main"
+      document.getElementById("posting_form").submit();
     })
   })
 
@@ -1236,5 +1019,4 @@
         }
       });
   };
-
 </script>

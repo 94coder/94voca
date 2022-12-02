@@ -23,6 +23,7 @@ router.post("/voca_load", (req, res) => {
         fd_id: post.fd_id,
         fl_id: post.fl_id,
         fl_name: post.fl_name,
+        pr_id: post.pr_id,
       });
     }
   );
@@ -42,6 +43,7 @@ router.post("/voca_study", (req, res) => {
         fl_id: post.fl_id,
         fl_name: post.fl_name,
         loadlist: result,
+        pr_id: post.pr_id,
       });
     }
   );

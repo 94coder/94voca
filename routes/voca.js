@@ -37,6 +37,43 @@ router.post("*", (req, res, next) => {
   }
 });
 
+router.post("/main", (req, res) => {
+  const post = req.body;
+  db.query(
+    `SELECT * FROM voca_folder WHERE parent_id=?;
+  SELECT * FROM voca_file WHERE folder_id=?;
+  SELECT * FROM voca_folder WHERE folder_id=?;
+  SELECT * FROM voca_folder WHERE folder_id=?;
+  `,
+    [post.fd_id, post.fd_id, post.fd_id, post.pr_id],
+    (err, result) => {
+      if (!result[3][0]) {
+        res.redirect("/");
+      } else {
+        if (post.toast) {
+          toast = post.toast;
+        } else {
+          toast = "";
+        }
+        res.render("template", {
+          page: "./index",
+          content: "./voca/voca_main",
+          fd_id: post.fd_id,
+          pr_id: post.pr_id,
+          gpr_id: result[3][0].parent_id,
+          fd_name: result[2][0].folder_name,
+          pr_name: result[3][0].folder_name,
+          folder: result[0],
+          file: result[1],
+          fav: result[2][0].favorites,
+          sha: result[2][0].shared,
+          toast: toast,
+        });
+      }
+    }
+  );
+});
+
 router.post("/load_list", (req, res) => {
   const post = req.body;
   db.query(
@@ -146,29 +183,6 @@ router.post("/tts", (req, res) => {
       });
     }
   );
-});
-
-router.get("/dark_mode", (req, res) => {
-  const user = req.user[0];
-  if (user.darkmode == 0) {
-    db.query(
-      `UPDATE localuser SET darkmode=1 WHERE user_id=?
-    `,
-      [user.user_id],
-      (err, result) => {
-        res.send("0");
-      }
-    );
-  } else {
-    db.query(
-      `UPDATE localuser SET darkmode=0 WHERE user_id=?
-    `,
-      [user.user_id],
-      (err, result) => {
-        res.send("0");
-      }
-    );
-  }
 });
 
 module.exports = router;
