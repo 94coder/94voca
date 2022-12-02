@@ -1,18 +1,9 @@
-<link rel="stylesheet" type="text/css" id="logoncss" />
-<script>
-  if (
-    localStorage.getItem("color-theme") == null ||
-    localStorage.getItem("color-theme") == "bright"
-  ) {
-    document
-      .getElementById("logoncss")
-      .setAttribute("href", "/stylesheets/logonstyle.css");
-  } else {
-    document
-      .getElementById("logoncss")
-      .setAttribute("href", "/stylesheets/darkmode.css");
-  }
-</script>
+<link
+  href="/stylesheets/<%= style %>.css"
+  rel="stylesheet"
+  type="text/css"
+  id="logoncss"
+/>
 <div class="logonpage" color-theme="dark">
   <nav class="navbar navbar-expand-lg border">
     <a class="navbar-brand brand_tab" href="/" id="titleid">94VOCA</a>
@@ -1262,21 +1253,9 @@
   };
 
   document.getElementById("dark_mode_btn").addEventListener("click", () => {
-    if (
-      localStorage.getItem("color-theme") == null ||
-      localStorage.getItem("color-theme") == "bright"
-    ) {
-      localStorage.setItem("color-theme", "dark");
-      document
-        .getElementById("logoncss")
-        .setAttribute("href", "/stylesheets/darkmode.css");
-    } else {
-      localStorage.setItem("color-theme", "bright");
-      document
-        .getElementById("logoncss")
-        .setAttribute("href", "/stylesheets/logonstyle.css");
-    }
+    fetch("/voca/darkmode").then((res) => window.location.reload());
   });
+
   document.getElementById("go_header").addEventListener("click", () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   });

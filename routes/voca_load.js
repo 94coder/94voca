@@ -11,6 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/voca_load", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -24,6 +30,7 @@ router.post("/voca_load", (req, res) => {
         fl_id: post.fl_id,
         fl_name: post.fl_name,
         pr_id: post.pr_id,
+        style: style,
       });
     }
   );
@@ -31,6 +38,12 @@ router.post("/voca_load", (req, res) => {
 
 router.post("/voca_study", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -44,12 +57,19 @@ router.post("/voca_study", (req, res) => {
         fl_name: post.fl_name,
         loadlist: result,
         pr_id: post.pr_id,
+        style: style,
       });
     }
   );
 });
 
 router.get("/shared_page", (req, res) => {
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_folder WHERE shared=1;
   SELECT * FROM voca_file WHERE shared=1;
@@ -60,6 +80,7 @@ router.get("/shared_page", (req, res) => {
         content: "./voca/voca_shared",
         folder: result[0],
         file: result[1],
+        style: style,
       });
     }
   );
@@ -79,6 +100,12 @@ router.post("/shared_user", (req, res) => {
 
 router.post("/shared_voca_load", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -90,6 +117,7 @@ router.post("/shared_voca_load", (req, res) => {
         loadlist: result,
         fl_id: post.fl_id,
         fl_name: post.fl_name,
+        style: style,
       });
     }
   );
@@ -97,6 +125,12 @@ router.post("/shared_voca_load", (req, res) => {
 
 router.post("/shared_voca_study", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -108,6 +142,7 @@ router.post("/shared_voca_study", (req, res) => {
         fl_id: post.fl_id,
         fl_name: post.fl_name,
         loadlist: result,
+        style: style,
       });
     }
   );
@@ -116,6 +151,11 @@ router.post("/shared_voca_study", (req, res) => {
 router.post("/my_search", (req, res) => {
   const post = req.body;
   const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE voca REGEXP ? AND voca_data.user_id=? OR voca_mean REGEXP ? AND voca_data.user_id=?;
   `,
@@ -127,6 +167,7 @@ router.post("/my_search", (req, res) => {
         loadlist: result,
         user: 0,
         keyword: post.voca,
+        style: style,
       });
     }
   );
@@ -134,6 +175,12 @@ router.post("/my_search", (req, res) => {
 
 router.post("/sha_search", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_data WHERE voca REGEXP ? OR voca_mean REGEXP ?;
   `,
@@ -145,6 +192,7 @@ router.post("/sha_search", (req, res) => {
         loadlist: result,
         user: 1,
         keyword: post.voca,
+        style: style,
       });
     }
   );

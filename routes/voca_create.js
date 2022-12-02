@@ -116,6 +116,11 @@ router.post("/create_file", (req, res) => {
 router.post("/create_data_page", (req, res) => {
   const post = req.body;
   const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   if (post.toast) {
     toast = 1;
   } else {
@@ -128,6 +133,7 @@ router.post("/create_data_page", (req, res) => {
     fl_id: post.fl_id,
     fl_name: post.fl_name,
     toast: toast,
+    style: style,
   });
 });
 

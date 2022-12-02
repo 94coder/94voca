@@ -75,6 +75,11 @@ router.get("/", (req, res, next) => {
 
 router.get("/", (req, res) => {
   const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0`,
     [user.user_id],
@@ -99,6 +104,7 @@ router.get("/", (req, res) => {
             fav: "0",
             sha: "0",
             toast: "",
+            style: style,
           });
         }
       );

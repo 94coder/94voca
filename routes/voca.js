@@ -39,6 +39,12 @@ router.post("*", (req, res, next) => {
 
 router.post("/main", (req, res) => {
   const post = req.body;
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    style = "logonstyle";
+  } else {
+    style = "darkmode";
+  }
   db.query(
     `SELECT * FROM voca_folder WHERE parent_id=?;
   SELECT * FROM voca_file WHERE folder_id=?;
@@ -68,6 +74,7 @@ router.post("/main", (req, res) => {
           fav: result[2][0].favorites,
           sha: result[2][0].shared,
           toast: toast,
+          style: style,
         });
       }
     }
@@ -181,6 +188,23 @@ router.post("/tts", (req, res) => {
           }
         }
       });
+    }
+  );
+});
+
+router.get("/darkmode", (req, res) => {
+  const user = req.user[0];
+  if (user.darkmode == "0") {
+    darkmode = "1";
+  } else {
+    darkmode = "0";
+  }
+  db.query(
+    `UPDATE localuser SET darkmode=? WHERE user_id=?
+  `,
+    [darkmode, user.user_id],
+    (err, result) => {
+      res.send("0");
     }
   );
 });
