@@ -1,298 +1,295 @@
-<div class="w-100 h-100">
-  <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand brand_tab" href="/" id="titleid">94VOCA</a>
-    <a
-      class="btn btn-light position-absolute end-0 me-2"
-      id="goLogin1"
-      href="#sign_page"
-    >
-      로그인 하고 이용하기 →
-    </a>
-    <a class="btn btn-light position-absolute end-0 me-2 d-none"
-    id="goInfo"
-    href="#info_page">
-      ← 사이트 소개 보러가기
-    </a>
-  </nav>
-  <div class="text-center mt-3" id="info_page" data-scroll>
-    <div>
-      <img src="/icons/94voca_nobackground.png" class="d-inline" width="50" height="50" />
-      <h2 id="site_intro_type1" class="d-inline"></h2>
-    </div>
-    <h2 id="site_intro_type2"></h2>
-    <a class="btn btn-primary" id="goLogin2" href="#sign_page">
-      로그인 하고 이용하기 →
-    </a>
-    <div class="text-center border border-opacity-50 rounded m-1 pt-4 mt-4">
-      <h3>사이트 소개</h3>
-      <div id="site_info_img" class="carousel carousel-dark slide">
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#site_info_img"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#site_info_img"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#site_info_img"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#site_info_img"
-            data-bs-slide-to="3"
-            aria-label="Slide 4"
-          ></button>
-        </div>
-        <div class="carousel-inner p-3">
-          <div class="carousel-item active" data-bs-interval="10000">
-            <div class="border d-inline-block p-2 mb-2 rounded"> 
-              <h5>나만의 단어장을 만들 수 있어요</h5>
-              <p>
-                폴더별로 정리, 즐겨찾기, 검색, 공유 등 다양한 기능을 이용해 보세요.
-              </p>
-            </div>
-            <img src="/images/guide1.png" class="d-block w-100 border" alt="..." id="info_img_src1" />
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <div class="border d-inline-block p-2 pt-4 mb-2 rounded">
-              <h5>나만의 방식으로 단어장을 구성하세요</h5>
-              <p>
-                단어, 표현, 문장 등 원하는 대로 입력하세요.<br/>
-                원어민 발음으로 듣기 또한 가능하답니다.
-              </p>
-            </div>
-            <img src="/images/guide2.png" class="d-block w-100 border" alt="..." id="info_img_src2" />
-          </div>
-          <div class="carousel-item">
-            <div class="border d-inline-block p-2 mb-2 rounded">
-              <h5>단어장을 색다른 방법으로 공부할 수 있습니다</h5>
-              <p>
-                원하는 부분만 보거나 듣기, 혹은 따라읽으며 반복하기 등</br>
-                뇌를 자극하며 공부할 수 있습니다.
-              </p>
-            </div>
-            <img src="/images/guide3.png" class="d-block w-100 border" alt="..." id="info_img_src3" />
-          </div>
-          <div class="carousel-item">
-            <div class="border d-inline-block p-2 mb-2 rounded">
-              <h5>폴더 혹은 단어장을 공유할 수 있습니다</h5>
-              <p>
-                나만의 단어장을을 공유하거나, 다른 회원님들의 단어장도 볼 수 있어요.
-              </p>
-            </div>
-            <img src="/images/guide4.png" class="d-block w-100 border" alt="..." id="info_img_src4" />
-          </div>
-        </div>
+<nav class="navbar navbar-expand-lg">
+  <a
+    class="btn btn-light position-absolute end-0 me-2"
+    id="goLogin1"
+    href="#sign_page"
+  >
+    로그인 하고 이용하기 →
+  </a>
+  <a class="btn btn-light position-absolute end-0 me-2 d-none"
+  id="goInfo"
+  href="#info_page">
+    ← 사이트 소개 보러가기
+  </a>
+</nav>
+<div class="text-center mt-3" id="info_page" data-scroll>
+  <div>
+    <img src="/icons/94voca_nobackground.png" class="d-inline" width="50" height="50" />
+    <h2 id="site_intro_type1" class="d-inline"></h2>
+  </div>
+  <h2 id="site_intro_type2"></h2>
+  <a class="btn btn-primary" id="goLogin2" href="#sign_page">
+    로그인 하고 이용하기 →
+  </a>
+  <div class="text-center border border-opacity-50 rounded m-1 pt-4 mt-4">
+    <h3>사이트 소개</h3>
+    <div id="site_info_img" class="carousel carousel-dark slide">
+      <div class="carousel-indicators">
         <button
-          class="carousel-control-prev"
           type="button"
           data-bs-target="#site_info_img"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
         <button
-          class="carousel-control-next"
           type="button"
           data-bs-target="#site_info_img"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#site_info_img"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#site_info_img"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
       </div>
+      <div class="carousel-inner p-3">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <div class="border d-inline-block p-2 mb-2 rounded"> 
+            <h5>나만의 단어장을 만들 수 있어요</h5>
+            <p>
+              폴더별로 정리, 즐겨찾기, 검색, 공유 등 다양한 기능을 이용해 보세요.
+            </p>
+          </div>
+          <img src="/images/guide1.png" class="d-block w-100 border" alt="..." id="info_img_src1" />
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <div class="border d-inline-block p-2 pt-4 mb-2 rounded">
+            <h5>나만의 방식으로 단어장을 구성하세요</h5>
+            <p>
+              단어, 표현, 문장 등 원하는 대로 입력하세요.<br/>
+              원어민 발음으로 듣기 또한 가능하답니다.
+            </p>
+          </div>
+          <img src="/images/guide2.png" class="d-block w-100 border" alt="..." id="info_img_src2" />
+        </div>
+        <div class="carousel-item">
+          <div class="border d-inline-block p-2 mb-2 rounded">
+            <h5>단어장을 색다른 방법으로 공부할 수 있습니다</h5>
+            <p>
+              원하는 부분만 보거나 듣기, 혹은 따라읽으며 반복하기 등</br>
+              뇌를 자극하며 공부할 수 있습니다.
+            </p>
+          </div>
+          <img src="/images/guide3.png" class="d-block w-100 border" alt="..." id="info_img_src3" />
+        </div>
+        <div class="carousel-item">
+          <div class="border d-inline-block p-2 mb-2 rounded">
+            <h5>폴더 혹은 단어장을 공유할 수 있습니다</h5>
+            <p>
+              나만의 단어장들을 공유하거나, 다른 회원님들의 단어장도 볼 수 있어요.
+            </p>
+          </div>
+          <img src="/images/guide4.png" class="d-block w-100 border" alt="..." id="info_img_src4" />
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#site_info_img"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#site_info_img"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
   </div>
-  <div class="authpage d-none" data-scroll id="sign_page">
-    <div class="authwrap">
-      <div id="auth_wrap">
-        <div
-          class="alert alert-warning alert-dismissible fade show dnone"
-          id="alertid"
-          role="alert"
-        >
-          <%= errmsg %>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        <ul class="nav nav-tabs nav-fill">
-          <li class="nav-item cursor">
-            <a
-              class="nav-link active"
-              id="login_tab_link"
-              aria-current="page"
-              >로그인</a
-            >
-          </li>
-          <li class="nav-item cursor">
-            <a
-              class="nav-link"
-              id="signup_tab_link"
-              aria-current="page"
-              >회원가입</a
-            >
-          </li>
-        </ul>
-        <div id="login_tab_id">
-          <form action="/signpage/login_process" method="post" name="login">
-            <img src="/icons/94voca_nobackground.png" class="logoimg" alt="" />
-            <div class="form-floating authinput">
-              <input
-                type="email"
-                class="form-control"
-                id="floatingInput"
-                placeholder="name@example.com"
-                name="email"
-              />
-              <label for="floatingInput">이메일</label>
-            </div>
-            <div class="form-floating authinput">
-              <input
-                type="password"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-                name="password"
-              />
-              <label for="floatingPassword">비밀번호</label>
-            </div>
-            <input
-              class="w-100 btn btn-primary authbtn"
-              type="submit"
-              value="로그인"
-            />
-            <input
-              class="w-100 btn btn-primary authbtn"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#findpwdmodal"
-              value="비밀번호 찾기" disabled
-            />
-            <button
-              class="w-100 btn authbtn sauthbtn btn-outline-dark border border-opacity-75"
-              id="glbtnid"
-              type="button"
-            >
-              <img src="/icons/google.png" id="google_logo" />
-              Google 계정으로 로그인
-            </button>
-            <button
-              class="w-100 btn authbtn sauthbtn"
-              id="klbtnid"
-              type="button"
-            >
-              <img src="/icons/kakao.png" id="kakao_logo" />
-              카카오로 시작하기
-            </button>
-            <p class="mt-5 mb-3 text-muted">by 94coder</p>
-          </form>
-        </div>
-        <div class="dnone" id="signup_tab_id">
-          <form
-            action="/signpage/signup_process"
-            method="post"
-            name="signup"
-            id="signtabid"
+</div>
+<div class="authpage d-none" data-scroll id="sign_page">
+  <div class="authwrap">
+    <div id="auth_wrap">
+      <div
+        class="alert alert-warning alert-dismissible fade show dnone"
+        id="alertid"
+        role="alert"
+      >
+        <%= errmsg %>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item cursor">
+          <a
+            class="nav-link active"
+            id="login_tab_link"
+            aria-current="page"
+            >로그인</a
           >
-            <img src="/icons/94voca_nobackground.png" alt="" class="logoimg" />
-            <div class="form-floating authinput">
-              <input
-                type="email"
-                class="form-control is-val"
-                id="email_area"
-                placeholder="name@example.com"
-                name="email"
-              />
-              <label for="floatingInput">이메일</label>
-              <div
-                id="validationServerUsernameFeedback"
-                class="invalid-feedback"
-              >
-                이메일 형식을 확인하세요
-              </div>
-            </div>
-            <div class="form-floating authinput">
-              <input
-                type="password"
-                class="form-control is-val"
-                id="pwd_area"
-                placeholder="Password"
-                name="password"
-              />
-              <label for="floatingPassword">비밀번호(6~18자)</label>
-              <div
-                id="validationServerUsernameFeedback"
-                class="invalid-feedback"
-              >
-                비밀번호 형식을 확인하세요
-              </div>
-            </div>
-            <div class="form-floating authinput">
-              <input
-                type="password"
-                class="form-control is-val"
-                id="pwd_area2"
-                placeholder="Password"
-              />
-              <label for="floatingPassword">비밀번호 재확인</label>
-              <div
-                id="validationServerUsernameFeedback"
-                class="invalid-feedback"
-              >
-                비밀번호가 일치하지 않습니다
-              </div>
-            </div>
-            <div class="form-floating authinput">
-              <input
-                type="text"
-                class="form-control is-val"
-                id="nick_area"
-                placeholder="Nickname"
-                name="nickname"
-              />
-              <label for="floatingInput">닉네임(2~10자)</label>
-              <div
-                id="validationServerUsernameFeedback"
-                class="invalid-feedback"
-              >
-                닉네임 형식을 확인하세요
-              </div>
-            </div>
-            <div class="mt-3 mb-3">
-              <a
-                class="text-primary cursor"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#policymodal"
-                aria-controls="policymodal"
-                >개인정보 처리방침</a
-              >
-            </div>
+        </li>
+        <li class="nav-item cursor">
+          <a
+            class="nav-link"
+            id="signup_tab_link"
+            aria-current="page"
+            >회원가입</a
+          >
+        </li>
+      </ul>
+      <div id="login_tab_id">
+        <form action="/signpage/login_process" method="post" name="login">
+          <img src="/icons/94voca_nobackground.png" class="logoimg" alt="" />
+          <div class="form-floating authinput">
             <input
-              type="button"
-              class="w-100 btn btn-primary mt-2"
-              id="sbm_Btn"
-              disabled
-              value="가입하기"
+              type="email"
+              class="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              name="email"
             />
-            <p class="mt-5 mb-3 text-muted">by 94coder</p>
-          </form>
-        </div>
+            <label for="floatingInput">이메일</label>
+          </div>
+          <div class="form-floating authinput">
+            <input
+              type="password"
+              class="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+              name="password"
+            />
+            <label for="floatingPassword">비밀번호</label>
+          </div>
+          <input
+            class="w-100 btn btn-primary authbtn"
+            type="submit"
+            value="로그인"
+          />
+          <input
+            class="w-100 btn btn-primary authbtn"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#findpwdmodal"
+            value="비밀번호 찾기" disabled
+          />
+          <button
+            class="w-100 btn authbtn sauthbtn btn-outline-dark border border-opacity-75"
+            id="glbtnid"
+            type="button"
+          >
+            <img src="/icons/google.png" id="google_logo" />
+            Google 계정으로 로그인
+          </button>
+          <button
+            class="w-100 btn authbtn sauthbtn"
+            id="klbtnid"
+            type="button"
+          >
+            <img src="/icons/kakao.png" id="kakao_logo" />
+            카카오로 시작하기
+          </button>
+          <p class="mt-5 mb-3 text-muted">by 94coder</p>
+        </form>
+      </div>
+      <div class="dnone" id="signup_tab_id">
+        <form
+          action="/signpage/signup_process"
+          method="post"
+          name="signup"
+          id="signtabid"
+        >
+          <img src="/icons/94voca_nobackground.png" alt="" class="logoimg" />
+          <div class="form-floating authinput">
+            <input
+              type="email"
+              class="form-control is-val"
+              id="email_area"
+              placeholder="name@example.com"
+              name="email"
+            />
+            <label for="floatingInput">이메일</label>
+            <div
+              id="validationServerUsernameFeedback"
+              class="invalid-feedback"
+            >
+              이메일 형식을 확인하세요
+            </div>
+          </div>
+          <div class="form-floating authinput">
+            <input
+              type="password"
+              class="form-control is-val"
+              id="pwd_area"
+              placeholder="Password"
+              name="password"
+            />
+            <label for="floatingPassword">비밀번호(6~18자)</label>
+            <div
+              id="validationServerUsernameFeedback"
+              class="invalid-feedback"
+            >
+              비밀번호 형식을 확인하세요
+            </div>
+          </div>
+          <div class="form-floating authinput">
+            <input
+              type="password"
+              class="form-control is-val"
+              id="pwd_area2"
+              placeholder="Password"
+            />
+            <label for="floatingPassword">비밀번호 재확인</label>
+            <div
+              id="validationServerUsernameFeedback"
+              class="invalid-feedback"
+            >
+              비밀번호가 일치하지 않습니다
+            </div>
+          </div>
+          <div class="form-floating authinput">
+            <input
+              type="text"
+              class="form-control is-val"
+              id="nick_area"
+              placeholder="Nickname"
+              name="nickname"
+            />
+            <label for="floatingInput">닉네임(2~10자)</label>
+            <div
+              id="validationServerUsernameFeedback"
+              class="invalid-feedback"
+            >
+              닉네임 형식을 확인하세요
+            </div>
+          </div>
+          <div class="mt-3 mb-3">
+            <a
+              class="text-primary cursor"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#policymodal"
+              aria-controls="policymodal"
+              >개인정보 처리방침</a
+            >
+          </div>
+          <input
+            type="button"
+            class="w-100 btn btn-primary mt-2"
+            id="sbm_Btn"
+            disabled
+            value="가입하기"
+          />
+          <p class="mt-5 mb-3 text-muted">by 94coder</p>
+        </form>
       </div>
     </div>
   </div>
@@ -378,6 +375,7 @@
     document.getElementById("goInfo").classList.remove("d-none");
     document.getElementById("goLogin1").classList.add("d-none");
   }
+
   window.addEventListener("load", () => {
     if (window.innerWidth < 481) {
       document.getElementById("info_img_src1").src = "/images/m_guide1.jpg";

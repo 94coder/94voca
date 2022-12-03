@@ -10,23 +10,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// const helmet = require("helmet");
-// const cspOptions = {
-//   directives: {
-//     ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-
-//     "script-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-
-//     "img-src": ["'self'", "data:", "https://cdn.jsdelivr.net"],
-//   },
-// };
-
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: cspOptions,
-//   })
-// );
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
