@@ -306,10 +306,6 @@
   margin-left: 30px;
 }
 
-.switch {
-  margin-top: 5px;
-}
-
 @media only screen and (max-width: 1150px) {
   .file_row {
     grid-template-columns: repeat(auto-fill, minmax(30%, auto));
