@@ -149,3 +149,26 @@ document.addEventListener("DOMContentLoaded", () => {
     cursor: false,
   }).go();
 });
+
+const loadImage = () => {
+  if (matchMedia("screen and (max-width: 480px)").matches) {
+    did("guide_img1").src = "/images/m_guide1.jpg";
+    did("guide_img2").src = "/images/m_guide2.jpg";
+    did("guide_img3").src = "/images/m_guide3.jpg";
+    did("guide_img4").src = "/images/m_guide4.jpg";
+  } else if (matchMedia("screen and (max-width: 991px)").matches) {
+    did("guide_img1").src = "/images/t_guide1.jpg";
+    did("guide_img2").src = "/images/t_guide2.jpg";
+    did("guide_img3").src = "/images/t_guide3.jpg";
+    did("guide_img4").src = "/images/t_guide4.jpg";
+  } else if (matchMedia("screen and (min-width: 992px)").matches) {
+    did("guide_img1").src = "/images/guide1.png";
+    did("guide_img2").src = "/images/guide2.png";
+    did("guide_img3").src = "/images/guide3.png";
+    did("guide_img4").src = "/images/guide4.png";
+  }
+};
+
+loadImage();
+
+window.onresize = () => loadImage();

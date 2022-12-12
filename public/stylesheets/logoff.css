@@ -57,6 +57,19 @@ h2 {
   height: 21px;
 }
 
+.info_img {
+  height: 600px;
+  width: 1230px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 991px) {
+  .info_img {
+    height: 944px;
+    width: 700px;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .authwrap {
     height: 95%;
@@ -74,5 +87,10 @@ h2 {
   }
   .mob_none {
     display: none;
+  }
+
+  .info_img {
+    height: 577px;
+    width: 300px;
   }
 }
