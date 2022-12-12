@@ -27,3 +27,11 @@ const fetchp = async (url, body) => {
   const data = await response.json();
   return data;
 };
+
+const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
+
+const scrollToBottom = () => {
+  window.scrollTo(0, document.body.scrollHeight);
+};

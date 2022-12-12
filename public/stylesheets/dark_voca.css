@@ -57,6 +57,12 @@
   height: 25px;
 }
 
+.upDownBtn {
+  position: fixed;
+  top: 100px;
+  right: 0;
+}
+
 @media only screen and (max-width: 593px) {
   .data_box {
     display: grid;
@@ -88,5 +94,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 120px;
+  }
+
+  .upDownBtn {
+    top: 20px;
+    right: 20px;
   }
 }
