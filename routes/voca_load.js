@@ -9,41 +9,32 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-router.post("/voca_load", (req, res) => {
+router.post("/load", (req, res) => {
   const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
+  res.render("template", {
+    page: "./index",
+    content: "./voca/load",
+    fl_id: post.fl_id,
+    fl_name: post.fl_name,
+    fd_id: post.fd_id,
+  });
+});
+
+router.post("/load_data", (req, res) => {
+  const post = req.body;
   db.query(
-    `SELECT * FROM voca_data WHERE file_id=?
+    `UPDATE voca_file SET current=CURRENT_TIMESTAMP WHERE file_id=?;
+    SELECT * FROM voca_data WHERE file_id=?
   `,
-    [post.fl_id],
+    [post.fl_id, post.fl_id],
     (err, result) => {
-      res.render("template", {
-        page: "./index",
-        content: "./voca/voca_load",
-        loadlist: result,
-        fd_id: post.fd_id,
-        fl_id: post.fl_id,
-        fl_name: post.fl_name,
-        pr_id: post.pr_id,
-        style: style,
-      });
+      res.send(result[1]);
     }
   );
 });
 
-router.post("/voca_study", (req, res) => {
+router.post("/study", (req, res) => {
   const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -51,25 +42,17 @@ router.post("/voca_study", (req, res) => {
     (err, result) => {
       res.render("template", {
         page: "./index",
-        content: "./voca/voca_study",
-        fd_id: post.fd_id,
+        content: "./voca/study",
         fl_id: post.fl_id,
         fl_name: post.fl_name,
+        fd_id: post.fd_id,
         loadlist: result,
-        pr_id: post.pr_id,
-        style: style,
       });
     }
   );
 });
 
 router.get("/shared_page", (req, res) => {
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
     `SELECT * FROM voca_folder WHERE shared=1;
   SELECT * FROM voca_file WHERE shared=1;
@@ -77,10 +60,9 @@ router.get("/shared_page", (req, res) => {
     (err, result) => {
       res.render("template", {
         page: "./index",
-        content: "./voca/voca_shared",
+        content: "./voca/shared_page",
         folder: result[0],
         file: result[1],
-        style: style,
       });
     }
   );
@@ -98,14 +80,8 @@ router.post("/shared_user", (req, res) => {
   );
 });
 
-router.post("/shared_voca_load", (req, res) => {
+router.post("/shared_file_load", (req, res) => {
   const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
     `SELECT * FROM voca_data WHERE file_id=?
   `,
@@ -113,86 +89,40 @@ router.post("/shared_voca_load", (req, res) => {
     (err, result) => {
       res.render("template", {
         page: "./index",
-        content: "./voca/voca_share_load",
+        content: "./voca/shared_file_load",
         loadlist: result,
         fl_id: post.fl_id,
         fl_name: post.fl_name,
-        style: style,
       });
     }
   );
 });
 
-router.post("/shared_voca_study", (req, res) => {
+router.post("/load_shared_foldersfile", (req, res) => {
   const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
-    `SELECT * FROM voca_data WHERE file_id=?
+    `SELECT * FROM voca_file WHERE folder_id=?
   `,
-    [post.fl_id],
+    [post.fd_id],
     (err, result) => {
-      res.render("template", {
-        page: "./index",
-        content: "./voca/voca_share_study",
-        fl_id: post.fl_id,
-        fl_name: post.fl_name,
-        loadlist: result,
-        style: style,
-      });
+      res.send(result);
     }
   );
 });
 
-router.post("/my_search", (req, res) => {
+router.post("/search", (req, res) => {
   const post = req.body;
   const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
     `SELECT * FROM voca_data WHERE voca REGEXP ? AND voca_data.user_id=? OR voca_mean REGEXP ? AND voca_data.user_id=?;
   `,
-    [post.voca, user.user_id, post.voca, user.user_id],
+    [post.word, user.user_id, post.word, user.user_id],
     (err, result) => {
       res.render("template", {
         page: "./index",
-        content: "./voca/voca_search",
+        content: "./voca/search",
         loadlist: result,
-        user: 0,
-        keyword: post.voca,
-        style: style,
-      });
-    }
-  );
-});
-
-router.post("/sha_search", (req, res) => {
-  const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
-  db.query(
-    `SELECT * FROM voca_data WHERE voca REGEXP ? OR voca_mean REGEXP ?;
-  `,
-    [post.voca, post.voca],
-    (err, result) => {
-      res.render("template", {
-        page: "./index",
-        content: "./voca/voca_search",
-        loadlist: result,
-        user: 1,
-        keyword: post.voca,
-        style: style,
+        keyword: post.word,
       });
     }
   );

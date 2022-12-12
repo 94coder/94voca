@@ -1,0 +1,132 @@
+<div class="content">
+  <form action="/voca/folder" method="post">
+    <button type="submit" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i>
+      <i class="bi bi-folder2-open"></i>
+    </button>
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+  </form>
+  <h4 class="text-center m-3"><%= fl_name %></h4>    
+    <div class="form-check form-switch ms-5">
+      <input class="form-check-input fs-3 me-1" type="checkbox" role="switch" id="all_checkbox_id">
+      <label class="form-check-label fs-4" for="flexSwitchCheckDefault">전체 보이기</label>
+    </div>
+  <% for(let i=0; i<loadlist.length; i++){ %>
+    <div class="border p-2 m-2 rounded" data-scroll>
+      <span><%- i+1 %></span>
+      <div class="data_box border-bottom">
+        <div class="border-end p-2">단어or표현
+          <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('<%= loadlist[i].data_id %>','voca')"></i>
+        </div>
+        <div class="p-2">
+          <div class="form-check form-switch form-check-reverse d-inline-block">
+            <input class="form-check-input" type="checkbox" id="vocaid<%- i %>" onclick="isChecked('<%- i %>','voca')">
+            <label class="form-check-label"></label>
+          </div>
+          <b><span class="d-none" id="voca_id<%- i %>"><%= loadlist[i].voca %></span></b>
+        </div>
+      </div>
+      <div class="data_box border-bottom">
+        <div class="border-end p-2">단어 뜻  
+        </div>
+        <div class="p-2">
+          <div class="form-check form-switch form-check-reverse d-inline-block">
+            <input class="form-check-input" type="checkbox" id="voca_meanid<%- i %>" onclick="isChecked('<%- i %>','voca_mean')">
+            <label class="form-check-label"></label>
+          </div>
+          <span class="d-none" id="voca_mean_id<%- i %>"><%= loadlist[i].voca_mean %>
+          </span>
+        </div>
+      </div>
+      <div class="data_box border-bottom">
+        <div class="border-end p-2">예문
+          <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('<%= loadlist[i].data_id %>','exam')"></i>
+        </div>
+        <div class="p-2">
+          <div class="form-check form-switch form-check-reverse d-inline-block">
+            <input class="form-check-input" type="checkbox" id="examid<%- i %>" onclick="isChecked('<%- i %>','exam')">
+            <label class="form-check-label"></label>
+          </div>
+          <span class="d-none" id="exam_id<%- i %>"><%= loadlist[i].exam %>
+          </span>
+        </div>
+      </div>
+      <div class="data_box border-bottom">
+        <div class="border-end p-2">예문 뜻  
+        </div>
+        <div class="p-2">
+          <div class="form-check form-switch form-check-reverse d-inline-block">
+            <input class="form-check-input" type="checkbox" id="exam_meanid<%- i %>" onclick="isChecked('<%- i %>','exam_mean')">
+            <label class="form-check-label"></label>
+          </div>
+          <span class="d-none" id="exam_mean_id<%- i %>"><%= loadlist[i].exam_mean %>
+          </span>
+        </div>
+      </div>
+      <div class="data_box">
+        <div class="border-end p-2">따라읽기</div>
+        <div class="p-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="shadowing('<%- i %>')">
+            반복 
+            <span class="badge text-bg-secondary" id="countNum<%- i %>">0</span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="refreshing('<%- i %>')">
+            초기화
+          </button>
+        </div>
+      </div>
+    </div>
+  <% } %>
+  <div class="load_footer"></div>
+</div>
+<script>
+  const isChecked = (i,what) => {
+    const checkbox = did(what+"id"+i);
+    const is_checked = checkbox.checked;
+    if(is_checked){
+      did(what+'_id'+i).classList.remove("d-none");
+    }else{
+      did(what+'_id'+i).classList.add("d-none");
+    }
+  }
+  
+  const showAll = () =>{
+    if(!did("all_checkbox_id").checked){
+      for(let i=0; i<"<%= loadlist.length %>"; i++){
+      did("vocaid"+i).checked = false
+      did("voca_meanid"+i).checked = false
+      did("examid"+i).checked = false
+      did("exam_meanid"+i).checked = false
+      did("voca_id"+i).classList.add("d-none");
+      did("voca_mean_id"+i).classList.add("d-none");
+      did("exam_id"+i).classList.add("d-none");
+      did("exam_mean_id"+i).classList.add("d-none");
+    }
+    }else{
+      for(let i=0; i<"<%= loadlist.length %>"; i++){
+      did("vocaid"+i).checked = true
+      did("voca_meanid"+i).checked = true
+      did("examid"+i).checked = true
+      did("exam_meanid"+i).checked = true
+      did("voca_id"+i).classList.remove("d-none");
+      did("voca_mean_id"+i).classList.remove("d-none");
+      did("exam_id"+i).classList.remove("d-none");
+      did("exam_mean_id"+i).classList.remove("d-none");
+    }
+    }
+          
+  }
+
+  const shadowing = (i) => {
+    let count = Number(did('countNum'+i).innerHTML)
+    count ++;
+    did('countNum'+i).innerText = count;
+  }
+
+  const refreshing = (i) => {
+    did('countNum'+i).innerText = 0;
+  }
+
+  eclick(did('all_checkbox_id'), showAll)
+  
+</script>

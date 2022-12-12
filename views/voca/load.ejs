@@ -1,0 +1,393 @@
+<div class="content">
+  <form action="/voca/folder" method="post">
+    <button type="submit" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i>
+      <i class="bi bi-folder2-open"></i>
+    </button>
+    <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+  </form>
+  <h4 class="text-center m-3"><%= fl_name %></h4>
+  <div class="text-center">
+    <form action="/voca/study" method="post" class="d-inline-block">
+      <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+      <input type="hidden" name="fl_id" value="<%= fl_id %>" />
+      <input type="hidden" name="fl_name" value="<%= fl_name %>" />
+      <input type="submit" value="공부하기" class="btn btn-outline-dark" />
+    </form>
+    <input
+      class="btn btn-outline-dark"
+      type="button"
+      value="단어or표현추가"
+      data-bs-toggle="modal"
+      data-bs-target="#createDataModal"
+    />
+  </div>
+  <input type="hidden" id="selected_data" />
+  <input type="hidden" id="selected_data_id" />
+  <input type="button" class="d-none" id="load_data_btn" />
+  <div id="load_body"></div>
+  <div class="load_footer"></div>
+</div>
+
+<div class="modal fade" id="createDataModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">추가하실 데이터를 입력하세요</h5>
+      </div>
+      <div class="modal-body pb-0">
+        <h4 class="text-center m-3" id="create_data_file_name"></h4>
+        <div>
+          <div>
+            <div>단어or표현</div>
+            <div>
+              <textarea
+                class="form-control data_input is-val mt-2 mb-2"
+                name="voca"
+                id="createvocaid"
+                minlength="1"
+                maxlength="101"
+                placeholder="100자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div>
+            <div>단어 뜻</div>
+            <div>
+              <textarea
+                class="form-control data_input mt-2 mb-2"
+                name="voca_mean"
+                id="createvmid"
+                maxlength="100"
+                placeholder="100자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div>
+            <div>예문</div>
+            <div>
+              <textarea
+                class="form-control data_input mt-2 mb-2"
+                name="exam"
+                id="createexamid"
+                maxlength="1000"
+                placeholder="1000자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div>
+            <div>예문 뜻</div>
+            <div>
+              <textarea
+                class="form-control data_input mt-2 mb-2"
+                name="exam_mean"
+                id="createemid"
+                maxlength="1000"
+                placeholder="1000자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="createvocabtn"
+          disabled
+        >
+          추가
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="createcanclebtn"
+        >
+          완료
+        </button>
+      </div>
+      <div class="modal-footer border-0"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ModifyDataModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">데이터 변경</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mod_data_grid">
+          <b>단어or표현</b
+          ><textarea
+            class="form-control data_input is-val"
+            name="voca"
+            id="modvocaid"
+            minlength="1"
+            maxlength="101"
+          ></textarea>
+        </div>
+        <div class="mod_data_grid">
+          <b>단어 뜻</b
+          ><textarea
+            class="form-control data_input"
+            name="voca_mean"
+            id="modvmid"
+            maxlength="100"
+          ></textarea>
+        </div>
+        <div class="mod_data_grid">
+          <b>예문</b
+          ><textarea
+            class="form-control data_input"
+            name="exam"
+            id="modexamid"
+            maxlength="1000"
+          ></textarea>
+        </div>
+        <div class="mod_data_grid">
+          <b>예문 뜻</b
+          ><textarea
+            class="form-control data_input"
+            name="exam_mean"
+            id="modemid"
+            maxlength="1000"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="close_mod_btn"
+        >
+          닫기
+        </button>
+        <button type="button" class="btn btn-primary" id="modvocabtn" disabled>
+          변경하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteDataModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">데이터 삭제</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">정말 삭제하시겠습니까?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="close_del_btn"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          class="btn btn-primary"
+          value="삭제"
+          id="delvocabtn"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  eclick(did("load_data_btn"), () => {
+    fetch("/voca/load_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fl_id: "<%= fl_id %>",
+      }),
+    })
+      .then((res) => res.json())
+      .then((loadlist) => {
+        let load_list = "";
+        for (let i = 0; i < loadlist.length; i++) {
+          load_list += `
+          <div class="border p-2 m-2 rounded" id="shown_id${i}">
+            <span class="me-2">${i + 1}</span>
+            <input type="hidden" id="data_id${i}" value="${
+            loadlist[i].data_id
+          }" />
+            <div class="data_box border-bottom">
+              <div class="border-end p-2">
+                단어or표현
+                <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('${
+                  loadlist[i].data_id
+                }','voca')"></i>
+              </div>
+              <div class="p-2">
+                <b id="shown_voca${i}">${loadlist[i].voca}</b>
+              </div>
+            </div>
+            <div class="data_box border-bottom">
+              <div class="border-end p-2">
+                단어 뜻  
+              </div>
+              <div class="p-2" id="shown_voca_mean${i}">
+                ${loadlist[i].voca_mean}
+              </div>
+            </div>
+            <div class="data_box border-bottom">
+              <div class="border-end p-2">
+                예문
+                <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('${
+                  loadlist[i].data_id
+                }','exam')"></i>
+              </div>
+              <div class="p-2" id="shown_exam${i}">
+                ${loadlist[i].exam}
+              </div>
+            </div>
+            <div class="data_box">
+              <div class="border-end p-2">
+                예문 뜻  
+              </div>
+              <div class="p-2" id="shown_exam_mean${i}">
+                ${loadlist[i].exam_mean}
+              </div>
+            </div>
+            <input type="button" value="수정" class="btn btn-outline-primary" onclick="modVoca(did('shown_voca${i}').innerText,did('shown_voca_mean${i}').innerText,did('shown_exam${i}').innerText,did('shown_exam_mean${i}').innerText,did('data_id${i}').value,'${i}')" data-bs-toggle="modal" data-bs-target="#ModifyDataModal">
+            <input type="button" value="삭제" class="btn btn-outline-danger" onclick="delVoca(did('data_id${i}').value,'${i}')" data-bs-toggle="modal" data-bs-target="#deleteDataModal" />
+          </div>
+          `;
+        }
+        did("load_body").innerHTML = load_list;
+      });
+  });
+
+  ekeyup(did("modvocaid"), () => {
+    isValid("text", "modvoca", 100);
+  });
+  ekeyup(did("modvmid"), () => {
+    isValid("text", "modvoca", 100);
+  });
+  ekeyup(did("modexamid"), () => {
+    isValid("text", "modvoca", 1000);
+  });
+  ekeyup(did("modemid"), () => {
+    isValid("text", "modvoca", 1000);
+  });
+
+  function modVoca(voca, voca_mean, exam, exam_mean, data, i) {
+    did("modvocaid").value = voca;
+    did("modvmid").value = voca_mean;
+    did("modexamid").value = exam;
+    did("modemid").value = exam_mean;
+    did("selected_data_id").value = data;
+    did("selected_data").value = i;
+  }
+
+  eclick(did("modvocabtn"), () => {
+    fetch("/voca/modify_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        dt_id: did("selected_data_id").value,
+        voca: did("modvocaid").value,
+        voca_mean: did("modvmid").value,
+        exam: did("modexamid").value,
+        exam_mean: did("modemid").value,
+      }),
+    }).then((res) => {
+      toastLive.style = "display:block";
+      toastMsg.innerText = "수정 완료";
+      did("close_mod_btn").click();
+      did("shown_voca" + did("selected_data").value).innerText =
+        did("modvocaid").value;
+      did("shown_voca_mean" + did("selected_data").value).innerText =
+        did("modvmid").value;
+      did("shown_exam" + did("selected_data").value).innerText =
+        did("modexamid").value;
+      did("shown_exam_mean" + did("selected_data").value).innerText =
+        did("modemid").value;
+    });
+  });
+
+  function delVoca(data, i) {
+    did("selected_data_id").value = data;
+    did("selected_data").value = i;
+  }
+
+  eclick(did("delvocabtn"), () => {
+    fetch("/voca/delete_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        dt_id: did("selected_data_id").value,
+      }),
+    }).then((res) => {
+      toastLive.style = "display:block";
+      toastMsg.innerText = "삭제 완료";
+      did("close_del_btn").click();
+      did("shown_id" + did("selected_data").value).style = "display:none";
+    });
+  });
+
+  ekeyup(did("createvocaid"), () => {
+    isValid("text", "createvoca", 100);
+  });
+
+  eclick(did("createvocabtn"), () => {
+    fetch("/voca/create_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fd_id: "<%= fd_id %>",
+        fl_id: "<%= fl_id %>",
+        voca: did("createvocaid").value,
+        voca_mean: did("createvmid").value,
+        exam: did("createexamid").value,
+        exam_mean: did("createemid").value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        toastLive.style = "display:block";
+        toastMsg.innerText = "단어가 추가되었습니다";
+        did("load_data_btn").click();
+        did("createvocaid").value = "";
+        did("createvmid").value = "";
+        did("createexamid").value = "";
+        did("createemid").value = "";
+        did("createvocabtn").disabled = "true";
+      });
+  });
+
+  window.addEventListener("DOMContentLoaded", function () {
+    did("load_data_btn").click();
+  });
+</script>

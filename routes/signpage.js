@@ -9,8 +9,6 @@ const auth = require("../lib/logonStatus");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const mymodule = require("../lib/mymodule");
-const nodemailer = require("nodemailer");
-const mailer = require("../lib/config").mailstore;
 
 const passport = require("../lib/passport")();
 
@@ -121,8 +119,9 @@ router.post("/delete_member", (req, res) => {
     DELETE FROM voca_file WHERE user_id=?;
     DELETE FROM voca_folder WHERE user_id=?;
     DELETE FROM localuser WHERE user_id=?;
+    DELETE FROM support WHERE user_id=?
     `,
-      [user.user_id, user.user_id, user.user_id, user.user_id],
+      [user.user_id, user.user_id, user.user_id, user.user_id, user.user_id],
       (err, result) => {
         res.redirect("/");
       }
@@ -189,82 +188,54 @@ router.post(
 );
 
 router.post("/pwdmail", (req, res) => {
-  let params = {
-    Source: "94voca2022@gmail.com",
-    Destination: {
-      ToAddresses: ["billlee2656@gmail.com"],
-    },
-    ReplyToAddresses: [],
-    Message: {
-      Body: {
-        Html: {
-          Charset: "UTF-8",
-          Data: "This is the body of my email!",
-        },
-      },
-      Subject: {
-        Charset: "UTF-8",
-        Data: `Hello!`,
-      },
-    },
-  };
-  AWS_SES.sendEmail(params).promise();
-  res.send("1");
+  const post = req.body;
+  db.query(
+    `SELECT email FROM localuser WHERE email=?
+  `,
+    [post.email],
+    (err, result) => {
+      if (result[0]) {
+        const newpwd = Math.random().toString(36).slice(2);
+        bcrypt.hash(newpwd, 10, (err, hash) => {
+          db.query(
+            `
+            UPDATE localuser SET password=? WHERE email=?
+            `,
+            [hash, post.email],
+            (err, result) => {
+              let params = {
+                Source: "94voca2022@gmail.com",
+                Destination: {
+                  ToAddresses: [post.email],
+                },
+                ReplyToAddresses: [],
+                Message: {
+                  Body: {
+                    Html: {
+                      Charset: "UTF-8",
+                      Data: `
+                    새로 발급된 임시비밀번호 : ' ${newpwd} '
+                    로그인 후 비밀번호를 꼭 변경해주세요.
+                    `,
+                    },
+                  },
+                  Subject: {
+                    Charset: "UTF-8",
+                    Data: `94voca에서의 새 비밀번호를 확인해 주세요`,
+                  },
+                },
+              };
+              AWS_SES.sendEmail(params).promise();
+              res.send("1");
+            }
+          );
+        });
+      } else {
+        res.send("2");
+      }
+    }
+  );
 });
-
-// router.post("/pwdmail", (req, res) => {
-//   const post = req.body;
-//   db.query(
-//     `SELECT email FROM localuser WHERE email=?
-//   `,
-//     [post.email],
-//     (err, result) => {
-//       if (result[0]) {
-//         const newpwd = Math.random().toString(36).slice(2);
-//         bcrypt.hash(newpwd, 10, (err, hash) => {
-//           db.query(
-//             `
-//               UPDATE localuser SET password=? WHERE email=?
-//               `,
-//             [hash, post.email],
-//             (err, result) => {
-//               let transporter = nodemailer.createTransport({
-//                 service: "gmail",
-//                 host: "smtp.gmail.com",
-//                 port: 465,
-//                 secure: true,
-//                 auth: {
-//                   user: mailer.mail,
-//                   pass: mailer.mailpwd,
-//                 },
-//               });
-
-//               var mailOptions = {
-//                 from: mailer.mail,
-//                 to: post.email,
-//                 subject: "94voca 에서의 새 비밀번호를 확인해주세요",
-//                 text: `
-//                 새로 발급된 임시비밀번호 : ' ${newpwd} '
-//                 로그인 후 비밀번호를 꼭 변경해주세요.
-//                 `,
-//               };
-
-//               transporter.sendMail(mailOptions, (error, info) => {
-//                 if (error) {
-//                   console.log(error);
-//                 } else {
-//                   res.send("1");
-//                 }
-//               });
-//             }
-//           );
-//         });
-//       } else {
-//         res.send("2");
-//       }
-//     }
-//   );
-// });
 
 router.get(
   "/google",

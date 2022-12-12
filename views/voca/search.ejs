@@ -1,0 +1,52 @@
+<div class="content">
+  <a class="btn btn-outline-dark" href="/">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <div>
+    <h5 class="text-center m-3">검색 키워드 : <%= keyword %></h5>
+    <% for(let i=0; i<loadlist.length; i++){ %>
+      <div class="border p-2 m-2 rounded" data-scroll>
+        <span><%- i+1 %></span>
+        <div class="data_box border-bottom">
+          <div class="border-end p-2">단어or표현
+            <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('<%= loadlist[i].data_id %>','voca')"></i>
+          </div>
+          <div class="p-2">
+            <b><span><%= loadlist[i].voca %></span></b>
+          </div>
+        </div>
+        <div class="data_box border-bottom">
+          <div class="border-end p-2">단어 뜻  
+          </div>
+          <div class="p-2">
+            <span><%= loadlist[i].voca_mean %>
+            </span>
+          </div>
+        </div>
+        <div class="data_box border-bottom">
+          <div class="border-end p-2">예문
+            <i class="bi bi-volume-up-fill mb-1 cursor" onclick="tts('<%= loadlist[i].data_id %>','exam')"></i>
+          </div>
+          <div class="p-2">
+            <span><%= loadlist[i].exam %>
+            </span>
+          </div>
+        </div>
+        <div class="data_box">
+          <div class="border-end p-2">예문 뜻  
+          </div>
+          <div class="p-2">
+            <span><%= loadlist[i].exam_mean %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+  <div class="load_footer"></div>
+</div>
+<script>
+  if(!'<%= loadlist %>'){
+    did("loaded_area").innerText = '검색 결과가 없습니다'
+  }
+</script>

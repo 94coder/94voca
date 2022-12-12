@@ -6,7 +6,7 @@
 .folder_wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid gray;
   grid-auto-rows: 150px;
 }
 
@@ -23,17 +23,22 @@
   grid-auto-rows: 100px;
 }
 
+.current_folder {
+  border-color: gray !important;
+}
+
 .folder {
+  color: #d3d3d3;
   background: none;
   border: none;
 }
 
 .folder:hover {
-  background-color: lightgray;
+  background-color: gray;
 }
 
 .dot3:hover {
-  background-color: lightgray;
+  background-color: gray;
 }
 
 #add_button {
@@ -67,7 +72,7 @@
   .folder_wrapper {
     display: grid;
     grid-auto-rows: 120px;
-    border-right: 1px solid lightgray;
+    border-right: 1px solid gray;
   }
 
   .file_wrapper {

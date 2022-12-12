@@ -1,0 +1,34 @@
+@import url("voca.css");
+
+.navbar {
+  z-index: 1;
+  background-color: #363636;
+  color: white;
+}
+
+.nav_tab_item:hover {
+  background-color: black;
+}
+
+.load_footer {
+  height: 100px;
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
+  .navbar > .nav-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

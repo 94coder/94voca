@@ -1,0 +1,170 @@
+<div class="content">
+  <ul class="nav nav-tabs nav-fill" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        data-bs-toggle="tab"
+        data-bs-target="#folder_area"
+        type="button"
+        role="tab"
+        aria-controls="folder_area"
+        aria-selected="true"
+      >
+        폴더, 단어장
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#fav_area"
+        type="button"
+        role="tab"
+        aria-controls="fav_area"
+        aria-selected="false"
+      >
+        즐겨찾기 폴더
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div
+      class="tab-pane fade show active"
+      id="folder_area"
+      role="tabpanel"
+      tabindex="0"
+    >
+      <div
+        class="current_folder d-flex justify-content-around p-1 m-3 border-bottom"
+      >
+        <i class="bi bi-arrow-left-circle fs-4 cursor" id="go_back"></i>
+        <div><i class="bi bi-folder2-open me-1 fs-5"></i><%= fd_name %></div>
+        <i onclick="openFolderModal('<%= fd_name %>','<%= fd_id %>','<%= pr_id %>','<%= fav %>','<%= sha %>')" class="bi bi-three-dots-vertical fs-5 cursor dot3 border-0 rounded-circle" id="current_folder_menu" data-bs-toggle="modal" data-bs-target="#FolderModal"></i>
+      </div>
+      <div class="f_wrapper">
+          <div class="folder_wrapper mt-3">
+            <% if(folder.length == 0){ %>
+              <div class="text-center">생성된 폴더가 없습니다</div>
+            <% } %>
+            <% for(let i=0; i<folder.length; i++){ %>
+                <form class="row" action="/voca/folder" method="post">
+                  <button class="folder m-3 p-3 text-center col-7 me-0" type="submit" >
+                    <div class="d-flex flex-column">
+                      <i class="fa-solid fa-folder fs-1"></i>
+                      <span class="mt-2 text-break"><%= folder[i].folder_name %></span>
+                    </div>
+                  </button>
+                  <div class="col-3 d-flex align-items-center"><i onclick="openFolderModal('<%= folder[i].folder_name %>','<%= folder[i].folder_id %>','<%= folder[i].parent_id %>','<%= folder[i].favorites %>','<%= folder[i].shared %>')" class="bi bi-three-dots-vertical cursor dot3 border-0 rounded-circle" data-bs-toggle="modal" data-bs-target="#FolderModal"></i></div>
+                  <input type="hidden" name="fd_id" value="<%= folder[i].folder_id %>" />
+                </form>
+            <% } %>
+          </div>
+        <div class="position-relative">
+          <div class="dropdown position-absolute top-0 end-0 me-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              정렬 순서
+            </button>
+            <form action="/voca/folder" method="post" id="set_order_form">
+              <ul class="dropdown-menu">
+                <li><button class="dropdown-item" onclick="setOrder('0')" id="set_order_btn1">생성 날짜 순</button></li>
+                <li><button class="dropdown-item" onclick="setOrder('1')" id="set_order_btn2">최신 순</button></li>
+                <li><button class="dropdown-item" onclick="setOrder('2')" id="set_order_btn3">이름 순</button></li>
+              </ul>
+              <input type="hidden" name="fd_id" value="<%= fd_id %>" />
+              <input type="hidden" name="order" id="order_id" />
+            </form>
+          </div>
+          <div class="file_wrapper mt-2">
+            <% if(file.length == 0){ %>
+              <div class="text-center">생성된 단어장이 없습니다</div>
+            <% } %>
+            <% for(let i=0; i<file.length; i++){ %>
+              <form class="row m-3" action="/voca/load" method="post">
+                <button type="submit" class="folder text-center col-7 m-3 p-2 me-0">
+                  <div class="d-flex flex-column">
+                    <i class="bi bi-journal-text fs-1"></i>
+                    <span class="mt-1 text-break"><%= file[i].file_name %></span>
+                  </div>
+                </button>
+                <div class="col-3 d-flex align-items-center"><i class="bi bi-three-dots-vertical cursor dot3 border-0 rounded-circle" data-bs-toggle="modal" data-bs-target="#FileModal" onclick="selectFile('<%= file[i].file_id %>','<%= file[i].file_name %>','<%= file[i].folder_id %>','<%= file[i].favorites %>','<%= file[i].shared %>')"></i></div>
+                <input type="hidden" name="fd_id" value="<%= file[i].folder_id %>" />
+                <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+                <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
+              </form>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="dropup" id="add_button">
+        <button type="button" class="btn btn-primary rounded-circle opacity-75" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-plus fs-4"></i></button>
+        <ul class="dropdown-menu dropdown-menu-lg-start mb-2">
+          <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#AddFolderModal"><i class="bi bi-folder-plus me-1"></i>폴더 추가</button></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#AddFileModal"><i class="bi bi-journal-plus me-1"></i>단어장 추가</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="fav_area" role="tabpanel" tabindex="0">
+      <div class="file_wrapper2 ">
+        <% if(fav_folder.length == 0){ %>
+          <div class="text-center">즐겨찾기 폴더가 없습니다</div>
+        <% } %>
+        <% for(let i=0; i<fav_folder.length; i++){ %>
+          <form action="/voca/folder" method="post">
+            <button class="folder p-3 text-center w-100" type="submit" >
+              <div class="d-flex flex-column">
+                <i class="fa-solid fa-folder fs-1"></i>
+                <span class="mt-2 text-break"><%= fav_folder[i].folder_name %></span>
+              </div>
+            </button>
+            <input type="hidden" name="fd_id" value="<%= fav_folder[i].folder_id %>" />
+          </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="load_footer"></div>
+
+<input type="hidden" id="root_folder" value="<%= root %>" />
+<input type="hidden" id="selected_folder" value="<%= fd_id %>" />
+<input type="hidden" id="selected_sub_folder" />
+<input type="hidden" id="selected_parent" />
+<input type="hidden" id="selected_file" />
+<input type="hidden" id="selected_file_name" />
+<input type="hidden" id="move_selected_folder" />
+<input type="button" class="d-none" id="create_data_modal_btn" data-bs-toggle="modal" data-bs-target="#createDataModal" />
+
+<form method="post" id="go_post">
+  <input type="hidden" name="fd_id" id="post_fd_id" />
+  <input type="hidden" name="toast" id="toast_id" />
+</form>
+
+<%- include('modal.ejs') %>
+
+<script type="text/javascript" src="/javascripts/voca.js"></script>
+<script>
+  toastLive = did("liveToast");
+  closeToast = did("closeToast");
+  toastMsg = did("toastMsg");
+
+  if("<%= is_root %>" == "0"){
+    did("current_folder_menu").style.display = "none"
+    did("go_back").style.display = "none"
+  }else{
+    did("current_folder_menu").style.display = "block"
+    did("go_back").style.display = "block"
+  }
+  if("<%= toast %>"){
+    toastMsg.innerText = "<%= toast %>"
+    toastLive.style.display = "block"
+  }
+  if("<%= order %>" == 0){
+    did("set_order_btn1").classList.add("active")
+  }else if("<%= order %>" == 1){
+    did("set_order_btn2").classList.add("active")
+  }else if("<%= order %>" == 2){
+    did("set_order_btn3").classList.add("active")
+  }
+</script>

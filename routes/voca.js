@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("../lib/logonStatus");
+const mymodule = require("../lib/mymodule");
 const AWS = require("aws-sdk");
 
 const aws_info = require("../lib/config").aws;
@@ -37,46 +38,96 @@ router.post("*", (req, res, next) => {
   }
 });
 
-router.post("/main", (req, res) => {
+router.get("/folder", (req, res) => {
+  const user = req.user[0];
+  db.query(
+    `SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0
+  `,
+    [user.user_id],
+    (err, result) => {
+      body = mymodule.POST(
+        "/voca/folder",
+        mymodule.HIDDEN(result[0].folder_id)
+      );
+      res.send(body);
+    }
+  );
+});
+
+router.post("/folder", (req, res) => {
   const post = req.body;
   const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
+  let toast;
+  if (post.toast) {
+    toast = post.toast;
   } else {
-    style = "darkmode";
+    toast = null;
   }
   db.query(
     `SELECT * FROM voca_folder WHERE parent_id=?;
   SELECT * FROM voca_file WHERE folder_id=?;
   SELECT * FROM voca_folder WHERE folder_id=?;
-  SELECT * FROM voca_folder WHERE folder_id=?;
+  SELECT * FROM voca_folder WHERE user_id=? AND favorites=1;
+  SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0;
   `,
-    [post.fd_id, post.fd_id, post.fd_id, post.pr_id],
+    [post.fd_id, post.fd_id, post.fd_id, user.user_id, user.user_id],
     (err, result) => {
-      if (!result[3][0]) {
-        res.redirect("/");
+      if (result[2][0].parent_id == 0) {
+        is_root = "0";
       } else {
-        if (post.toast) {
-          toast = post.toast;
-        } else {
-          toast = "";
-        }
-        res.render("template", {
-          page: "./index",
-          content: "./voca/voca_main",
-          fd_id: post.fd_id,
-          pr_id: post.pr_id,
-          gpr_id: result[3][0].parent_id,
-          fd_name: result[2][0].folder_name,
-          pr_name: result[3][0].folder_name,
-          folder: result[0],
-          file: result[1],
-          fav: result[2][0].favorites,
-          sha: result[2][0].shared,
-          toast: toast,
-          style: style,
+        is_root = "1";
+      }
+      if (!post.order || post.order == 0) {
+        order = 0;
+        newest = result[1].sort((a, b) => {
+          return new Date(a.created) - new Date(b.created);
+        });
+      } else if (post.order == 1) {
+        order = 1;
+        newest = result[1].sort((a, b) => {
+          return new Date(b.created) - new Date(a.created);
+        });
+      } else if (post.order == 2) {
+        order = 2;
+        file_list = result[1].sort((a, b) => {
+          let x = a.file_name.toLowerCase();
+          let y = b.file_name.toLowerCase();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
         });
       }
+      res.render("template", {
+        page: "./index",
+        content: "./voca/folder",
+        folder: result[0],
+        file: result[1],
+        fd_name: result[2][0].folder_name,
+        is_root: is_root,
+        fd_id: post.fd_id,
+        fav_folder: result[3],
+        toast: toast,
+        fav: result[2][0].favorites,
+        sha: result[2][0].shared,
+        order: order,
+        pr_id: result[2][0].parent_id,
+        root: result[4].folder_id,
+      });
+    }
+  );
+});
+
+router.post("/get_parent", (req, res) => {
+  const post = req.body;
+  db.query(
+    `SELECT parent_id FROM voca_folder WHERE folder_id=?`,
+    [post.fd_id],
+    (err, result) => {
+      res.send(`${result[0].parent_id}`);
     }
   );
 });
@@ -107,43 +158,6 @@ router.post("/load_list", (req, res) => {
           return 0;
         });
       }
-      res.send(result);
-    }
-  );
-});
-
-router.get("/load_fav", (req, res) => {
-  const user = req.user[0];
-  db.query(
-    `SELECT * FROM voca_file WHERE user_id=? AND favorites=1;
-    SELECT * FROM voca_folder WHERE user_id=? AND favorites=1
-  `,
-    [user.user_id, user.user_id],
-    (err, result) => {
-      res.send(result);
-    }
-  );
-});
-
-router.post("/load_fav_file", (req, res) => {
-  const post = req.body;
-  db.query(
-    `SELECT * FROM voca_file WHERE folder_id=?
-  `,
-    [post.fd_id],
-    (err, result) => {
-      res.send(result);
-    }
-  );
-});
-
-router.post("/load_sha_file", (req, res) => {
-  const post = req.body;
-  db.query(
-    `SELECT * FROM voca_file WHERE folder_id=?
-  `,
-    [post.fd_id],
-    (err, result) => {
       res.send(result);
     }
   );
@@ -192,19 +206,14 @@ router.post("/tts", (req, res) => {
   );
 });
 
-router.get("/darkmode", (req, res) => {
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    darkmode = "1";
-  } else {
-    darkmode = "0";
-  }
+router.post("/load_move_folder", (req, res) => {
+  const post = req.body;
   db.query(
-    `UPDATE localuser SET darkmode=? WHERE user_id=?
-  `,
-    [darkmode, user.user_id],
+    `SELECT * FROM voca_folder WHERE parent_id=?;
+    SELECT * FROM voca_folder WHERE folder_id=?`,
+    [post.pr_id, post.pr_id],
     (err, result) => {
-      res.send("0");
+      res.send(result);
     }
   );
 });

@@ -1,0 +1,78 @@
+<div class="content">
+  <ul class="nav nav-tabs nav-fill" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        data-bs-toggle="tab"
+        data-bs-target="#current_area"
+        type="button"
+        role="tab"
+        aria-controls="current_area"
+        aria-selected="true"
+      >
+        최근 본 단어장
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#fav_area"
+        type="button"
+        role="tab"
+        aria-controls="fav_area"
+        aria-selected="false"
+      >
+        즐겨찾기 단어장
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div
+      class="tab-pane fade show active"
+      id="current_area"
+      role="tabpanel"
+      tabindex="0"
+    >
+    <div class="file_wrapper2">
+      <% if(current.length == 0){ %>
+        <div class="text-center">생성된 단어장이 없습니다</div>
+      <% } %>
+      <% for(let i=0; i<current.length; i++){ %>
+        <form class="m-3" action="/voca/load" method="post">
+          <button type="submit" class="folder text-center p-2 w-100">
+            <div class="d-flex flex-column">
+              <i class="bi bi-journal-text fs-1"></i>
+              <span class="mt-1 text-break"><%= current[i].file_name %></span>
+            </div>
+          </button>
+          <input type="hidden" name="fd_id" value="<%= current[i].folder_id %>" />
+          <input type="hidden" name="fl_id" value="<%= current[i].file_id %>" />
+          <input type="hidden" name="fl_name" value="<%= current[i].file_name %>" />
+        </form>
+      <% } %>
+    </div>
+    </div>
+    <div class="tab-pane fade" id="fav_area" role="tabpanel" tabindex="0">
+      <div class="file_wrapper2">
+        <% if(fav.length == 0){ %>
+          <div class="text-center">즐겨찾기 단어장이 없습니다</div>
+        <% } %>
+        <% for(let i=0; i<fav.length; i++){ %>
+          <form class="m-3" action="/voca/load" method="post">
+            <button type="submit" class="folder text-center p-2 w-100">
+              <div class="d-flex flex-column">
+                <i class="bi bi-journal-text fs-1"></i>
+                <span class="mt-1 text-break"><%= fav[i].file_name %></span>
+              </div>
+            </button>
+            <input type="hidden" name="fd_id" value="<%= fav[i].folder_id %>" />
+            <input type="hidden" name="fl_id" value="<%= fav[i].file_id %>" />
+            <input type="hidden" name="fl_name" value="<%= fav[i].file_name %>" />
+          </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="load_footer"></div>

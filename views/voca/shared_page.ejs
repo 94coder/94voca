@@ -1,0 +1,179 @@
+<div class="content">
+  <ul
+    class="nav nav-tabs nav-fill mb-3"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="folder-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#folder-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="folder-tab-pane"
+        aria-selected="true"
+      >
+      <i class="bi bi-folder2-open"></i>
+        공유 폴더
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="file-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#file-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="file-tab-pane"
+        aria-selected="false"
+      >
+      <i class="bi bi-journal-text"></i>
+        공유 단어장
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content sha_tab">
+    <div
+      class="tab-pane fade show active"
+      id="folder-tab-pane"
+      role="tabpanel"
+      aria-labelledby="folder-tab"
+      tabindex="0"
+    >
+      <div class="container-fluid">
+        <div class="file_wrapper2">
+          <% if(folder.length == 0){ %>
+            <div class="text-center">공유된 폴더가 없습니다</div>
+          <% } %>
+          <% for(i=0;i<folder.length;i++){ %>
+            <button class="folder p-3 text-center w-100" data-bs-toggle="modal" data-bs-target="#sharedFolderModal" onclick="openSharedFolder('<%= folder[i].folder_name %>','<%= folder[i].folder_id %>')">
+              <div class="d-flex flex-column">
+                <i class="fa-solid fa-folder fs-1"></i>
+                <span class="mt-2 text-break"><%= folder[i].folder_name %></span>
+                <span><i class="bi bi-person-circle me-1"></i><span id="folder_user<%- i %>"></span></span>
+              </div>
+            </button>
+            <script>
+              fetch("/voca/shared_user",{
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  user_id: "<%= folder[i].user_id %>",
+                }),
+              })
+              .then(res=>res.json())
+              .then(user=>{
+                did("folder_user<%- i %>").innerText = user.nickname;
+              })
+            </script>
+          <%}%>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tab-pane fade"
+      id="file-tab-pane"
+      role="tabpanel"
+      aria-labelledby="file-tab"
+      tabindex="0"
+    >
+      <div class="container-fluid text-center">
+        <div class="file_wrapper2">
+          <% if(file.length == 0){ %>
+            <div class="text-center">공유된 단어장이 없습니다</div>
+          <% } %>
+          <% for(i=0;i<file.length;i++){ %>
+            <form class="m-3" action="/voca/shared_file_load" method="post">
+              <button type="submit" class="folder text-center p-2 w-100">
+                <div class="d-flex flex-column">
+                  <i class="bi bi-journal-text fs-1"></i>
+                  <span class="mt-1 text-break"><%= file[i].file_name %></span>
+                  <span><i class="bi bi-person-circle me-1"></i><span id="file_user<%- i %>"></span></span>
+                </div>
+              </button>
+              <input type="hidden" name="fl_id" value="<%= file[i].file_id %>" />
+              <input type="hidden" name="fl_name" value="<%= file[i].file_name %>" />
+            </form>
+            <script>
+              fetch("/voca/shared_user",{
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  user_id: "<%= file[i].user_id %>",
+                }),
+              })
+              .then(res=>res.json())
+              .then(user=>{
+                did("file_user<%- i %>").innerText = user.nickname;
+              })
+            </script>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="load_footer"></div>
+
+<div class="modal fade" id="sharedFolderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shared_folder_name"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body file_wrapper2" id="shared_foldersfile_area">
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const openSharedFolder = (fd_name,fd_id) => {
+    did("shared_folder_name").innerText = fd_name;
+    fetch("/voca/load_shared_foldersfile",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fd_id: fd_id,
+      }),
+    })
+    .then(res=>res.json())
+    .then(list=>{
+      let file_list = "";
+      for(let i=0; i<list.length; i++){
+        file_list += `
+        <form class="m-3" action="/voca/shared_file_load" method="post">
+          <button type="submit" class="folder text-center p-2 w-100">
+            <div class="d-flex flex-column">
+              <i class="bi bi-journal-text fs-1"></i>
+              <span class="mt-1">${list[i].file_name}</span>
+            </div>
+          </button>
+          <input type="hidden" name="fl_id" value="${list[i].id}" />
+          <input type="hidden" name="fl_name" value="${list[i].file_name}" />
+        </form>
+        `
+      }
+      console.log(file_list)
+      did("shared_foldersfile_area").innerHTML = file_list;
+    })
+  }
+</script>

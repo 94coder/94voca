@@ -1,0 +1,426 @@
+<div class="modal fade" id="componentModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div
+          class="btn-group-vertical d-flex justify-content-center"
+          role="group"
+          aria-label="Vertical button group"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#settingModal"
+            id="open_setting"
+          >
+            <i class="bi bi-gear fs-5 mt-1 me-1"></i>
+            설정
+          </button>
+          <a type="button" class="btn btn-outline-dark p-3" href="/voca/shared_page">
+            <i class="bi bi-share-fill fs-5 mt-1 me-1"></i>
+            공유마당
+          </a>
+          <button type="button" class="btn btn-outline-dark p-3" data-bs-toggle="modal"
+          data-bs-target="#supportModal" id="openSupportBtn">
+            <i class="bi bi-question-circle fs-5 mt-1 me-1"></i>
+            문의하기
+          </button>
+          <button type="button" class="btn btn-outline-dark p-3" id="dark_mode_btn">
+            <i class="bi bi-moon-fill fs-5 mt-1 me-1"></i>
+            다크모드
+          </button>
+          <form class="input-group mt-3" action="/voca/search" method="post">
+            <input type="text" name="word" class="form-control" placeholder="검색할 단어를 입력하세요" id="search_word">
+            <button class="btn btn-outline-secondary" type="submit" id="search_btn"><i class="bi bi-search"></i></button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="settingModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5"><i class="bi bi-gear fs-5 mt-1 me-1"></i>설정</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="fs-5"><i class="bi bi-person-lines-fill ms-1"></i>회원 정보</div>
+        <div class="m-2" id="user_email">이메일 : ~</div>
+        <div class="m-2" id="user_nickname">닉네임 : ~</div>
+        <div class="m-2" id="user_registered">가입날짜 : ~</div>
+        <div
+          class="btn-group-vertical d-flex justify-content-center"
+          role="group"
+          aria-label="Vertical button group"
+        >
+          <a
+            type="button"
+            class="btn btn-outline-dark p-3"
+            href="/signpage/logout"
+          >
+          <i class="bi bi-box-arrow-left fs-5 mt-1 me-1"></i>
+            로그아웃
+          </a>
+          <button type="button" class="btn btn-outline-dark p-3" data-bs-toggle="modal"
+          data-bs-target="#renameNickModal">
+            <i class="bi bi-person-fill-gear fs-5 mt-1 me-1"></i>
+            닉네임 변경
+          </button>
+          <button type="button" class="btn btn-outline-dark p-3" data-bs-toggle="modal"
+          data-bs-target="#resetPwdModal">
+            <i class="fa-solid fa-key fs-5 mt-1 me-1"></i>
+            비밀번호 변경
+          </button>
+          <button type="button" class="btn btn-outline-danger p-3" data-bs-toggle="modal"
+          data-bs-target="#deleteAuthModal">
+            <i class="bi bi-person-fill-dash fs-5 mt-1 me-1""></i>
+            회원탈퇴
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close_setting_btn">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="renameNickModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">변경할 닉네임을 입력하세요</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          id="nickinputid"
+          type="text"
+          name="nickname"
+          class="form-control is-val w100"
+          maxlength="11"
+        />
+        <div class="invalid-feedback" id="mod_nick_msg">
+          닉네임 형식을 확인하세요(2~10글자의 영어,숫자,한글)
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="mod_nick_cancle"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          value="변경하기"
+          class="btn btn-primary"
+          id="nickinputbtn"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="resetPwdModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">비밀번호 변경</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="p-2">
+          <li class="row mb-3">
+            <div class="col-4 p-0 mt-1">현재 비밀번호</div>
+            <div class="col-8 p-0">
+              <input
+                type="password"
+                class="w-100 form-control is-val"
+                id="now_pwd_id"
+                minlength="6"
+                maxlength="19"
+              />
+              <div class="invalid-feedback">비밀번호를 확인하세요</div>
+              <input type="hidden" name="modal" value="change" />
+            </div>
+          </li>
+          <li class="row">
+            <div class="col-4 p-0 mt-1">새 비밀번호</div>
+            <div class="col-8 p-0">
+              <input
+                type="password"
+                id="pwdinputid"
+                class="w-100 form-control is-val"
+                minlength="6"
+                maxlength="19"
+              />
+              <div class="invalid-feedback">
+                비밀번호 형식을 확인하세요(6~18자 영문,숫자 조합)
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="mod_pwd_cancle"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          value="확인"
+          class="btn btn-primary"
+          id="pwdinputbtn"
+          disabled
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteAuthModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="del_modal_title">
+          현재 비밀번호를 입력하세요
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div id="delete_modal_first">
+          <input
+            type="password"
+            class="w100 is-val form-control"
+            name="password"
+            minlength="6"
+            maxlength="19"
+            id="del_pwd_id"
+          />
+          <div class="invalid-feedback">비밀번호를 확인하세요</div>
+        </div>
+        <div id="delete_modal_second" class="d-none">
+          정말 계정을 삭제하시겠습니까?
+        </div>
+        <div class="modal-footer border-0">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            취소
+          </button>
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary"
+            id="delete_check_btn"
+          />
+          <form action="/signpage/delete_member" method="post">
+            <input
+              type="submit"
+              value="탈퇴"
+              class="btn btn-danger d-none"
+              id="delete_form_btn"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="supportModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="del_modal_title">문의하기</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs nav-fill mb-3" id="supportTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="support-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#support-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="support-tab-pane"
+              aria-selected="true"
+            >
+              문의하기
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="support-list-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#support-list-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="support-list-tab-pane"
+              aria-selected="false"
+            >
+              문의내역
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content sha_tab me-4">
+          <div
+            class="col-9 p-0 w-100 tab-pane fade show active"
+            id="support-tab-pane"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control is-val h-25"
+                placeholder="제목을 입력해주세요"
+                id="supporttitleinputid"
+                minlength="1"
+                maxlength="51"
+              />
+              <label for="supporttitleinputid">제목을 입력해주세요</label>
+              <div class="invalid-feedback">50자 이내로 입력하세요</div>
+            </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control is-val"
+                placeholder="문의하실 내용을 입력해주세요"
+                id="supportinputid"
+                minlength="1"
+                maxlength="1001"
+              ></textarea>
+              <label for="supportinputid">문의하실 내용을 입력해주세요</label>
+              <div class="invalid-feedback">1~1000자 사이로 입력하세요</div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="support-list-tab-pane"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <div class="accordion accordion-flush" id="support_accordion"></div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="support_cancle"
+          >
+            취소
+          </button>
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary"
+            id="supportinputbtn"
+            disabled
+          />
+          <input
+            type="button"
+            value="확인"
+            class="btn btn-primary d-none"
+            id="supporttitleinputbtn"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="delSupportModal"
+  tabindex="-1"
+  aria-labelledby="delSupportModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          정말 삭제하시겠습니까?
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-footer border-0">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            id="cancle_delete_support"
+          >
+            취소
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            id="delete_support_button"
+          >
+            삭제
+          </button>
+          <input type="hidden" id="selectedsupport" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

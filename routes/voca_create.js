@@ -4,7 +4,6 @@ const router = express.Router();
 const mysql = require("mysql");
 const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
-const mymodule = require("../lib/mymodule");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -57,14 +56,7 @@ router.post("/create_folder", (req, res) => {
       `,
     [user.user_id, post.fd_id, post.new_fd_name],
     (err, result) => {
-      body = mymodule.POST(
-        "/voca/main",
-        mymodule.HIDDEN(post.fd_id, post.pr_id) +
-          `
-        <input type="hidden" name="toast" value="폴더가 생성되었습니다" />
-        `
-      );
-      res.send(body);
+      res.send("0");
     }
   );
 });
@@ -95,46 +87,15 @@ router.post("/create_file", (req, res) => {
     [user.user_id, post.fd_id, post.new_fl_name],
     (err, result) => {
       db.query(
-        `SELECT * FROM voca_file WHERE folder_id=? AND file_name=?
+        `SELECT file_id FROM voca_file WHERE folder_id=? AND file_name=?
               `,
         [post.fd_id, post.new_fl_name],
         (err, result) => {
-          body = mymodule.POST(
-            "/voca/create_data_page",
-            `<input type='hidden' name='fl_id' value='${result[0].file_id}' />
-            <input type='hidden' name='fl_name' value='${result[0].file_name}' />
-            <input type='hidden' name='fd_id' value='${post.fd_id}' />
-            `
-          );
-          res.send(body);
+          res.send(`${result[0].file_id}`);
         }
       );
     }
   );
-});
-
-router.post("/create_data_page", (req, res) => {
-  const post = req.body;
-  const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
-  if (post.toast) {
-    toast = 1;
-  } else {
-    toast = 0;
-  }
-  res.render("template", {
-    page: "./index",
-    content: "./voca/voca_create_data",
-    fd_id: post.fd_id,
-    fl_id: post.fl_id,
-    fl_name: post.fl_name,
-    toast: toast,
-    style: style,
-  });
 });
 
 router.post("/create_data", (req, res) => {

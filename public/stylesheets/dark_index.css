@@ -1,0 +1,69 @@
+@import url("dark_voca.css");
+
+body {
+  background-color: #363636;
+  color: #d3d3d3;
+}
+
+.navbar {
+  z-index: 1;
+  background-color: #292929;
+  color: white;
+}
+
+.nav_tab_item:hover {
+  background-color: #363636;
+}
+
+.load_footer {
+  height: 100px;
+}
+
+.nav-link {
+  color: #d3d3d3;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: #d3d3d3;
+  background-color: gray;
+  border-color: lightgray;
+}
+
+.btn-outline-dark {
+  color: #d3d3d3;
+  border-color: #d3d3d3;
+}
+
+.btn-outline-secondary {
+  color: #d3d3d3;
+  border-color: #d3d3d3;
+}
+
+.modal-content {
+  background-color: #363636;
+}
+
+.accordion-button,
+.accordion-body {
+  background-color: lightgray;
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
+  .navbar > .nav-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

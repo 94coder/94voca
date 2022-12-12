@@ -6,11 +6,10 @@ const db = mysql.createConnection(require("../lib/config").user);
 db.connect();
 
 const bodyParser = require("body-parser");
-const mymodule = require("../lib/mymodule");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-router.post("/modify_folder", (req, res) => {
+router.post("/rename_folder", (req, res) => {
   const post = req.body;
   db.query(
     `UPDATE voca_folder SET folder_name=? WHERE folder_id=?
@@ -22,7 +21,7 @@ router.post("/modify_folder", (req, res) => {
   );
 });
 
-router.post("/modify_file", (req, res) => {
+router.post("/rename_file", (req, res) => {
   const post = req.body;
   db.query(
     `UPDATE voca_file SET file_name=? WHERE file_id=?
@@ -103,27 +102,17 @@ router.post("/share_file", (req, res) => {
   `,
     [post.fl_id],
     (err, result) => {
-      console.log(result);
       if (result[0].shared == 0) {
         shared = 1;
-        sharedmsg = "단어장이 공유되었습니다";
       } else {
         shared = 0;
-        sharedmsg = "단어장 공유가 해제되었습니다";
       }
       db.query(
         `UPDATE voca_file SET shared=? WHERE file_id=?
     `,
         [shared, post.fl_id],
         (err, result) => {
-          body = mymodule.POST(
-            "/voca/main",
-            mymodule.HIDDEN(post.fd_id, post.pr_id) +
-              `
-            <input type="hidden" name="toast" value="${sharedmsg}" />
-            `
-          );
-          res.send(body);
+          res.send(`${shared}`);
         }
       );
     }
@@ -171,7 +160,7 @@ router.post("/move_folder", (req, res) => {
   const post = req.body;
   db.query(
     `
-  UPDATE voca_folder SET parent_id=? WHERE folder_id=?
+  UPDATE voca_folder SET parent_id=? WHERE folder_id=?;
   `,
     [post.mv_fd_id, post.fd_id],
     (err, result) => {

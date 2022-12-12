@@ -75,39 +75,18 @@ router.get("/", (req, res, next) => {
 
 router.get("/", (req, res) => {
   const user = req.user[0];
-  if (user.darkmode == "0") {
-    style = "logonstyle";
-  } else {
-    style = "darkmode";
-  }
   db.query(
-    `SELECT folder_id FROM voca_folder WHERE user_id=? AND parent_id=0`,
+    `SELECT * FROM voca_file ORDER BY current DESC;
+  SELECT * FROM voca_file WHERE user_id=? AND favorites=1;
+  `,
     [user.user_id],
     (err, result) => {
-      let fd_id = result[0].folder_id;
-      db.query(
-        `SELECT * FROM voca_folder WHERE parent_id=?;
-      SELECT * FROM voca_file WHERE folder_id=?
-      `,
-        [fd_id, fd_id],
-        (err, result2) => {
-          res.render("template", {
-            page: "./index",
-            content: "./voca/voca_main",
-            fd_id: fd_id,
-            pr_id: "0",
-            gpr_id: "0",
-            folder: result2[0],
-            file: result2[1],
-            fd_name: "Home",
-            pr_name: "0",
-            fav: "0",
-            sha: "0",
-            toast: "",
-            style: style,
-          });
-        }
-      );
+      res.render("template", {
+        page: "./index",
+        content: "./voca/main",
+        current: result[0],
+        fav: result[1],
+      });
     }
   );
 });

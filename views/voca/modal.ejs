@@ -1,0 +1,541 @@
+<div class="modal fade" id="AddFolderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">폴더 생성</h5>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          placeholder="추가하실 폴더이름을 입력해주세요"
+          id="newfolderid"
+          class="form-control is-val w100"
+          minlength="1"
+          maxlength="21"
+        />
+        <div class="invalid-feedback">폴더명은 1~20자로 해주세요</div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="add_folder_cancle"
+        >
+          닫기
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="newfolderbtn"
+          disabled
+        >
+          생성하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="AddFileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">단어장 생성</h5>
+      </div>
+      <div class="modal-body">
+        <form action="/voca/create_file" method="post" id="new_file_form">
+          <input
+            type="text"
+            name="new_fl_name"
+            placeholder="추가하실 단어장 이름을 입력해주세요"
+            id="newfileid"
+            class="form-control is-val w100"
+            minlength="1"
+            maxlength="21"
+          />
+          <input type="hidden" name="fd_id" id="new_fl_fd_id" />
+          <div class="invalid-feedback">단어장명은 1~20자로 해주세요</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          닫기
+        </button>
+        <button type="button" class="btn btn-primary" id="newfilebtn" disabled>
+          생성하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createDataModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">추가하실 데이터를 입력하세요</h5>
+      </div>
+      <div class="modal-body pb-0">
+        <h4 class="text-center m-3" id="create_data_file_name"></h4>
+        <div>
+          <div class="m-3">
+            <div class="mb-2">단어or표현</div>
+            <div class="p-1">
+              <textarea
+                class="form-control is-val"
+                name="voca"
+                id="createvocaid"
+                minlength="1"
+                maxlength="101"
+                placeholder="100자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div class="m-3">
+            <div class="mb-2">단어 뜻</div>
+            <div class="p-1">
+              <textarea
+                class="form-control"
+                name="voca_mean"
+                id="createvmid"
+                maxlength="100"
+                placeholder="100자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div class="m-3">
+            <div class="mb-2">예문</div>
+            <div class="p-1">
+              <textarea
+                class="form-control"
+                name="exam"
+                id="createexamid"
+                maxlength="1000"
+                placeholder="1000자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+          <div class="m-3">
+            <div class="mb-2">예문 뜻</div>
+            <div class="p-1">
+              <textarea
+                class="form-control"
+                name="exam_mean"
+                id="createemid"
+                maxlength="1000"
+                placeholder="1000자 이내로 입력해주세요"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="createvocabtn"
+            disabled
+          >
+            추가
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="finish_create_voca"
+          >
+            완료
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer pt-0 border-0"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="FolderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">폴더 기능</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-center m-3" id="folder_modal_name"></h4>
+        <div
+          class="btn-group-vertical d-flex justify-content-center"
+          role="group"
+          aria-label="Vertical button group"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#renameFolderModal"
+          >
+            <i class="bi bi-pencil-square fs-5 mt-1 me-1"></i>
+            폴더명 변경
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#moveFolderModal"
+            onclick="moveFolder(did('selected_parent').value)"
+          >
+            <i class="bi bi-folder-symlink fs-5 mt-1 me-1"></i>
+            폴더 이동
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            id="fd_fav_btn"
+          >
+            <img class="icon mb-1" id="folder_modal_fav_img" />
+            <span id="folder_modal_fav_text"></span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            id="sharing_fd_Btn"
+          >
+            <i class="bi bi-share-fill fs-5 mt-1 me-1"></i>
+            <span id="folder_modal_sha_text"></span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteFolderModal"
+          >
+            <i class="bi bi-trash-fill"></i>
+            폴더 삭제
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="FileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">단어장 기능</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-center m-3" id="file_modal_name"></h4>
+        <div
+          class="btn-group-vertical d-flex justify-content-center"
+          role="group"
+          aria-label="Vertical button group"
+        >
+          <form action="/voca/study" method="post" id="go_study_form">
+            <input type="hidden" name="fd_id" id="file_modal_fd_id" />
+            <input type="hidden" name="fl_id" id="file_modal_fl_id" />
+            <input type="hidden" name="fl_name" id="file_modal_fl_name" />
+          </form>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            id="go_study_btn"
+          >
+            <i class="bi bi-book fs-5 mt-1 me-1"></i>
+            단어장 공부
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#renameFileModal"
+          >
+            <i class="bi bi-pencil-square fs-5 mt-1 me-1"></i>
+            단어장명 변경
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            onclick="moveFile(did('selected_folder').value)"
+            data-bs-toggle="modal"
+            data-bs-target="#moveFileModal"
+          >
+            <i class="bi bi-folder-symlink fs-5 mt-1 me-1"></i>
+            단어장 이동
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            id="fl_fav_btn"
+          >
+            <img class="icon mb-1" id="file_modal_fav_img" />
+            <span id="file_modal_fav_text"></span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark p-3"
+            id="sharing_file_Btn"
+          >
+            <i class="bi bi-share-fill fs-5 mt-1 me-1"></i>
+            <span id="file_modal_sha_text"></span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger p-3"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteFileModal"
+          >
+            <i class="bi bi-trash-fill fs-5 mt-1 me-1"></i>
+            단어장 삭제
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="renameFolderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">폴더명 변경</h5>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          name="new_fd_name"
+          placeholder="변경하실 폴더 이름을 입력해주세요"
+          id="renamefolderid"
+          class="form-control is-val w100"
+          minlength="1"
+          maxlength="21"
+        />
+        <div class="invalid-feedback">폴더명은 1~20자로 해주세요</div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="rename_folder_cancle"
+        >
+          닫기
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="renamefolderbtn"
+          disabled
+        >
+          변경하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="renameFileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">단어장명 변경</h5>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          name="new_fl_name"
+          placeholder="변경하실 단어장 이름을 입력해주세요"
+          id="renamefileid"
+          class="form-control is-val w100"
+          minlength="1"
+          maxlength="21"
+          onkeyup="isValid('text','renamefile',20)"
+        />
+        <div class="invalid-feedback">단어장명은 1~20자로 해주세요</div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="rename_file_cancle"
+        >
+          닫기
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="renamefilebtn"
+          disabled
+        >
+          변경하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteFolderModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">정말 삭제하시겠습니까?</h5>
+      </div>
+      <div class="modal-body">폴더 내의 모든 단어장이 삭제됩니다.</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="del_folder_cancle"
+        >
+          닫기
+        </button>
+        <button type="button" class="btn btn-danger" id="del_folder_btn">
+          삭제하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteFileModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">정말 삭제하시겠습니까?</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">단어장 내 모든 데이터가 삭제됩니다.</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="del_file_cancle"
+        >
+          취소
+        </button>
+        <input
+          type="button"
+          class="btn btn-danger"
+          value="삭제"
+          id="del_file_btn"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="moveFolderModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">이동하실 폴더를 선택하세요</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center fs-5">
+          선택된 폴더 : <span id="move_folder_selected_folder_name"></span>
+        </div>
+        <div id="move_go_parent"></div>
+        <div class="file_wrapper3" id="move_folder_area"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          취소
+        </button>
+        <input
+          type="button"
+          class="btn btn-primary"
+          value="이동"
+          id="move_folder_btn"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="moveFileModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">이동하실 폴더를 선택하세요</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center fs-5">
+          선택된 폴더 : <span id="move_file_selected_folder_name"></span>
+        </div>
+        <div id="move_file_go_parent"></div>
+        <div class="file_wrapper3" id="move_file_area"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          취소
+        </button>
+        <input
+          type="button"
+          class="btn btn-primary"
+          value="이동"
+          id="move_file_btn"
+        />
+      </div>
+    </div>
+  </div>
+</div>
