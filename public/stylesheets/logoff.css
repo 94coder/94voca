@@ -10,9 +10,10 @@ h2 {
 }
 
 .authpage {
-  display: grid;
-  place-items: center;
-  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .authwrap {
