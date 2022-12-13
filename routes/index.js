@@ -76,10 +76,10 @@ router.get("/", (req, res, next) => {
 router.get("/", (req, res) => {
   const user = req.user[0];
   db.query(
-    `SELECT * FROM voca_file ORDER BY current DESC;
+    `SELECT * FROM voca_file WHERE user_id=? ORDER BY current DESC;
   SELECT * FROM voca_file WHERE user_id=? AND favorites=1;
   `,
-    [user.user_id],
+    [user.user_id, user.user_id],
     (err, result) => {
       res.render("template", {
         page: "./index",
